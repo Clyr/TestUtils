@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorPrimary">#3AB9FE</color>
+    <color name="colorPrimaryDark">#3AB9FE</color>
+    <color name="colorAccent">#3AB9FE</color>
+    <color name="colorMusic">#268CC9</color>
+    <color name="red3">#33ff0000</color>
+    <color name="transparent">#00000000</color>
+    <color name="bluef">#0000ff</color>
+    <color name="bluec">#cc0000ff</color>
+    <color name="blue9">#990000ff</color>
+    <color name="blue6">#660000ff</color>
+    <color name="blue3">#330000ff</color>
+    <color name="blackf">#000000</color>
+    <color name="blackc">#cc000000</color>
+    <color name="black9">#99000000</color>
+    <color name="black8">#88000000</color>
+    <color name="black6">#66000000</color>
+    <color name="black5">#55000000</color>
+    <color name="black4">#44000000</color>
+    <color name="black3">#33000000</color>
+    <color name="white">#ffffff</color>
+    <color name="whitea">#aaffffff</color>
+    <color name="xxl_gray">#cccccccc</color>
+    <color name="text_gray_666666">#666666</color>
+    <color name="test">#cccccc</color>
+
+    <color name="black">#000000</color>
+    <color name="grey">#cccccc</color>
+    <color name="high_grey">#5d5d5d</color>
+    <color name="clear">#00ffffff</color>
+    <color name="btn_content">#157efb</color>
+    <color name="btn_normal_withbg">#13a1ff</color>
+    <color name="btn_content_unable">#6e6e6e</color>
+    <color name="list_item_child_bg">#f8f7f7</color>
+    <color name="con_grey">#99666666</color>
+    <color name="http_nav_seq">#039aff</color>
+
+    <color name="color_login_subtitle">#157efb</color>
+    <color name="payColor">#3AB9FE</color>
+
+    <color name="main_ll">#550796F2</color>
+    <color name="main_lll">#220796F2</color>
+    <color name="main_l">#880796F2</color>
+
+    <color name="green">#00ff00</color>
+    <color name="green_blue">#23BFE5</color>
+    <color name="green_mix">#46df62</color>
+    <color name="green_black">#48ac72</color>
+    <color name="green2">#01DFA5</color>
+    <color name="green2_ll">#5501DFA5</color>
+
+    <color name="red">#ff0000</color>
+    <color name="red8">#88ff0000</color>
+    <color name="red5">#55ff0000</color>
+    <color name="mm131">#FF0460</color>
+    <!--<color name="red3">#33ff0000</color>-->
+
+    <color name="blue">#0000ff</color>
+    <!--<color name="blue3">#330000ff</color>-->
+    <color name="blue_black">#000048</color>
+    <color name="blue_black_l">#bb000048</color>
+
+    <color name="gray">#AEAEAE</color>
+    <color name="gray2">#aaAEAEAE</color>
+    <color name="gray_l">#66AEAEAE</color>
+    <color name="gray_lw">#36AEAEAE</color>
+    <color name="gray_black">#6E6E6E</color>
+    <color name="gray_ll">#06112233</color>
+
+    <color name="yellow">#ffff00</color>
+    <color name="yellow2">#fdefa0</color>
+    <color name="orange">#ffaa00</color>
+    <color name="orange2">#FE9A2E</color>
+    <color name="orange_ll">#ccffaa00</color>
+    <color name="orange_lll">#99ffaa00</color>
+
+    <color name="main_tab_item_text_select">#0796F2</color>
+    <color name="main_tab_item_text_normal">#bfbfbf</color>
+
+    <color name="colorCirclebg">#100000ff</color>
+    <color name="colorCirclebg2">#C3F3E4</color>
+    <color name="colorStart">#64F6BD</color>
+    <color name="colorEnd">#20BBE9</color>
+    <color name="background">#FFFFFF</color>
+    <color name="split_line">#16112233</color>
+    <color name="text1">#59B29C</color>
+    <color name="text2">#333333</color>
+
+    <color name="color1">#F0F0F0</color>
+    <color name="color2">#FFFFFF</color>
+    <color name="color3">#B0B0B0</color>
+    <color name="color4">#666666</color>
+    <color name="color5">#57C5E8</color>
+    <color name="divider_color">#E0E0E0</color>
+
+    <!--下拉刷新上拉加载-->
+    <color name="style_window_background">#fff</color>
+    <color name="style_header_bcakground">#66000000</color>
+    <color name="style_footer_bcakground">#fff</color>
+
+    <color name="normol">#fff</color>
+    <color name="press">#EBEBEB</color>
+    <color name="content_bg">#efefef</color>
+    <color name="content_item_bg">#fafafa</color>
+    <!-- Common -->
+
+    <!-- Theme - Dark Blue -->
+    <color name="mp.theme.dark_blue.background" tools:ignore="MissingDefaultResource">#3C5F78</color>
+    <color name="mp.theme.dark_blue.gradientColor" tools:ignore="MissingDefaultResource">#507E9F</color>
+    <color name="mp.theme.dark_blue.colorControlActivated" tools:ignore="MissingDefaultResource">#7AFFFFFF</color>
+    <color name="mp.theme.dark_blue.colorControlHighlight" tools:ignore="MissingDefaultResource">#7AFFFFFF</color>
+
+    <color name="mp.theme.dark_blue.colorPrimary" tools:ignore="MissingDefaultResource">#3C5F78</color>
+    <color name="mp.theme.dark_blue.colorPrimaryDark" tools:ignore="MissingDefaultResource">#3C5F78</color>
+    <color name="mp.theme.dark_blue.colorAccent" tools:ignore="MissingDefaultResource">#DDF9FF</color>
+    <color name="mp.theme.dark_blue.textColorPrimary" tools:ignore="MissingDefaultResource">#DDF9FF</color>
+    <color name="mp.theme.dark_blue.textColorSecondary" tools:ignore="MissingDefaultResource">#3C5F78</color>
+
+    <color name="mp.theme.dark_blue.actionMode.statusBarColor" tools:ignore="MissingDefaultResource">#9CBDCC</color>
+    <color name="mp.theme.dark_blue.actionMode.background" tools:ignore="MissingDefaultResource">#9CBDCC</color>
+
+    <color name="mp.line" tools:ignore="MissingDefaultResource">#3DDDF9FF</color>
+    <color name="mp.list.background" tools:ignore="MissingDefaultResource">#1ADDF9FF</color>
+    <color name="mp.list.background.selected" tools:ignore="MissingDefaultResource">#6CDDF9FF</color>
+    <color name="mp.list.scrollThumb" tools:ignore="MissingDefaultResource">#99DDF9FF</color>
+    <color name="mp.list.text.title" tools:ignore="MissingDefaultResource">#DDF9FF</color>
+    <color name="mp.list.text.title.selected" tools:ignore="MissingDefaultResource">#3C5F78</color>
+    <color name="mp.list.text.hint" tools:ignore="MissingDefaultResource">#9CBDCC</color>
+    <color name="mp.list.text.hint.selected" tools:ignore="MissingDefaultResource">#7C3C5F78</color>
+
+    <color name="mp.popupMenu.background" tools:ignore="MissingDefaultResource">#B4D2E0</color>
+
+    <color name="mp.text.hint" tools:ignore="MissingDefaultResource">#9CBDCC</color>
+
+    <!-- Segmented Control -->
+    <color name="mp.widget.segmented.default" tools:ignore="MissingDefaultResource">?attr/colorAccent</color>
+    <color name="mp.widget.segmented.checked" tools:ignore="MissingDefaultResource">#3C5F78</color>
+
+    <!-- CharacterView -->
+    <color name="mp.characterView.background" tools:ignore="MissingDefaultResource">#9CBDCC</color>
+    <color name="mp.characterView.textColor" tools:ignore="MissingDefaultResource">@color/mp.list.text.title</color>
+
+    <color name="imageBackground">#DDFFFFFF</color>
+    <color name="imageBorder">#FF333333</color>
+
+    <color name="orange1">#FFf26700</color>
+    <!--<color name="orange2">#FFff9000</color>-->
+    <color name="yellow1">#FFfbad00</color>
+    <!--<color name="yellow2">#FFffc600</color>-->
+
+    <color name="action_bar_start">#FFFBFBFB</color>
+    <color name="action_bar_end">#FFCCCCCC</color>
+
+    <color name="linkColorBlue">#0099dd</color>
+
+    <color name="dark_divider">#33cccccc</color>
+
+    <color name="background_wtf">#FF999900</color>
+    <color name="background_error">#FFCC0000</color>
+    <color name="background_verbose">#FF666666</color>
+    <color name="background_debug">#FF0066CC</color>
+    <color name="background_info">#FF00CC00</color>
+    <color name="background_warn">#FFFFFF00</color>
+
+    <color name="main_bubble_background_dark">#44FFFFFF</color>
+    <color name="main_bubble_background_dark_2">#55BBBBFF</color>
+    <color name="main_bubble_background_light">#33000000</color>
+    <color name="main_bubble_background_light_2">#330000BB</color>
+    <color name="main_bubble_background_tmobile">#33333333</color>
+    <color name="main_bubble_background_verizon">#FFEEEEEE</color>
+
+    <color name="main_background_dark">#FF000000</color>
+    <color name="main_background_light">#FFFFFFEE</color>
+    <color name="main_background_android">#FFA4C639</color>
+    <color name="main_background_verizon">#FF000000</color>
+    <color name="main_background_att">#FFFFFFFF</color>
+    <color name="main_background_sprint">#FF000000</color>
+    <color name="main_background_tmobile">#FFeaeff3</color>
+
+    <color name="main_foreground_dark">@android:color/darker_gray</color>
+    <color name="main_foreground_light">@android:color/black</color>
+    <color name="main_foreground_android">@android:color/black</color>
+    <color name="main_foreground_verizon">#FFed1f24</color>
+    <color name="main_foreground_att">#FF0c7db5</color>
+    <color name="main_foreground_sprint">#FFffde00</color>
+    <color name="main_foreground_tmobile">#FFe9098d</color>
+
+    <color name="spinner_droptown_dark">#FF333333</color>
+    <color name="spinner_droptown_light">#00000000</color>
+    <color name="spinner_droptown_android">#FFA4C639</color>
+    <color name="spinner_droptown_verizon">#FF333333</color>
+    <color name="spinner_droptown_att">#00000000</color>
+    <color name="spinner_droptown_sprint">#FF333333</color>
+    <color name="spinner_droptown_tmobile">#00000000</color>
+
+    <color name="foreground_wtf">#FFFFFFFF</color>
+    <color name="foreground_error">#FFFFFFFF</color>
+    <color name="foreground_verbose">#FFCCCCCC</color>
+    <color name="foreground_debug">#FFCCCCCC</color>
+    <color name="foreground_info">#FF333333</color>
+    <color name="foreground_warn">#FF333333</color>
+
+    <!-- Android color FTW -->
+    <color name="tag_color_01">#FFA4C639</color>
+    <color name="tag_color_02">#FF3366FF</color>
+    <color name="tag_color_03">#FFCC9900</color>
+    <color name="tag_color_04">#FFCC0000</color>
+    <color name="tag_color_05">#FFCCCCCC</color>
+    <color name="tag_color_06">#FF990099</color>
+    <color name="tag_color_07">#FF00CC00</color>
+    <color name="tag_color_08">#FF66CCFF</color>
+    <color name="tag_color_09">#FF00CC99</color>
+    <color name="tag_color_10">#FFFF6633</color>
+    <color name="tag_color_11">#FFFFFFFF</color>
+    <color name="tag_color_12">#FFCCCCFF</color>
+    <color name="tag_color_13">#FFFFFF00</color>
+    <color name="tag_color_14">#FF0099CC</color>
+    <color name="tag_color_15">#FF999900</color>
+    <color name="tag_color_16">#FFCC3399</color>
+    <color name="tag_color_17">#FFFFCC99</color>
+
+    <color name="light_tag_color_01">#FF5b39c6</color>
+    <color name="light_tag_color_02">#FFcc9900</color>
+    <color name="light_tag_color_03">#FF3366ff</color>
+    <color name="light_tag_color_04">#FF006600</color>
+    <color name="light_tag_color_05">#FF990000</color>
+    <color name="light_tag_color_06">#FF000066</color>
+    <color name="light_tag_color_07">#FFff33ff</color>
+    <color name="light_tag_color_08">#FF993300</color>
+    <color name="light_tag_color_09">#FFff3366</color>
+    <color name="light_tag_color_10">#FF0099cc</color>
+    <color name="light_tag_color_11">#FF000000</color>
+    <color name="light_tag_color_12">#FF333300</color>
+    <color name="light_tag_color_13">#FF0000ff</color>
+    <color name="light_tag_color_14">#FFff6633</color>
+    <color name="light_tag_color_15">#FF6666ff</color>
+    <color name="light_tag_color_16">#FF33cc66</color>
+    <color name="light_tag_color_17">#FF003366</color>
+
+    <color name="android_theme_tag_color_01">#FF222222</color>
+    <color name="android_theme_tag_color_02">#FF996666</color>
+    <color name="android_theme_tag_color_03">#FFFFCC99</color>
+    <color name="android_theme_tag_color_04">#FFCC0000</color>
+    <color name="android_theme_tag_color_05">#FF666633</color>
+    <color name="android_theme_tag_color_06">#FF990099</color>
+    <color name="android_theme_tag_color_07">#FF006600</color>
+    <color name="android_theme_tag_color_08">#FF660066</color>
+    <color name="android_theme_tag_color_09">#FF003399</color>
+    <color name="android_theme_tag_color_10">#FFFF6633</color>
+    <color name="android_theme_tag_color_11">#FFFFFFFF</color>
+    <color name="android_theme_tag_color_12">#FFCC3333</color>
+    <color name="android_theme_tag_color_13">#FFFFFF00</color>
+    <color name="android_theme_tag_color_14">#FF0099CC</color>
+    <color name="android_theme_tag_color_15">#FF009933</color>
+    <color name="android_theme_tag_color_16">#FFCC3399</color>
+    <color name="android_theme_tag_color_17">#FFFFCC00</color>
+</resources>
