@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.clyr.testutils.databinding.FragmentHomeBinding;
+import com.clyr.view.DialogHelper;
 
 public class HomeFragment extends Fragment {
 
@@ -27,14 +28,16 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
+        homeViewModel.getText().observe(getViewLifecycleOwner(), s -> {
+
         });
+        initView();
         return root;
+    }
+
+    private void initView() {
+        binding.buttonDialog.setOnClickListener(v -> DialogHelper.dialogShow(getActivity()));
+        binding.buttonCustomdialog.setOnClickListener(v -> DialogHelper.alertDialogDiy(getActivity()));
     }
 
     @Override

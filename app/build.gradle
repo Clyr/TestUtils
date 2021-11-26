@@ -10,7 +10,7 @@ android {
         minSdk 16
         targetSdk 31
         versionCode 1
-        versionName "1.0.1"
+        versionName "1.0.0"
         multiDexEnabled true
         resConfigs "en", "zh-rCN"/*,"其他应用需要支持的语言"*/
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -54,4 +54,30 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    /** butterknife*/
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+
+    /**PLog*/
+    implementation 'org.mym.plog:plog-core:2.0.0'
+    implementation "org.mym.plog:plog-formatter:2.0.0"   //格式化实现包 (强烈推荐使用)
+    implementation "org.mym.plog:plog-printer:2.0.0"     //Printer扩展，如文件支持等 (可选)
+    implementation "org.mym.plog:plog-timing:2.0.0"      //计时日志包 (可选)
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.0.0-alpha02'
+
+    implementation 'com.zhy:okhttputils:2.6.2'
+    implementation 'com.lzy.net:okgo:2.0.0'
+    implementation 'com.lzy.net:okrx:0.1.0'
+
+    /**bugly 统计bug日志*/
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
+    implementation 'com.youth.banner:banner:1.4.10'
+
+    /**eventbus*/
+    implementation 'org.greenrobot:eventbus:3.2.0'
 }

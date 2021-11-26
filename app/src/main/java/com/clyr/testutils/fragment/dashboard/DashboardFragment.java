@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.clyr.testutils.databinding.FragmentDashboardBinding;
+import com.clyr.view.DialogHelper;
 
 public class DashboardFragment extends Fragment {
 
@@ -27,14 +28,16 @@ public class DashboardFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
-        dashboardViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
+
+        dashboardViewModel.getText().observe(getViewLifecycleOwner(), s -> {
+
         });
+        initView();
         return root;
+    }
+
+    private void initView() {
+
     }
 
     @Override

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".newactivity.ShareActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:text="调用系统分享"/>
+    <TextView
+        android:id="@+id/share_text"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_margin="3dp"
+        android:background="@color/xxl_gray"
+        android:height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分享文本信息" />
+    <TextView
+        android:id="@+id/share_img"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_margin="3dp"
+        android:background="@color/xxl_gray"
+        android:textSize="18sp"
+        android:height="40dp"
+        android:layout_height="wrap_content"
+        android:text="分享单张图片" />
+    <TextView
+        android:id="@+id/share_file"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_margin="3dp"
+        android:background="@color/xxl_gray"
+        android:textSize="18sp"
+        android:height="40dp"
+        android:layout_height="wrap_content"
+        android:text="分享多个文件" />
+    <TextView
+        android:id="@+id/share_wechat"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_margin="3dp"
+        android:background="@color/xxl_gray"
+        android:textSize="18sp"
+        android:height="40dp"
+        android:layout_height="wrap_content"
+        android:text="分享到微信" />
+    <TextView
+        android:id="@+id/share_qq"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:layout_margin="3dp"
+        android:background="@color/xxl_gray"
+        android:height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="分享到QQ" />
+</LinearLayout>

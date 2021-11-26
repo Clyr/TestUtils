@@ -51,18 +51,7 @@ dependencies {
     /**dagger 解耦*/
     implementation 'com.google.dagger:dagger:2.23.2'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.23.2'
-    /**个推*/
-    implementation 'com.getui:sdk:2.13.2.0'
 
-    /**刷新*/
-    implementation 'com.jaeger.statusbarutil:library:1.5.1'
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
-    implementation 'com.youth.banner:banner:1.4.10'
-    /**华为推送*/
-
-    /** butterknife*/
-    implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     /**okhttputils okgo 依赖于okhttp3*/
     implementation 'com.lzy.net:okgo:2.0.0'
     implementation 'com.lzy.net:okrx:0.1.0'
@@ -80,13 +69,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.0.0-alpha02'
     /**picasso 图片加载 舍弃 使用 Glide*/
     implementation 'com.squareup.picasso:picasso:2.71828'
-    /*implementation 'com.github.bumptech.glide:glide:4.10.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'*/
     /**kotlin*/
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    /**eventbus*/
-    implementation 'org.greenrobot:eventbus:3.1.1'
     /**侧滑返回*/
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
     /**桌面提示圆点 暂无效果*/
@@ -98,7 +82,5 @@ dependencies {
     /** GreenDao */
     implementation 'org.greenrobot:greendao:3.2.2'
 
-    /**bugly 统计bug日志*/
-    implementation 'com.tencent.bugly:crashreport:latest.release'
-    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+
 }
