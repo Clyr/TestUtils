@@ -10,15 +10,24 @@ android {
         minSdk 16
         targetSdk 31
         versionCode 1
-        versionName "1.0"
-
+        versionName "1.0.1"
+        multiDexEnabled true
+        resConfigs "en", "zh-rCN"/*,"其他应用需要支持的语言"*/
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
+
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        applicationVariants.all { variant ->
+            variant.outputs.forEach {
+                it.outputFileName = "TestUtils_${defaultConfig.versionName}.apk" //最终修改生成的apk文件名
+            }
         }
     }
     compileOptions {
@@ -40,6 +49,8 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'androidx.navigation:navigation-fragment:2.3.5'
     implementation 'androidx.navigation:navigation-ui:2.3.5'
+    implementation project(path: ':view')
+    implementation project(path: ':utils')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

@@ -25,29 +25,23 @@ public class DialogHelper {
         AlertDialog.Builder ab = new AlertDialog.Builder(activity);
         ab.setMessage("message-第一个弹窗样式")
                 .setTitle("title")
-                .setPositiveButton("第二个", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //使用message可以显示全部字符串
-                        AlertDialog.Builder ab1 = new AlertDialog.Builder(activity);
-                        ab1.setMessage("message-这是第二个弹窗样式加长（Please install the Android Support Repository from the Android SDK Manager.\n" +
-                                "<a href=\"openAndroidSdkManager\">Open Android SDK Manager</a>）\n")
-                                .setPositiveButton("确定", null)
-                                .setNegativeButton("取消", null)
-                                .show();
-                    }
+                .setPositiveButton("第二个", (dialog, which) -> {
+                    //使用message可以显示全部字符串
+                    AlertDialog.Builder ab1 = new AlertDialog.Builder(activity);
+                    ab1.setMessage("message-这是第二个弹窗样式加长（Please install the Android Support Repository from the Android SDK Manager.\n" +
+                            "<a href=\"openAndroidSdkManager\">Open Android SDK Manager</a>）\n")
+                            .setPositiveButton("确定", null)
+                            .setNegativeButton("取消", null)
+                            .show();
                 })
-                .setNegativeButton("第三个", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //使用title字体略大但是只能显示部分信息大约char=31
-                        AlertDialog.Builder ab1 = new AlertDialog.Builder(activity);
-                        ab1.setTitle("message-这是第三个弹窗样式加长（Please install the Android Support Repository from the Android SDK Manager.\n" +
-                                "<a href=\"openAndroidSdkManager\">Open Android SDK Manager</a>）\n")
-                                .setPositiveButton("确定", null)
-                                .setNegativeButton("取消", null)
-                                .show();
-                    }
+                .setNegativeButton("第三个", (dialog, which) -> {
+                    //使用title字体略大但是只能显示部分信息大约char=31
+                    AlertDialog.Builder ab1 = new AlertDialog.Builder(activity);
+                    ab1.setTitle("message-这是第三个弹窗样式加长（Please install the Android Support Repository from the Android SDK Manager.\n" +
+                            "<a href=\"openAndroidSdkManager\">Open Android SDK Manager</a>）\n")
+                            .setPositiveButton("确定", null)
+                            .setNegativeButton("取消", null)
+                            .show();
                 })
                 .show();
     }
@@ -56,25 +50,17 @@ public class DialogHelper {
     public static void textDialog(final Activity activity) {
         final TextDialog mDialog;
         mDialog = new TextDialog(activity, R.layout.textdialog,
-                new int[]{R.id.cancel, R.id.query}, new SetBackground() {
-            @Override
-            public void backgroundAlpha(float bgAlpha) {
-                setBackground(bgAlpha, activity);
-            }
-        });
+                new int[]{R.id.cancel, R.id.query}, bgAlpha -> setBackground(bgAlpha, activity));
         mDialog.show();
         mDialog
-                .setOnCenterItemClickListener(new TextDialog.OnCenterItemClickListener() {
-                    @Override
-                    public void OnCenterItemClick(TextDialog dialog, View view) {
-                        int id = view.getId();
-                        if (id == R.id.cancel) {
+                .setOnCenterItemClickListener((dialog, view) -> {
+                    int id = view.getId();
+                    if (id == R.id.cancel) {
 
-                        } else if (id == R.id.query) {
-                            dialogShow(activity);
-                        }
-                        mDialog.dismiss();
+                    } else if (id == R.id.query) {
+                        dialogShow(activity);
                     }
+                    mDialog.dismiss();
                 });
     }
 
@@ -96,27 +82,18 @@ public class DialogHelper {
         builder.setTitle("这是第二个")
                 .setMessage("这是第二个")
                 .setView(view)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton("确定", (dialog, which) -> {
 
-                    }
-                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+                }).setNegativeButton("取消", (dialog, which) -> {
 
-            }
         }).show();
     }
+
     Handler mHandler = new Handler();
-    Runnable task = new Runnable() {
-        @Override
-        public void run() {
-            LoadingDialog.cancelLoading();
-        }
-    };
-    public void loadingDialog(Activity activity){
-        LoadingDialog.showLoadingBall(activity,R.style.ProgressDialogTransparent);
+    Runnable task = LoadingDialog::cancelLoading;
+
+    public void loadingDialog(Activity activity) {
+        LoadingDialog.showLoadingBall(activity, R.style.ProgressDialogTransparent);
         mHandler.postDelayed(task, 3000);
     }
 }
