@@ -2,11 +2,15 @@ package com.clyr.testutils.activity;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 
+import androidx.core.content.ContextCompat;
+
 import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
+import com.jaeger.library.StatusBarUtil;
 
 
 public class SplashActivity extends BaseActivity {
@@ -21,6 +25,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        //StatusBarUtil.setColor(this, Color.WHITE,0);
         mHideHandler.postDelayed(mRunnable, delayMillis);
     }
 

@@ -9,6 +9,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import androidx.annotation.StyleRes;
+
 import com.clyr.view.R;
 
 
@@ -142,6 +144,52 @@ public class LoadingDialog {
         return mLoadingDialog;
     }
 
+    public static Dialog showLoading(Activity context, @StyleRes int proStyle) {
+        View view = LayoutInflater.from(context).inflate(R.layout.loadingdialog, null);
+        TextView loadingText = (TextView) view.findViewById(R.id.tv_reminder);
+        loadingText.setText("加载中...");
+        mLoadingDialog = new Dialog(context, proStyle);
+
+        Window dialogWindow = mLoadingDialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        dialogWindow.setGravity(Gravity.CENTER);
+
+        lp.width = 240; // 宽度
+        lp.height = 240; // 高度
+        dialogWindow.setAttributes(lp);
+
+        mLoadingDialog.setCancelable(true);
+        mLoadingDialog.setCanceledOnTouchOutside(false);
+        mLoadingDialog.setContentView(view);
+
+        mLoadingDialog.show();
+        return mLoadingDialog;
+    }
+
+    public static Dialog showLoading(Activity context, @StyleRes int proStyle, String IndicatorName) {
+        View view = LayoutInflater.from(context).inflate(R.layout.loadingdialog, null);
+        TextView loadingText = (TextView) view.findViewById(R.id.tv_reminder);
+        loadingText.setText("加载中...");
+        AVLoadingIndicatorView indicatorView = view.findViewById(R.id.avi);
+        indicatorView.setIndicator(IndicatorName);
+        mLoadingDialog = new Dialog(context, proStyle);
+
+        Window dialogWindow = mLoadingDialog.getWindow();
+        WindowManager.LayoutParams lp = dialogWindow.getAttributes();
+        dialogWindow.setGravity(Gravity.CENTER);
+
+        lp.width = 240; // 宽度
+        lp.height = 240; // 高度
+        dialogWindow.setAttributes(lp);
+
+        mLoadingDialog.setCancelable(true);
+        mLoadingDialog.setCanceledOnTouchOutside(false);
+        mLoadingDialog.setContentView(view);
+
+        mLoadingDialog.show();
+        return mLoadingDialog;
+    }
+
     /**
      * 关闭加载对话框
      */
@@ -150,4 +198,36 @@ public class LoadingDialog {
             mLoadingDialog.cancel();
         }
     }
+
+    private static final String[] INDICATORS = new String[]{
+            "BallPulseIndicator",
+            "BallGridPulseIndicator",
+            "BallClipRotateIndicator",
+            "BallClipRotatePulseIndicator",
+            "SquareSpinIndicator",
+            "BallClipRotateMultipleIndicator",
+            "BallPulseRiseIndicator",
+            "BallRotateIndicator",
+            "CubeTransitionIndicator",
+            "BallZigZagIndicator",
+            "BallZigZagDeflectIndicator",
+            "BallTrianglePathIndicator",
+            "BallScaleIndicator",
+            "LineScaleIndicator",
+            "LineScalePartyIndicator",
+            "BallScaleMultipleIndicator",
+            "BallPulseSyncIndicator",
+            "BallBeatIndicator",
+            "LineScalePulseOutIndicator",
+            "LineScalePulseOutRapidIndicator",
+            "BallScaleRippleIndicator",
+            "BallScaleRippleMultipleIndicator",
+            "BallSpinFadeLoaderIndicator",
+            "LineSpinFadeLoaderIndicator",
+            "TriangleSkewSpinIndicator",
+            "PacmanIndicator",
+            "BallGridBeatIndicator",
+            "SemiCircleSpinIndicator",
+            "com.wang.avi.sample.MyCustomIndicator"
+    };
 }

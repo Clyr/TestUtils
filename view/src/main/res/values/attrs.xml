@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="MyCornerImageView">
-        <attr name="border_width" format="dimension" />
-        <attr name="boder_color" format="color" />
+    <declare-styleable name="TitleCustomView">
+        <attr name="mode">
+            <enum name="defau" value="-1"></enum>
+            <enum name="all_show" value="0"></enum>
+            <enum name="only_left" value="1"></enum>
+            <enum name="only_right" value="2"></enum>
+            <enum name="only_center" value="3"></enum>
+        </attr>
+        <attr name="left_icon" format="reference"></attr>
+        <attr name="left_text" format="string"></attr>
+        <attr name="right_icon" format="reference"></attr>
+        <attr name="right_text" format="string"></attr>
+        <attr name="center_text" format="string"></attr>
+        <attr name="left_text_color" format="color"></attr>
+        <attr name="right_text_color" format="color"></attr>
+        <attr name="center_text_color" format="color"></attr>
+        <attr name="left_text_size" format="dimension"></attr>
+        <attr name="right_text_size" format="dimension"></attr>
+        <attr name="center_text_size" format="dimension"></attr>
+        <attr name="bg" format="reference|color"></attr>
     </declare-styleable>
-
 </resources>

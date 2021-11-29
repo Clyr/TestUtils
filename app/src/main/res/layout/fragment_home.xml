@@ -7,30 +7,27 @@
     android:orientation="vertical"
     tools:context=".fragment.home.HomeFragment">
 
-
-
-    <com.clyr.view.layout.FlowLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="首页"
+        android:textColor="@color/white"
+        android:textSize="18dp"></TextView>
 
-        <Button
-            android:id="@+id/button_dialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AlertDialog" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button_customdialog"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="自定义提示窗体" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="56dp"></androidx.recyclerview.widget.RecyclerView>
 
 
-        <Button
-            android:id="@+id/button_load"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="加载1" />
-    </com.clyr.view.layout.FlowLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
 </LinearLayout>

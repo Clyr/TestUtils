@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="home_fun_list">
+        <item>AlertDialog</item>
+        <item>LoadDialog</item>
+        <item>OkHttp</item>
+        <item>Acheck存储</item>
+        <item>GridView</item>
+        <item>Video</item>
+        <item>图片相关</item>
+        <item>Sqlite</item>
+        <item>Tree_list</item>
+        <item>雷达图</item>
+        <item>滚动新闻</item>
+        <item>表格</item>
+        <item>测试调用三方软件</item>
+        <item>测试获取网络地址</item>
+        <item>刷新</item>
+        <item>系统工具</item>
+        <item>UpDate</item>
+        <item>通知</item>
+        <item>Retrofit</item>
+        <item>Rxjava</item>
+        <item>ShortcutBadger</item>
+        <item>VPN监测开关</item>
+        <item>推送</item>
+        <item>地图</item>
+        <item>分享</item>
+    </string-array>
+</resources>
