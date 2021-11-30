@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:minHeight="40dip" >
+
+    <CheckBox
+        android:visibility="gone"
+        android:id="@+id/cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center_vertical" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/ivicon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_toRightOf="@id/cb"
+        android:gravity="center_vertical"
+        android:minHeight="40dip" />
+
+    <TextView
+        android:id="@+id/itemvalue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivicon"
+        android:gravity="center_vertical"
+        android:textSize="18dip"
+        android:minHeight="40dip"
+        android:text="neirong" />
+
+    <ImageView
+        android:id="@+id/ivec"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/tree_ec" />
+
+</RelativeLayout>

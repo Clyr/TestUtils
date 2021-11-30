@@ -374,7 +374,7 @@ public class IOSave {
             Toast.makeText(context,"删除数据",Toast.LENGTH_SHORT).show();
         }
     }
-    public class StuDBHelper extends SQLiteOpenHelper {
+    public static class StuDBHelper extends SQLiteOpenHelper {
 
         private static final String TAG = "TestSQLite";
         public static final int VERSION = 2;

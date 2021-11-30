@@ -33,16 +33,11 @@
             android:text="SharedPreferences Get"></Button>
 
         <Button
-            android:id="@+id/sqliteset"
+            android:id="@+id/sq_lite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="数据库存储"></Button>
+            android:text="数据库存储sqlite"></Button>
 
-        <Button
-            android:id="@+id/sqliteget"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="数据库读取"></Button>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

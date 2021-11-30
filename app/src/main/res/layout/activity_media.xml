@@ -6,4 +6,74 @@
     android:layout_height="match_parent"
     tools:context=".activity.MediaActivity">
 
+    <include layout="@layout/title_easy"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/select_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="从相册选择图片"></Button>
+
+        <Button
+            android:id="@+id/select_camera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="从相机拍摄图片"></Button>
+
+        <Button
+            android:id="@+id/select_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="从相册选择视频"></Button>
+
+        <Button
+            android:id="@+id/select_camera_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="从相机录制视频"></Button>
+
+        <Button
+            android:id="@+id/select_mp3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="播放音乐"></Button>
+
+        <com.clyr.view.GuaGuaKa
+            android:layout_width="300dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            tools:layout_editor_absoluteX="42dp"
+            tools:layout_editor_absoluteY="56dp" />
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp">
+
+
+            <com.clyr.view.ProcessImageView
+                android:id="@+id/image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentBottom="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image"></com.clyr.view.ProcessImageView>
+
+            <Button
+                android:id="@+id/buttonimage"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/refresh1" />
+        </RelativeLayout>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

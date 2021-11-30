@@ -47,8 +47,11 @@ import java.net.URLConnection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import okhttp3.OkHttpClient;
 
 
 /**
@@ -56,6 +59,15 @@ import java.util.regex.Pattern;
  * Created by M S I of clyr on 2019/11/14.
  */
 public class SystemUtils {
+    static {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(10000L, TimeUnit.MILLISECONDS)
+                .readTimeout(10000L, TimeUnit.MILLISECONDS)
+                //其他配置
+                .build();
+
+        OkHttpUtils.initClient(okHttpClient);
+    }
 
     /**
      * 获取当前本地apk的版本 versionCode

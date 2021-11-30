@@ -15,6 +15,7 @@
         <activity android:name=".cache.SaveMediaActivity" />
         <activity android:name=".cache.SaveDrawableActivity" />
         <activity android:name=".cache.SaveJsonArrayActivity" />
+        <activity android:name=".SqliteActivity"/>
     </application>
 
 </manifest>

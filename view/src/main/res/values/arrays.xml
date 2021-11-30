@@ -7,7 +7,6 @@
         <item>IO存储</item>
         <item>GridView</item>
         <item>Media相关</item>
-        <item>Sqlite</item>
         <item>Tree_list</item>
         <item>雷达图</item>
         <item>滚动新闻</item>
@@ -25,5 +24,6 @@
         <item>推送</item>
         <item>地图</item>
         <item>分享</item>
+        <item>图表</item>
     </string-array>
 </resources>

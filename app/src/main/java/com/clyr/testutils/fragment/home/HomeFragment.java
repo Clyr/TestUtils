@@ -3,20 +3,14 @@ package com.clyr.testutils.fragment.home;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.clyr.base.interfaces.OnItemClickListener;
 import com.clyr.testutils.R;
@@ -25,19 +19,24 @@ import com.clyr.testutils.activity.EmptyActivity;
 import com.clyr.testutils.activity.GridActivity;
 import com.clyr.testutils.activity.IOActivity;
 import com.clyr.testutils.activity.LoadActivity;
+import com.clyr.testutils.activity.MarqueeActivity;
+import com.clyr.testutils.activity.MediaActivity;
 import com.clyr.testutils.activity.OkHttpActivity;
+import com.clyr.testutils.activity.RadarActivity;
+import com.clyr.testutils.activity.RefrashActivity;
+import com.clyr.testutils.activity.SystemUtilActivity;
+import com.clyr.testutils.activity.TableActivity;
+import com.clyr.testutils.activity.TreeListActivity;
 import com.clyr.testutils.adapter.HomeFragmentAdapter;
 import com.clyr.testutils.base.Const;
 import com.clyr.testutils.databinding.FragmentHomeBinding;
 import com.clyr.utils.MyLog;
+import com.clyr.utils.SystemUtils;
 import com.clyr.utils.ToastUtils;
-import com.clyr.utils.UIUtils;
-import com.clyr.utils.UtilsKit;
-import com.clyr.view.DialogHelper;
 import com.clyr.view.RecycleViewDivider;
+import com.clyr.view.loadingdialog.LoadingDialog;
 import com.google.android.material.appbar.AppBarLayout;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class HomeFragment extends Fragment implements OnItemClickListener {
@@ -92,12 +91,14 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     @Override
     public void onClick(int position, Object obj) {
         String title = (String) obj;
-        Intent intent = new Intent();
-        if (!TextUtils.isEmpty(title)) {
-            intent.setClass(getContext(), getActivityClass(title));
+        Class<?> aClass = getActivityClass(title);
+        if (aClass != null) {
+            Intent intent = new Intent();
+            intent.setClass(getContext(), aClass);
             intent.putExtra(Const.TITLE, title);
+            startActivity(intent);
         }
-        startActivity(intent);
+
     }
 
     private Class<?> getActivityClass(String str) {
@@ -114,27 +115,28 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
             case "GridView":
                 return GridActivity.class;
             case "Media相关":
-                return DialogActivity.class;
-            case "Sqlite":
-                return DialogActivity.class;
+                return MediaActivity.class;
             case "Tree_list":
-                return DialogActivity.class;
+                return TreeListActivity.class;
             case "雷达图":
-                return DialogActivity.class;
+                return RadarActivity.class;
             case "滚动新闻":
-                return DialogActivity.class;
+                return MarqueeActivity.class;
             case "表格":
-                return DialogActivity.class;
+                return TableActivity.class;
             case "测试调用三方软件":
-                return DialogActivity.class;
+                startThreeApp();
+                return null;
             case "测试获取网络地址":
-                return DialogActivity.class;
+                getIpAddress();
+                return null;
             case "刷新":
-                return DialogActivity.class;
+                return RefrashActivity.class;
             case "系统工具":
-                return DialogActivity.class;
+                return SystemUtilActivity.class;
             case "UpDate":
-                return DialogActivity.class;
+                getUpdate();
+                return null;
             case "通知":
                 return DialogActivity.class;
             case "Retrofit":
@@ -151,8 +153,77 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 return DialogActivity.class;
             case "分享":
                 return DialogActivity.class;
+            case "图表":
+                return DialogActivity.class;
         }
 
         return EmptyActivity.class;
+    }
+
+    private void getUpdate() {
+
+            /*if (hasNewVersion) {
+                String appurl = "http://182.38.207.125:49155/imtt.dd.qq.com/16891/apk/912E6414B2549FFC49C8C63887F4C536.apk?mkey=618a0eb9700b56835a0410fc7dcf0043&arrive_key=23364718829&fsname=com.heiguang.hgrcwandroid_2.4.9_60.apk&hsr=4d5s&cip=122.4.199.97&proto=http";
+                UpdateEntity updateEntity = new UpdateEntity().setHasUpdate(true)
+                        .setIsIgnorable(true)
+                        .setVersionCode(PublicTools.getAppVersionCode())
+                        .setVersionName(PublicTools.getAppVersion(this))
+                        .setUpdateContent("Fix bug")
+                        .setDownloadUrl(appurl).setSize(30 * 1024);
+                UpdateManager build = XUpdate.newBuild(this)
+                        .supportBackgroundUpdate(true)
+                        //.promptThemeColor(getContext().getResources().getColor(R.color.zerofiveczeroab))
+                        //.promptTopResId() //顶部图片
+                        //.promptButtonTextColor() //按钮颜色
+                        //.promptWidthRatio((float) 0.5) //提示器宽度占屏幕的比例
+                        //.promptHeightRatio()
+                        //.promptIgnoreDownloadError(true)// 忽略下载异常，不关闭更新提示窗
+                        .build();
+                build.update(updateEntity);
+                MyLog.Log("XUpdate", build.toString());
+            }*/
+
+    }
+
+    private void getIpAddress() {
+        SystemUtils.getNetIp();
+    }
+
+    private void startThreeApp() {
+        try {
+            Intent intent = new Intent();
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setClassName("com.heiguang.hgrcwandroid", "com.heiguang.hgrcwandroid.activity.SplashActivity");
+            intent.putExtra("PushUtils", "PushUtils");
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtils.showLong("╮(╯▽╰)╭");
+        }
+
+
+
+        /*try {
+            Intent intent = new Intent();
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setClassName("com.matrix.tramsh5", "io.dcloud.PandoraEntry");
+            intent.putExtra("test", "测试");
+            startActivity(intent);
+            LoadingDialog.showLoading(getActivity());
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtils.showLong("╮(╯▽╰)╭");
+        }*/
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        LoadingDialog.cancelLoading();
     }
 }

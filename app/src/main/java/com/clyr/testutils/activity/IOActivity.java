@@ -2,6 +2,7 @@ package com.clyr.testutils.activity;
 
 import android.os.Bundle;
 
+import com.clyr.test.SqliteActivity;
 import com.clyr.test.cache.AcheckActivity;
 import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
@@ -28,6 +29,7 @@ public class IOActivity extends BaseActivity {
             ToastUtils.showShort(string);
         });
 
+        findViewById(R.id.sq_lite).setOnClickListener(v -> startActivity(SqliteActivity.class));
 
     }
 }

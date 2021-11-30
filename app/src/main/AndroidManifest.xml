@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -11,6 +13,15 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.SystemUtilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.RefrashActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.TreeListActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.MediaActivity"
             android:exported="false" />
@@ -44,6 +55,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.RadarActivity" />
+        <activity android:name=".activity.MarqueeActivity" />
+        <activity android:name=".activity.TableActivity" />
     </application>
 
 </manifest>

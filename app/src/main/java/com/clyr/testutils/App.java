@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Process;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.multidex.MultiDexApplication;
 
@@ -29,7 +28,6 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
@@ -124,6 +122,25 @@ public class App extends MultiDexApplication {
 //                .setRetryCount(3)                               //全局统一超时重连次数，默认为三次，那么最差的情况会请求4次(一次原始请求，三次重连请求)，不需要可以设置为0
 //                .addCommonHeaders(headers)                      //全局公共头
 //                .addCommonParams(params);                       //全局公共参数
+
+        /*XUpdate.get()
+                .debug(true)
+                .isWifiOnly(true)                                               //默认设置只在wifi下检查版本更新
+                //.isGet(true)                                                    //默认设置使用get请求检查版本
+                .isAutoMode(false)                                              //默认设置非自动模式，可根据具体使用配置
+                //.param("versionCode", UpdateUtils.getVersionCode(this))         //设置默认公共请求参数
+                //.param("appKey", getPackageName())
+                .setOnUpdateFailureListener(new OnUpdateFailureListener() {     //设置版本更新出错的监听
+                    @Override
+                    public void onFailure(UpdateError error) {
+                        if (error.getCode() != CHECK_NO_NEW_VERSION) {          //对不同错误进行处理
+                            //ToastUtils.toast(error.toString());
+                        }
+                    }
+                })
+                .supportSilentInstall(true)                                     //设置是否支持静默安装，默认是true
+                .setIUpdateHttpService(new OKHttpUpdateHttpService())           //这个必须设置！实现网络请求功能。
+                .init(this);*/
 
     }
 
