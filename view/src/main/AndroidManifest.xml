@@ -2,4 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.clyr.view">
 
+    <application>
+        <activity
+            android:name=".activity.SimpleLookActivity"
+            android:exported="false" />
+        <activity android:name=".activity.CameraActivity" />
+    </application>
+
 </manifest>

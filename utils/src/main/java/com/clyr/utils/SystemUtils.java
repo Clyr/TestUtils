@@ -26,6 +26,7 @@ import android.view.WindowManager;
 
 import androidx.core.app.ActivityCompat;
 
+import com.clyr.base.bean.IpsSohu;
 import com.clyr.utils.utilshelper.SystemStatusManager;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -44,6 +45,7 @@ import java.net.SocketException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -218,8 +220,8 @@ public class SystemUtils {
     /**
      * 系统剪贴板-获取:
      *
-     * @param context
-     * @return
+     * @param context ...
+     * @return string
      */
 
     public static String getCopy(Context context) {
@@ -459,6 +461,7 @@ public class SystemUtils {
 
     /**
      * 获取当前ip
+     *
      * @param context
      * @return
      */
@@ -607,20 +610,16 @@ public class SystemUtils {
                     String string = response.substring(start, end);
                     MyLog.d(string);
                     Gson gson = new Gson();
-                    ipsohu ipsohu = gson.fromJson(string, ipsohu.class);
-                    MyLog.d(ipsohu.cip);
-                    ToastUtils.showShort(activity, "外网IP：" + ipsohu.cip);
+                    IpsSohu IpsSohu = gson.fromJson(string, IpsSohu.class);
+                    MyLog.d(IpsSohu.cip);
+                    ToastUtils.showShort(activity, "外网IP：" + IpsSohu.cip);
                 }
                 ToastUtils.showShort(activity, getLocalIpAddress());
             }
         });
     }
 
-    class ipsohu {
-        public String cid;//370100
-        public String cip;//211.137.204.197
-        public String cname;//	山东省济南市
+    public static long getSystemTime() {
+        return new Date().getTime();
     }
-
-
 }

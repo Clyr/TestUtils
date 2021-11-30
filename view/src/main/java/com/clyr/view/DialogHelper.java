@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.clyr.base.interfaces.OnItemClickListener;
 import com.clyr.base.interfaces.SetBackground;
 import com.clyr.view.loadingdialog.LoadingDialog;
 import com.clyr.view.textdialog.TextDialog;
@@ -59,6 +60,23 @@ public class DialogHelper {
 
                     } else if (id == R.id.query) {
                         dialogShow(activity);
+                    }
+                    mDialog.dismiss();
+                });
+    }
+
+    public static void cameraSelectDialog(final Activity activity, OnItemClickListener clickListener) {
+        final TextDialog mDialog;
+        mDialog = new TextDialog(activity, R.layout.camera_select,
+                new int[]{R.id.open_album, R.id.open_camera}, bgAlpha -> setBackground(bgAlpha, activity));
+        mDialog.show();
+        mDialog
+                .setOnCenterItemClickListener((dialog, view) -> {
+                    int id = view.getId();
+                    if (id == R.id.open_album) {
+                        clickListener.onClick(0, activity.getResources().getString(R.string.open_album));
+                    } else if (id == R.id.open_camera) {
+                        clickListener.onClick(1, activity.getResources().getString(R.string.open_camera));
                     }
                     mDialog.dismiss();
                 });

@@ -358,4 +358,18 @@ public class BitmapUtils {
                      ...
                 });*/
     }
+
+
+    public static Bitmap rToBitmap(int drawble, Context context) {
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawble);
+        return bitmap;
+    }
+
+    public static void setBitmap(Context context,Object imgUrl,ImageView imageView){
+        Glide.with(context)
+                .load(imgUrl)
+                .centerCrop()
+                .placeholder(R.drawable.back)
+                .into(imageView);
+    }
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">base</string>
+    <string name="open_album">打开相册</string>
+    <string name="open_camera">打开摄像机</string>
 </resources>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.clyr.test">
+
+    <application>
+        <activity
+            android:name=".TestActivity"
+            android:exported="false" />
+        <activity android:name=".cache.AcheckActivity" />
+        <activity android:name=".cache.AboutActivity" />
+        <activity android:name=".cache.SaveBitmapActivity" />
+        <activity android:name=".cache.SaveJsonObjectActivity" />
+        <activity android:name=".cache.SaveObjectActivity" />
+        <activity android:name=".cache.SaveStringActivity" />
+        <activity android:name=".cache.SaveMediaActivity" />
+        <activity android:name=".cache.SaveDrawableActivity" />
+        <activity android:name=".cache.SaveJsonArrayActivity" />
+    </application>
+
+</manifest>

@@ -14,11 +14,30 @@
         android:layout_height="match_parent"
         android:layout_marginTop="50dp"
         android:orientation="vertical">
+
         <Button
             android:id="@+id/okhttputils"
-            android:text="OkHttpUtils"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Button>
+            android:layout_height="wrap_content"
+            android:text="OkHttpUtils"></Button>
+
+        <Button
+            android:id="@+id/okgo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OkGo"></Button>
+
+        <Button
+            android:id="@+id/okhttp3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="OkHttp3"></Button>
+
+        <Button
+            android:id="@+id/retrofit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Retrofit"></Button>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

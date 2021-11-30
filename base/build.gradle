@@ -76,12 +76,7 @@ dependencies {
     /**桌面提示圆点 暂无效果*/
     implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
 
-    /**拍照 & 视频录制*/
-    implementation 'cjt.library.wheel:camera:1.1.9'
-
     /** GreenDao */
     implementation 'org.greenrobot:greendao:3.2.2'
-
-
 
 }

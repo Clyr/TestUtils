@@ -4,10 +4,9 @@
         <item>AlertDialog</item>
         <item>LoadDialog</item>
         <item>OkHttp</item>
-        <item>Acheck存储</item>
+        <item>IO存储</item>
         <item>GridView</item>
-        <item>Video</item>
-        <item>图片相关</item>
+        <item>Media相关</item>
         <item>Sqlite</item>
         <item>Tree_list</item>
         <item>雷达图</item>

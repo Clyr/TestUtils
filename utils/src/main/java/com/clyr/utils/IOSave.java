@@ -42,6 +42,7 @@ import java.util.List;
  * 使用前 调用init()
  */
 public class IOSave {
+    @SuppressLint("StaticFieldLeak")
     private static IOSave ioSave;
 
     /**
@@ -69,9 +70,9 @@ public class IOSave {
     /**
      * 保存
      *
-     * @param context
-     * @param key
-     * @param value
+     * @param context ...
+     * @param key key
+     * @param value value
      */
     public void spSaveBoolean(Context context, String key, boolean value) {
         if (context == null) {
@@ -106,9 +107,9 @@ public class IOSave {
     /**
      * 获取
      *
-     * @param context
-     * @param key
-     * @param defValue
+     * @param context ...
+     * @param key key
+     * @param defValue defValue
      * @return
      */
     public boolean spGetBoolean(Context context, String key, boolean defValue) {

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.IOActivity">
+
+    <include layout="@layout/title_easy"></include>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/acheck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Acheck存储"></Button>
+
+        <Button
+            android:id="@+id/sputilset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SharedPreferences Set"></Button>
+
+        <Button
+            android:id="@+id/sputilget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SharedPreferences Get"></Button>
+
+        <Button
+            android:id="@+id/sqliteset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="数据库存储"></Button>
+
+        <Button
+            android:id="@+id/sqliteget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="数据库读取"></Button>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

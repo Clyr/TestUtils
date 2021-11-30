@@ -22,6 +22,8 @@ import com.clyr.base.interfaces.OnItemClickListener;
 import com.clyr.testutils.R;
 import com.clyr.testutils.activity.DialogActivity;
 import com.clyr.testutils.activity.EmptyActivity;
+import com.clyr.testutils.activity.GridActivity;
+import com.clyr.testutils.activity.IOActivity;
 import com.clyr.testutils.activity.LoadActivity;
 import com.clyr.testutils.activity.OkHttpActivity;
 import com.clyr.testutils.adapter.HomeFragmentAdapter;
@@ -107,13 +109,11 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 return LoadActivity.class;
             case "OkHttp":
                 return OkHttpActivity.class;
-            case "Acheck存储":
-                return DialogActivity.class;
+            case "IO存储":
+                return IOActivity.class;
             case "GridView":
-                return DialogActivity.class;
-            case "Video":
-                return DialogActivity.class;
-            case "图片相关":
+                return GridActivity.class;
+            case "Media相关":
                 return DialogActivity.class;
             case "Sqlite":
                 return DialogActivity.class;

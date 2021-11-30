@@ -6,4 +6,6 @@ package com.clyr.testutils.base;
 
 public class Const {
     public static String TITLE = "TITLE";
+    public static String TAG = "TAG";
+    public static String INFO = "INFO";
 }

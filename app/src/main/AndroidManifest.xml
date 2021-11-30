@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.MediaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.GridActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.IOActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.OkHttpActivity"
             android:exported="false" />
         <activity
