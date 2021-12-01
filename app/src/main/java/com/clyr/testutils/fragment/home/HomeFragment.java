@@ -36,6 +36,9 @@ import com.clyr.utils.ToastUtils;
 import com.clyr.view.RecycleViewDivider;
 import com.clyr.view.loadingdialog.LoadingDialog;
 import com.google.android.material.appbar.AppBarLayout;
+import com.xuexiang.xupdate.UpdateManager;
+import com.xuexiang.xupdate.XUpdate;
+import com.xuexiang.xupdate.entity.UpdateEntity;
 
 import java.util.Arrays;
 
@@ -162,26 +165,24 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
 
     private void getUpdate() {
 
-            /*if (hasNewVersion) {
-                String appurl = "http://182.38.207.125:49155/imtt.dd.qq.com/16891/apk/912E6414B2549FFC49C8C63887F4C536.apk?mkey=618a0eb9700b56835a0410fc7dcf0043&arrive_key=23364718829&fsname=com.heiguang.hgrcwandroid_2.4.9_60.apk&hsr=4d5s&cip=122.4.199.97&proto=http";
-                UpdateEntity updateEntity = new UpdateEntity().setHasUpdate(true)
-                        .setIsIgnorable(true)
-                        .setVersionCode(PublicTools.getAppVersionCode())
-                        .setVersionName(PublicTools.getAppVersion(this))
-                        .setUpdateContent("Fix bug")
-                        .setDownloadUrl(appurl).setSize(30 * 1024);
-                UpdateManager build = XUpdate.newBuild(this)
-                        .supportBackgroundUpdate(true)
-                        //.promptThemeColor(getContext().getResources().getColor(R.color.zerofiveczeroab))
-                        //.promptTopResId() //顶部图片
-                        //.promptButtonTextColor() //按钮颜色
-                        //.promptWidthRatio((float) 0.5) //提示器宽度占屏幕的比例
-                        //.promptHeightRatio()
-                        //.promptIgnoreDownloadError(true)// 忽略下载异常，不关闭更新提示窗
-                        .build();
-                build.update(updateEntity);
-                MyLog.Log("XUpdate", build.toString());
-            }*/
+        String appurl = "http://182.38.207.125:49155/imtt.dd.qq.com/16891/apk/912E6414B2549FFC49C8C63887F4C536.apk?mkey=618a0eb9700b56835a0410fc7dcf0043&arrive_key=23364718829&fsname=com.heiguang.hgrcwandroid_2.4.9_60.apk&hsr=4d5s&cip=122.4.199.97&proto=http";
+        UpdateEntity updateEntity = new UpdateEntity().setHasUpdate(true)
+                .setIsIgnorable(true)
+                .setVersionCode(SystemUtils.getVersionCode(getContext()))
+                .setVersionName(SystemUtils.getAppVersion(getContext()))
+                .setUpdateContent("Fix bug")
+                .setDownloadUrl(appurl).setSize(30 * 1024);
+        UpdateManager build = XUpdate.newBuild(getContext())
+                .supportBackgroundUpdate(true)
+                //.promptThemeColor(getContext().getResources().getColor(R.color.zerofiveczeroab))
+                //.promptTopResId() //顶部图片
+                //.promptButtonTextColor() //按钮颜色
+                //.promptWidthRatio((float) 0.5) //提示器宽度占屏幕的比例
+                //.promptHeightRatio()
+                //.promptIgnoreDownloadError(true)// 忽略下载异常，不关闭更新提示窗
+                .build();
+        build.update(updateEntity);
+        MyLog.d("XUpdate", build.toString());
 
     }
 
