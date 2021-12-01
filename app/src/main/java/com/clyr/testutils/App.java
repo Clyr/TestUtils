@@ -1,5 +1,7 @@
 package com.clyr.testutils;
 
+import static com.xuexiang.xupdate.entity.UpdateError.ERROR.CHECK_NO_NEW_VERSION;
+
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -11,16 +13,16 @@ import android.text.TextUtils;
 import androidx.multidex.MultiDexApplication;
 
 import com.clyr.testutils.activity.MainActivity;
+import com.clyr.testutils.utils.OKHttpUpdateHttpService;
 import com.clyr.utils.MyLog;
 import com.clyr.utils.UtilsKit;
 import com.clyr.utils.utilshelper.ACache;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.cache.CacheEntity;
-import com.lzy.okgo.cache.CacheMode;
-import com.lzy.okgo.cookie.store.CookieStore;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.xuexiang.xupdate.XUpdate;
+import com.xuexiang.xupdate.entity.UpdateError;
+import com.xuexiang.xupdate.listener.OnUpdateFailureListener;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.cookie.store.PersistentCookieStore;
 import com.zhy.http.okhttp.https.HttpsUtils;
 
 import java.io.File;
@@ -62,28 +64,9 @@ public class App extends MultiDexApplication {
         super.onCreate();
         mApp = this;
         UtilsKit.init(this);
-        /*CalligraphyConfig.initDefault(
-                new CalligraphyConfig.Builder()
-                        .setDefaultFontPath("fonts/Roboto-Monospace-Regular.ttf")
-                        .setFontAttrId(R.attr.fontPath)
-                        .build()
-        );*/
-
-
-        /* 设置具体的证书
-            new InputStream[]{getAssets().open("srca.cer")
-            new InputStream[]{new Buffer().writeUtf8(CER_12306).inputStream()
-            HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(证书的inputstream, null, null);
-            OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager))
-            //其他配置
-            .build();
-            OkHttpUtils.initClient(okHttpClient);
-        * */
         //设置 1.可以访问所有https  请求时间延长为15s 这个过程会显示dialog 已经设置可以取消--但是网络访问不会取消（某些单页的网络请求过多）
         HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(new LoggerInterceptor("TAG"))
                 .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
                 .hostnameVerifier(new HostnameVerifier() {
                     @Override
@@ -97,16 +80,13 @@ public class App extends MultiDexApplication {
                 .build();
 
         OkHttpUtils.initClient(okHttpClient);
-
-
+        OkGo.init(this);
         if (sHandler == null) {
             sHandler = new DemoHandler(getApplicationContext());
         }
 
-
         mContext = this;
         mACache = ACache.get(this, CACHE_NAME);
-        init();
 
         /* Bugly SDK初始化
          * 参数1：上下文对象
@@ -114,16 +94,7 @@ public class App extends MultiDexApplication {
          * 参数3：是否开启调试模式，调试模式下会输出'CrashReport'tag的日志
          */
         CrashReport.initCrashReport(getApplicationContext(), "e349a84b8a", true);
-
-        OkGo.getInstance().init(this);                    //必须调用初始化
-//                .setOkHttpClient(builder.build())               //建议设置OkHttpClient，不设置将使用默认的
-//                .setCacheMode(CacheMode.NO_CACHE)               //全局统一缓存模式，默认不使用缓存，可以不传
-//                .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)   //全局统一缓存时间，默认永不过期，可以不传
-//                .setRetryCount(3)                               //全局统一超时重连次数，默认为三次，那么最差的情况会请求4次(一次原始请求，三次重连请求)，不需要可以设置为0
-//                .addCommonHeaders(headers)                      //全局公共头
-//                .addCommonParams(params);                       //全局公共参数
-
-        /*XUpdate.get()
+        XUpdate.get()
                 .debug(true)
                 .isWifiOnly(true)                                               //默认设置只在wifi下检查版本更新
                 //.isGet(true)                                                    //默认设置使用get请求检查版本
@@ -140,7 +111,7 @@ public class App extends MultiDexApplication {
                 })
                 .supportSilentInstall(true)                                     //设置是否支持静默安装，默认是true
                 .setIUpdateHttpService(new OKHttpUpdateHttpService())           //这个必须设置！实现网络请求功能。
-                .init(this);*/
+                .init(this);
 
     }
 
@@ -199,60 +170,6 @@ public class App extends MultiDexApplication {
                 context.startActivity(intent);
             }
         }
-    }
-
-    private void init() {
-        //bug监听操作
-//        Thread.currentThread().setUncaughtExceptionHandler(new MyUncaughtExceptionHandler());
-//        LeakCanary.install(this);
-        //必须调用初始化
-        OkGo.init(this);
-        try {
-            //以下都不是必须的，根据需要自行选择,一般来说只需要 debug,缓存相关,cookie相关的 就可以了
-            OkGo.getInstance()
-
-                    //打开该调试开关,控制台会使用 红色error 级别打印log,并不是错误,是为了显眼,不需要就不要加入该行
-                    .debug("OkGo")
-
-                    //如果使用默认的 60秒,以下三行也不需要传
-                    .setConnectTimeout(OkGo.DEFAULT_MILLISECONDS)  //全局的连接超时时间
-                    .setReadTimeOut(OkGo.DEFAULT_MILLISECONDS)     //全局的读取超时时间
-                    .setWriteTimeOut(OkGo.DEFAULT_MILLISECONDS)    //全局的写入超时时间
-
-                    //可以全局统一设置缓存模式,默认是不使用缓存,可以不传,具体其他模式看 github 介绍 https://github.com/jeasonlzy/
-                    .setCacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
-
-                    //可以全局统一设置缓存时间,默认永不过期,具体使用方法看 github 介绍
-                    .setCacheTime(CacheEntity.CACHE_NEVER_EXPIRE)
-
-                    //如果不想让框架管理cookie,以下不需要
-//                .setCookieStore(new MemoryCookieStore())                //cookie使用内存缓存（app退出后，cookie消失）
-                    .setCookieStore((CookieStore) new PersistentCookieStore(this))          //cookie持久化存储，如果cookie不过期，则一直有效
-
-            //可以设置https的证书,以下几种方案根据需要自己设置,不需要不用设置
-//                    .setCertificates()                                  //方法一：信任所有证书
-//                    .setCertificates(getAssets().open("srca.cer"))      //方法二：也可以自己设置https证书
-//                    .setCertificates(getAssets().open("aaaa.bks"), "123456", getAssets().open("srca.cer"))//方法三：传入bks证书,密码,和cer证书,支持双向加密
-
-            //可以添加全局拦截器,不会用的千万不要传,错误写法直接导致任何回调不执行
-//                .addInterceptor(new Interceptor() {
-//                    @Override
-//                    public Response intercept(Chain chain) throws IOException {
-//                        return chain.proceed(chain.request());
-//                    }
-//                })
-            ;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Context getCotext() {
-        return mContext;
-    }
-
-    public static ACache getACache() {
-        return mACache;
     }
 
     private class MyUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {

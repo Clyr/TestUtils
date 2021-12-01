@@ -1,6 +1,8 @@
 package com.clyr.testutils.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -33,11 +35,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 
 public class OkHttpActivity extends BaseActivity {
     private final String mUrl = "https://api.apishop.net/common/air/getCityPM25Detail";
+    private final String mRUrl = "https://api.apishop.net/";
+    private String apiKey = "n2yeWil241d1a7d235c308e8556bccf5ec185de68768979";
+    private String city = "潍坊";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,24 +59,19 @@ public class OkHttpActivity extends BaseActivity {
     }
 
     private void okRetrofit() {
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()//okhttp设置部分，此处还可再设置网络参数
-                .addInterceptor(loggingInterceptor)
-                .build();
-
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(mUrl)
+                .baseUrl(mRUrl)
                 .client(HttpLog.getLogClient())//此client是为了打印信息
                 .build();
         ORService orService = retrofit.create(ORService.class);
 
-        retrofit2.Call<ResponseBody> calln = orService.post("cuGetDevTreeEx");
-        calln.enqueue(new retrofit2.Callback<ResponseBody>() {
+        retrofit2.Call<ResponseBody> bodyCall = orService.get(apiKey,city);
+        bodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
             @Override
             public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                if (response != null && response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     try {
-                        MyLog.d(response.body().toString());
+                        MyLog.d(response.body().string());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -84,32 +83,11 @@ public class OkHttpActivity extends BaseActivity {
                 MyLog.e(t.getMessage());
             }
         });
-
-
-        Map<String, String> map = getStringMap();
-        retrofit2.Call<ResponseBody> callph = orService.post("", map);
-        callph.enqueue(new retrofit2.Callback<ResponseBody>() {
-            @Override
-            public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                if (response != null && response.isSuccessful()) {
-                    try {
-                        MyLog.d(response.body().toString());
-                        extracted(response.body().toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
-                MyLog.e(t.getMessage());
-            }
-        });
-
     }
 
     private void okHttp3() {
+
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(3600, TimeUnit.SECONDS)
                 .readTimeout(3600, TimeUnit.SECONDS)
@@ -143,22 +121,36 @@ public class OkHttpActivity extends BaseActivity {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String string = response.body().toString();
-                extracted(string);
+                //extracted(response.body().string());
+                Message msg = new Message();
+                msg.what = 1;
+                msg.obj = response.body().string();
+                handler.sendMessage(msg);
             }
         });
+
     }
 
     private void okGo() {
+
         Map<String, String> mapData = getStringMap();
-        OkGo.put(mUrl).params(mapData).execute(new com.lzy.okgo.callback.StringCallback() {
-            @Override
-            public void onSuccess(String s, Call call, Response response) {
-                extracted(s);
-            }
-        });
+
+        OkGo.get(mUrl).params(mapData)
+                .execute(new com.lzy.okgo.callback.StringCallback() {
+                    @Override
+                    public void onSuccess(String s, Call call, Response response) {
+                        try {
+                            extracted(s);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
     }
 
     private void okHttpUtils() {
+
         Map<String, String> mapData = getStringMap();
         OkHttpUtils.get().url(mUrl).params(mapData).build().execute(new StringCallback() {
             @Override
@@ -173,14 +165,33 @@ public class OkHttpActivity extends BaseActivity {
                 extracted(response);
             }
         });
+
+
     }
 
     private void extracted(String response) {
-        CityPM25Detail cityPM25Detail = GsonUtil.fromJson(response, CityPM25Detail.class);
-        Pm pm = cityPM25Detail.getResult().getPm();
-        String toast = pm.getArea() + " - " + pm.getQuality() + " - " + pm.getPm2_5();
-        ToastUtils.showShort(toast);
+        MyLog.d(response);
+        try {
+            CityPM25Detail cityPM25Detail = GsonUtil.fromJson(response, CityPM25Detail.class);
+            Pm pm = cityPM25Detail.getResult().getPm();
+            String toast = pm.getArea() + " - " + pm.getQuality() + " - " + pm.getPm2_5();
+            ToastUtils.showShort(toast);
+        } catch (Exception e) {
+            MyLog.d(e.getMessage());
+            e.printStackTrace();
+        }
+
     }
+
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(@NonNull Message msg) {
+            if (msg.what == 1) {
+                extracted((String) msg.obj);
+            }
+            return false;
+        }
+    });
 
     @NonNull
     private Map<String, String> getStringMap() {
@@ -188,17 +199,8 @@ public class OkHttpActivity extends BaseActivity {
         //?apiKey=您的apiKey&city=参数1
 
         Map<String, String> mapData = new HashMap<>();
-        mapData.put("apiKey", "n2yeWil241d1a7d235c308e8556bccf5ec185de68768979");
-        mapData.put("city", "潍坊");
+        mapData.put("apiKey", apiKey);
+        mapData.put("city", city);
         return mapData;
     }
-
-    /*
-     **打印retrofit信息部分
-     */
-    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message ->
-            //打印retrofit日志
-            Log.e("RetrofitLog", "retrofitBack = " + message)
-
-    );
 }

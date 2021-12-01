@@ -2,7 +2,6 @@
   * Copyright 2021 bejson.com 
   */
 package com.clyr.base.bean;
-import java.util.Date;
 
 /**
  * Auto-generated: 2021-11-29 17:18:9
@@ -14,7 +13,7 @@ public class SiteList {
 
     private String aqi;
     private String co;
-    private Date ct;
+    private String ct;
     private String no2;
     private String o3;
     private String o3_8h;
@@ -38,10 +37,10 @@ public class SiteList {
          return co;
      }
 
-    public void setCt(Date ct) {
+    public void setCt(String ct) {
          this.ct = ct;
      }
-     public Date getCt() {
+     public String getCt() {
          return ct;
      }
 

@@ -54,6 +54,16 @@ public interface ORService {
     Call<ResponseBody> post(@Url String url, @QueryMap Map<String, String> map);
 
 
+    //TODO 测试
+    @POST("common/air/getCityPM25Detail")
+    Call<ResponseBody> post(@QueryMap Map<String, String> map);
+
+    @POST("common/air/getCityPM25Detail")
+    Call<ResponseBody> post(@Query("apiKey") String apiKey,
+                            @Query("city") String city);
+    @POST("common/air/getCityPM25Detail")
+    Call<ResponseBody> get(@Query("apiKey") String apiKey,
+                            @Query("city") String city);
     /**
      * CSDN原文 https://blog.csdn.net/qq_36699930/article/details/80564850
      */

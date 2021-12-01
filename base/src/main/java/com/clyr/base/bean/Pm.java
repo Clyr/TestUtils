@@ -2,7 +2,6 @@
   * Copyright 2021 bejson.com 
   */
 package com.clyr.base.bean;
-import java.util.Date;
 
 /**
  * Auto-generated: 2021-11-29 17:18:9
@@ -16,7 +15,7 @@ public class Pm {
     private String area;
     private String area_code;
     private String co;
-    private Date ct;
+    private String ct;
     private String no2;
     private String num;
     private String o3;
@@ -54,10 +53,10 @@ public class Pm {
          return co;
      }
 
-    public void setCt(Date ct) {
+    public void setCt(String ct) {
          this.ct = ct;
      }
-     public Date getCt() {
+     public String getCt() {
          return ct;
      }
 
