@@ -72,8 +72,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     /**侧滑返回*/
     implementation 'me.imid.swipebacklayout.lib:library:1.1.0'
-    /**桌面提示圆点 暂无效果*/
-    implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
 
     /** GreenDao */
     implementation 'org.greenrobot:greendao:3.2.2'

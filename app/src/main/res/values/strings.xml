@@ -6,4 +6,9 @@
     <string name="title_activity_fullscreen">FullscreenActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="vibrator_short">短振动</string>
+    <string name="vibrator_long">长振动</string>
+    <string name="badge_add">加角标</string>
+    <string name="badge_subtract">减角标</string>
+    <string name="badge_remove">清除角标</string>
 </resources>

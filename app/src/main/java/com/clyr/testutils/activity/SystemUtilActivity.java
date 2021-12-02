@@ -5,10 +5,14 @@ import android.os.Vibrator;
 
 import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
+import com.clyr.utils.ToastUtils;
+
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class SystemUtilActivity extends BaseActivity {
 
-    final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+    Vibrator vibrator;
+    private int badgeCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,7 @@ public class SystemUtilActivity extends BaseActivity {
         //    vibrator.cancel();
         //    vibrator.vibrate(10);
         //    long[] patter = {1000, 1000, 2000, 50};
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         findViewById(R.id.vibrator_short).setOnClickListener(v -> {
             long[] patter = {10, 10, 10, 10};
             vibrator.vibrate(patter, -1);
@@ -35,5 +40,20 @@ public class SystemUtilActivity extends BaseActivity {
                 vibrator.vibrate(3000);
             }
         });
+
+
+        findViewById(R.id.badge_add).setOnClickListener(v -> {
+            badgeCount++;
+            ShortcutBadger.applyCount(this, badgeCount);
+        });
+        findViewById(R.id.badge_subtract).setOnClickListener(v -> {
+            if (badgeCount <= 0) {
+                ToastUtils.showShort("已经清空了");
+                return;
+            }
+            badgeCount--;
+            ShortcutBadger.applyCount(this, 0);
+        });
+        findViewById(R.id.badge_remove).setOnClickListener(v -> ShortcutBadger.removeCount(this));
     }
 }
