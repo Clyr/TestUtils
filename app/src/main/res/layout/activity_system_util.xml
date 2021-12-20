@@ -7,41 +7,67 @@
     tools:context=".activity.SystemUtilActivity">
 
     <include layout="@layout/title_easy" />
+
     <LinearLayout
-        android:layout_marginTop="50dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/vibrator_short"
-            android:text="@string/vibrator_short"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/vibrator_short" />
 
         <Button
             android:id="@+id/vibrator_long"
-            android:text="@string/vibrator_long"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/vibrator_long" />
 
         <Button
             android:id="@+id/badge_add"
-            android:text="@string/badge_add"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/badge_add" />
 
         <Button
             android:id="@+id/badge_subtract"
-            android:text="@string/badge_subtract"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/badge_subtract" />
 
         <Button
             android:id="@+id/badge_remove"
-            android:text="@string/badge_remove"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/badge_remove" />
+
+        <EditText
+            android:id="@+id/edittext_none"
+            android:text="软键盘"
+            android:textSize="10dp"
+            android:padding="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"></EditText>
+
+        <Button
+            android:id="@+id/keyboard_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/keyboard_show" />
+
+        <Button
+            android:id="@+id/keyboard_hide"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/keyboard_hide" />
+        <Button
+            android:id="@+id/keyboard_hide2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/keyboard_hide" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

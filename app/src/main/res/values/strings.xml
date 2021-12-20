@@ -11,4 +11,6 @@
     <string name="badge_add">加角标</string>
     <string name="badge_subtract">减角标</string>
     <string name="badge_remove">清除角标</string>
+    <string name="keyboard_show">显示软键盘</string>
+    <string name="keyboard_hide">隐藏软键盘</string>
 </resources>

@@ -17,13 +17,13 @@
         <item>系统工具</item>
         <item>UpDate</item>
         <item>通知</item>
-        <item>Retrofit</item>
         <item>Rxjava</item>
-        <item>ShortcutBadger</item>
+        <item>自定义UI</item>
         <item>VPN监测开关</item>
         <item>推送</item>
         <item>地图</item>
         <item>分享</item>
         <item>图表</item>
+        <item>Fragment框架</item>
     </string-array>
 </resources>

@@ -1,7 +1,13 @@
 package com.clyr.testutils.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
@@ -55,5 +61,46 @@ public class SystemUtilActivity extends BaseActivity {
             ShortcutBadger.applyCount(this, 0);
         });
         findViewById(R.id.badge_remove).setOnClickListener(v -> ShortcutBadger.removeCount(this));
+
+
+        findViewById(R.id.keyboard_show).setOnClickListener(v -> showSoftInputFromWindow(this, findViewById(R.id.edittext_none)));
+        findViewById(R.id.keyboard_hide).setOnClickListener(v -> hideInput());
+        findViewById(R.id.keyboard_hide2).setOnClickListener(v -> hintKeyBoard());
+        showSoftInputFromWindow(this, findViewById(R.id.edittext_none));
+    }
+
+
+    public void hintKeyBoard() {
+        //拿到InputMethodManager
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        //如果window上view获取焦点 && view不为空
+        if (imm.isActive() && getCurrentFocus() != null) {
+            //拿到view的token 不为空
+            if (getCurrentFocus().getWindowToken() != null) {
+                //表示软键盘窗口总是隐藏，除非开始时以SHOW_FORCED显示。
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+    }
+
+    /**
+     * 隐藏键盘
+     */
+    protected void hideInput() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        View v = getWindow().peekDecorView();
+        if (null != v) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * EditText获取焦点并显示软键盘
+     */
+    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 }

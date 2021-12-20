@@ -21,4 +21,9 @@
         <attr name="center_text_size" format="dimension"></attr>
         <attr name="bg" format="reference|color"></attr>
     </declare-styleable>
+    <declare-styleable name="UnReadView">
+        <attr name="android:text" format="string"></attr>
+        <attr name="defaultred" format="dimension"></attr>
+        <attr name="android:textSize" format="dimension"></attr>
+    </declare-styleable>
 </resources>

@@ -123,7 +123,7 @@ public class ShareActivity extends BaseActivity {
     private void shareTest() {
         Intent textIntent = new Intent(Intent.ACTION_SEND);
         textIntent.setType("text/plain");
-        textIntent.putExtra(Intent.EXTRA_TEXT, "https://github.com/Clyr/TestList");
+        textIntent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.project_github));
         startActivity(Intent.createChooser(textIntent, "分享"));
     }
 

@@ -2,6 +2,7 @@ package com.clyr.utils;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -12,40 +13,74 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
+
+import com.clyr.base.AppKit;
+import com.clyr.base.bean.NotificationType;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by M S I of clyr on 2019/11/15.
  */
 public class NotificationUtils {
-    public static Activity activity;
-    public static final int NOTIFICATION_ID = 1001;
-    public static final int NOTIFICATION_ID3 = 1005;
+    public final int NOTIFICATION_ID = 1001;
+    private final int NOTIFICATION_ID3 = 1005;
+
+    private final String TAG = NotificationUtils.class.getSimpleName();
+
+    private final String NOTIFICATION_NAME_ID = "notification_clyr";
+    private final String NOTIFICATION_TEST_ID = "notification_clyr_test";
+    private final String NOTIFICATION_DOWNLOAD_ID = "notification_clyr_download";
+    private final int NOTIFICATION_ID_COMMON = 20211100;
+    // 超时时间1天
+    private final int DIALING_DURATION = 60 * 1000 * 60 * 24;
+    private final Context mContext = AppKit.getContext();
+    private final NotificationManager mManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+    @SuppressLint("StaticFieldLeak")
+    private static NotificationUtils notificationUtils;
+    private int flagNoClear = Notification.FLAG_AUTO_CANCEL;
+
+    private final List<NotificationType> mList = new ArrayList<>();
+
+
+    public static NotificationUtils init() {
+        if (notificationUtils == null) {
+            synchronized (NotificationUtils.class) {
+                if (notificationUtils == null) {
+                    notificationUtils = new NotificationUtils();
+                }
+            }
+        }
+        return notificationUtils;
+    }
 
     /**
      * 状态栏通知
-     * @param cla 点击跳转的页面
-     * @param drawable  设置图标
-     * @param raw 提示声音
+     *
+     * @param cla      点击跳转的页面
+     * @param drawable 设置图标
+     * @param raw      提示声音
      */
-    public static void sendNotification(Class<? extends Activity> cla, int drawable, int raw) {
-        //1、NotificationManager
-        NotificationManager manager = (NotificationManager) activity.getSystemService(NOTIFICATION_SERVICE);
-        /** 2、Builder->Notification
+    public void sendNotification(Class<? extends Activity> cla, int drawable, int raw) {
+        /* 2、Builder->Notification
          *  必要属性有三项
          *  小图标，通过 setSmallIcon() 方法设置
          *  标题，通过 setContentTitle() 方法设置
          *  内容，通过 setContentText() 方法设置*/
-        Intent inte = new Intent(activity, cla);
-        PendingIntent contentIntent =
-                PendingIntent.getActivity(activity, 0, inte, 0);
+        Intent inte = new Intent(mContext, cla);
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent contentIntent =
+                PendingIntent.getActivity(mContext, 0, inte, 0);
         long[] vibrate = new long[]{0, 500, 1000, 1500};
 
-        Notification.Builder builder = new Notification.Builder(activity);
-        builder.setContentInfo("Content info")
-                .setContentTitle("TestListTitle")//设置通知标题
+        Notification.Builder builder = new Notification.Builder(mContext);
+        builder.setContentTitle("TestListTitle")//设置通知标题
                 .setContentText("Notification ContentText")//设置通知内容
-                .setLargeIcon(BitmapFactory.decodeResource(activity.getResources(), drawable))
+                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), drawable))
                 .setSmallIcon(drawable)//不能缺少的一个属性 通知栏小图标 默认圆头安卓很丑
                 .setSubText("Subtext")
                 .setTicker("滚动消息......")
@@ -57,31 +92,26 @@ public class NotificationUtils {
 
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("001", "TestList通知测试", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_TEST_ID, "TestList通知测试", NotificationManager.IMPORTANCE_DEFAULT);
             channel.enableLights(true); //是否在桌面icon右上角展示小红点
             channel.setLightColor(Color.GREEN); //小红点颜色
             channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
-            manager.createNotificationChannel(channel);
-            builder.setChannelId("001");
+            mManager.createNotificationChannel(channel);
+            builder.setChannelId(NOTIFICATION_TEST_ID);
         }
 
         Notification noti = builder.build();
-        noti.flags = Notification.FLAG_NO_CLEAR;//不能删除通知
+
+        noti.flags = flagNoClear;//不能删除通知
         //3、manager.notify()
-        manager.notify(NOTIFICATION_ID, noti);
+        mManager.notify(NOTIFICATION_ID, noti);
+        addIDToList(new NotificationType(NOTIFICATION_ID, NotificationType.NotifiType.normal));
+
     }
 
 
-    public static void clearNotification() {
-        //单利的系统服务
-        NotificationManager manager = (NotificationManager) activity.getSystemService(NOTIFICATION_SERVICE);
-        manager.cancel(NOTIFICATION_ID);
-    }
-
-
-    public static void sendProgressNotification(int drawable) {
-        final NotificationManager manager = (NotificationManager) activity.getSystemService(NOTIFICATION_SERVICE);
-        final Notification.Builder builder = new Notification.Builder(activity);
+    public void sendProgressNotification(int drawable) {
+        final Notification.Builder builder = new Notification.Builder(mContext);
         builder.setSmallIcon(drawable)
                 .setContentTitle("TestList")
                 .setContentText("正在下载...")
@@ -89,14 +119,14 @@ public class NotificationUtils {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel channel =
-                    new NotificationChannel("005", "download_channel", NotificationManager.IMPORTANCE_LOW);
-            manager.createNotificationChannel(channel);
-            builder.setChannelId("005");
+                    new NotificationChannel(NOTIFICATION_DOWNLOAD_ID, "download_channel", NotificationManager.IMPORTANCE_LOW);
+            mManager.createNotificationChannel(channel);
+            builder.setChannelId(NOTIFICATION_DOWNLOAD_ID);
         }
 
         Notification n = builder.build();
         n.flags = Notification.FLAG_NO_CLEAR;//不能删除通知
-        manager.notify(NOTIFICATION_ID3, n);
+        mManager.notify(NOTIFICATION_ID3, n);
         //每隔1秒更新进度条进度
         //启动工作线程
         new Thread() {
@@ -116,36 +146,35 @@ public class NotificationUtils {
                         e.printStackTrace();
                     }
                     //发通知
-                    builder.setProgress(1000, i * 1, false);
-                    manager.notify(NOTIFICATION_ID3, n);
+                    builder.setProgress(1000, i, false);
+                    mManager.notify(NOTIFICATION_ID3, n);
                 }
                 //更新通知内容
-                manager.cancel(NOTIFICATION_ID3);
+                mManager.cancel(NOTIFICATION_ID3);
                 builder.setProgress(0, 0, false);
                 builder.setContentText("下载完毕");
 //                Notification n = builder.build();
                 n.flags = Notification.FLAG_AUTO_CANCEL;//不能删除通知
-                manager.notify(NOTIFICATION_ID3, n);
+                mManager.notify(NOTIFICATION_ID3, n);
             }
         }.start();
+        addIDToList(new NotificationType(NOTIFICATION_ID3, NotificationType.NotifiType.process));
     }
 
-    public static void sendNotification(Context context, Class<? extends Activity> cla, int drawable, int raw) {
+    public void sendNotification(Context context, Class<? extends Activity> cla, int drawable, int raw) {
         //1、NotificationManager
-        NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-        /** 2、Builder->Notification
+        /* 2、Builder->Notification
          *  必要属性有三项
          *  小图标，通过 setSmallIcon() 方法设置
          *  标题，通过 setContentTitle() 方法设置
          *  内容，通过 setContentText() 方法设置*/
         Intent inte = new Intent(context, cla);
-        PendingIntent contentIntent =
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent contentIntent =
                 PendingIntent.getActivity(context, 0, inte, 0);
         long[] vibrate = new long[]{0, 500, 1000, 1500};
 
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentInfo("TestList")
-                .setContentTitle("TestList")//设置通知标题
+        builder.setContentTitle("TestList")//设置通知标题
                 .setContentText("电源已充满")//设置通知内容
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), drawable))
                 .setSmallIcon(drawable)//不能缺少的一个属性 通知栏小图标 默认圆头安卓很丑
@@ -159,20 +188,22 @@ public class NotificationUtils {
 
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("001", "TestList电源通知", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_TEST_ID, "TestList电源通知", NotificationManager.IMPORTANCE_DEFAULT);
             channel.enableLights(true); //是否在桌面icon右上角展示小红点
             channel.setLightColor(Color.GREEN); //小红点颜色
             channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知
-            manager.createNotificationChannel(channel);
-            builder.setChannelId("001");
+            mManager.createNotificationChannel(channel);
+            builder.setChannelId(NOTIFICATION_TEST_ID);
         }
 
         Notification noti = builder.build();
         // noti.flags = Notification.FLAG_NO_CLEAR;//不能删除通知
-        noti.flags = Notification.FLAG_AUTO_CANCEL;//不能删除通知
+        noti.flags = flagNoClear;//不能删除通知
         //3、manager.notify()
-        manager.notify(NOTIFICATION_ID, noti);
+        mManager.notify(NOTIFICATION_ID, noti);
+        addIDToList(new NotificationType(NOTIFICATION_ID, NotificationType.NotifiType.normal));
     }
+
     /**
      * @param context  上下文
      * @param title    标题
@@ -181,22 +212,21 @@ public class NotificationUtils {
      * @param drawable 图标
      * @return
      */
-    public static Notification showNotfi(Context context, String title, String content, Class<? extends Activity> cla, int drawable) {
+    public Notification showNotfi(Context context, String title, String content, Class<? extends Activity> cla, int drawable) {
         String channelOneId = "getui_" + context.getString(R.string.app_name);
         CharSequence channelName = "个推";
 
         Intent intent1 = new Intent(context, cla);
         intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pi = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
-        Notification notification = null;
-        NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        @SuppressLint("UnspecifiedImmutableFlag") PendingIntent pi = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification notification;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             Uri mUri = Settings.System.DEFAULT_NOTIFICATION_URI;
 
             NotificationChannel mChannel = new NotificationChannel(channelOneId, channelName, NotificationManager.IMPORTANCE_LOW);
             mChannel.setDescription("description");
             mChannel.setSound(mUri, Notification.AUDIO_ATTRIBUTES_DEFAULT);
-            manager.createNotificationChannel(mChannel);
+            mManager.createNotificationChannel(mChannel);
             notification = new Notification.Builder(context, channelOneId)
                     .setChannelId(channelOneId)
                     .setSmallIcon(drawable)
@@ -216,15 +246,16 @@ public class NotificationUtils {
                     .build();
         }
         notification.defaults = Notification.DEFAULT_ALL;
-        manager.notify(10001, notification);
+        mManager.notify(10001, notification);
+        addIDToList(new NotificationType(10001, NotificationType.NotifiType.normal));
         return notification;
     }
 
-    public static Notification showNotfi(Context context, String title, String content, int drawable) {
+    public Notification showNotfi(Context context, String title, String content, int drawable) {
         String channelOneId = context.getString(R.string.app_name) + "_Test";
         CharSequence channelName = context.getString(R.string.app_name);
 
-        Notification notification = null;
+        Notification notification;
         NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             Uri mUri = Settings.System.DEFAULT_NOTIFICATION_URI;
@@ -251,6 +282,105 @@ public class NotificationUtils {
         }
         notification.defaults = Notification.DEFAULT_ALL;
         manager.notify(10001, notification);
+        addIDToList(new NotificationType(10001, NotificationType.NotifiType.normal));
         return notification;
+    }
+
+
+    @SuppressLint("UnspecifiedImmutableFlag")
+    public void createNotificationChannel(@NotNull String title, @NotNull String desc) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel;
+            channel = new NotificationChannel(NOTIFICATION_NAME_ID, mContext.getString(R.string.notification_name), NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription(mContext.getString(R.string.description_tip));
+            channel.enableVibration(true);
+            channel.enableLights(true);
+            channel.setLightColor(Color.RED);
+            mManager.createNotificationChannel(channel);
+        }
+
+        int notifiId = (int) SystemUtils.getSystemTime() / 100;
+
+        final Notification.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            builder = new Notification.Builder(mContext, NOTIFICATION_NAME_ID);
+            builder.setTimeoutAfter(DIALING_DURATION);
+        } else {
+            builder = new Notification.Builder(mContext);
+        }
+
+        String tickerStr = mContext.getString(R.string.new_msg);
+        builder.setTicker(tickerStr).setWhen(System.currentTimeMillis());
+
+        builder.setContentTitle(title);
+        builder.setContentText(desc);
+
+        builder.setSmallIcon(R.drawable.logo);
+
+        /*Intent launch;
+        launch = mContext.getPackageManager().getLaunchIntentForPackage("com.heiguang.hgrcwandroid");
+        launch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        launch = new Intent(mContext, MainActivity.class);
+        launch.putExtra("", "");
+        builder.setContentIntent(PendingIntent.getActivity(mContext,
+                (int) SystemClock.uptimeMillis(), launch, PendingIntent.FLAG_UPDATE_CURRENT));*/
+        builder.setAutoCancel(true);
+        Notification notification = builder.build();
+
+        mManager.cancel(notifiId);
+        //mManager.cancelAll();
+        notification.flags = flagNoClear;
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            notification.defaults = Notification.DEFAULT_ALL;
+        }
+        mManager.notify(notifiId, notification);
+        addIDToList(new NotificationType(notifiId, NotificationType.NotifiType.normal));
+    }
+
+
+    public void cancelNotification(int notifiId) {
+        mManager.cancel(notifiId);
+        deleteIDToList(notifiId);
+    }
+
+    public void cancelAll() {
+        mManager.cancelAll();
+        mList.clear();
+    }
+
+    public NotificationUtils setFlagClear() {
+        flagNoClear = Notification.FLAG_AUTO_CANCEL;
+        return this;
+    }
+
+    public NotificationUtils setFlagNoClear() {
+        flagNoClear = Notification.FLAG_NO_CLEAR;
+        return this;
+    }
+
+    private void addIDToList(NotificationType notificationType) {
+        /*for (NotificationType noti : mList) {
+            if (noti.getNotifiId() == notificationType.getNotifiId()) {
+                return;
+            }
+        }
+        mList.add(notificationType);*/
+
+        if (!mList.contains(notificationType)) {
+            mList.add(notificationType);
+        } else {
+            MyLog.loge("已经有这个id了");
+        }
+    }
+
+    private void deleteIDToList(int notifiId) {
+        for (NotificationType noti : mList) {
+            if (noti.getNotifiId() == notifiId) {
+                mList.remove(noti);
+                return;
+            }
+        }
     }
 }

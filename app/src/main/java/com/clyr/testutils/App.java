@@ -12,6 +12,7 @@ import android.text.TextUtils;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.clyr.base.AppKit;
 import com.clyr.testutils.activity.MainActivity;
 import com.clyr.testutils.utils.OKHttpUpdateHttpService;
 import com.clyr.utils.MyLog;
@@ -87,6 +88,8 @@ public class App extends MultiDexApplication {
 
         mContext = this;
         mACache = ACache.get(this, CACHE_NAME);
+
+        AppKit.init(this);
 
         /* Bugly SDK初始化
          * 参数1：上下文对象

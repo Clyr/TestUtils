@@ -255,4 +255,7 @@
     <color name="android_theme_tag_color_15">#FF009933</color>
     <color name="android_theme_tag_color_16">#FFCC3399</color>
     <color name="android_theme_tag_color_17">#FFFFCC00</color>
+
+    <color name="color_unread">#E85237</color>
+    <color name="read_dot_bg">#f74c31</color>
 </resources>

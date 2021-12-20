@@ -1,7 +1,10 @@
 package com.clyr.testutils.fragment.home;
 
 import android.content.Intent;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.graphics.Color;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,16 +17,25 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.clyr.base.interfaces.OnItemClickListener;
 import com.clyr.testutils.R;
+import com.clyr.testutils.activity.ChartActivity;
+import com.clyr.testutils.activity.CustomUIActivity;
 import com.clyr.testutils.activity.DialogActivity;
 import com.clyr.testutils.activity.EmptyActivity;
+import com.clyr.testutils.activity.FragmentActivity;
 import com.clyr.testutils.activity.GridActivity;
 import com.clyr.testutils.activity.IOActivity;
 import com.clyr.testutils.activity.LoadActivity;
+import com.clyr.testutils.activity.MainActivity;
+import com.clyr.testutils.activity.MapActivity;
 import com.clyr.testutils.activity.MarqueeActivity;
 import com.clyr.testutils.activity.MediaActivity;
+import com.clyr.testutils.activity.NotificationActivity;
 import com.clyr.testutils.activity.OkHttpActivity;
+import com.clyr.testutils.activity.PushActivity;
 import com.clyr.testutils.activity.RadarActivity;
 import com.clyr.testutils.activity.RefrashActivity;
+import com.clyr.testutils.activity.RxjavaActivity;
+import com.clyr.testutils.activity.ShareActivity;
 import com.clyr.testutils.activity.SystemUtilActivity;
 import com.clyr.testutils.activity.TableActivity;
 import com.clyr.testutils.activity.TreeListActivity;
@@ -41,6 +53,7 @@ import com.xuexiang.xupdate.XUpdate;
 import com.xuexiang.xupdate.entity.UpdateEntity;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public class HomeFragment extends Fragment implements OnItemClickListener {
 
@@ -141,26 +154,56 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 getUpdate();
                 return null;
             case "通知":
-                return DialogActivity.class;
-            case "Retrofit":
-                return DialogActivity.class;
+                return NotificationActivity.class;
             case "Rxjava":
-                return DialogActivity.class;
-            case "ShortcutBadger":
-                return DialogActivity.class;
+                return RxjavaActivity.class;
+            case "自定义UI":
+                return CustomUIActivity.class;
             case "VPN监测开关":
-                return DialogActivity.class;
+                checkVPN();
+                return null;
             case "推送":
-                return DialogActivity.class;
+                return PushActivity.class;
             case "地图":
-                return DialogActivity.class;
+                return MapActivity.class;
             case "分享":
-                return DialogActivity.class;
+                return ShareActivity.class;
             case "图表":
-                return DialogActivity.class;
+                return ChartActivity.class;
+            case "Fragment框架":
+                return FragmentActivity.class;
         }
 
         return EmptyActivity.class;
+    }
+
+    private boolean vpn = false;
+
+    private void checkVPN() {
+        vpn = !vpn;
+        ToastUtils.showShort(vpn ? "正在监测VPN" : "关闭监测VPN");
+        if (vpn)
+            if (SystemUtils.isVpnUsed()) {
+                ToastUtils.showShort("使用VPN中...\n" + SystemUtils.getIPAddress(getContext()));
+            } else {
+                ToastUtils.showShort("未使用使用VPN\n" + SystemUtils.getIPAddress(getContext()));
+            }
+    }
+
+    private void onClickshortcutsAdd() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = getContext().getSystemService(ShortcutManager.class);
+
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            intent.setAction(Intent.ACTION_VIEW);
+            ShortcutInfo shortcut = new ShortcutInfo.Builder(getContext(), "noti_channel_demo")
+                    .setIcon(Icon.createWithResource(getContext(), R.drawable.logo))
+                    .setShortLabel("通知渠道")
+                    .setLongLabel("通知渠道演示")
+                    .setIntent(intent)
+                    .build();
+            shortcutManager.addDynamicShortcuts(Collections.singletonList(shortcut));
+        }
     }
 
     private void getUpdate() {

@@ -9,12 +9,17 @@ import android.app.KeyguardManager;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.hardware.biometrics.BiometricPrompt;
 import android.hardware.fingerprint.FingerprintManager;
 import android.net.ConnectivityManager;
@@ -33,8 +38,10 @@ import android.view.WindowManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 
+import com.clyr.base.AppKit;
 import com.clyr.base.bean.IpsSohu;
 import com.clyr.utils.utilshelper.SystemStatusManager;
 import com.google.gson.Gson;
@@ -55,6 +62,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -64,6 +72,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,12 +82,14 @@ import java.util.regex.Pattern;
  * Created by M S I of clyr on 2019/11/14.
  */
 public class SystemUtils {
+    @SuppressLint("StaticFieldLeak")
+    private static final Context mContext = AppKit.getContext();
 
     /**
      * 获取当前本地apk的版本 versionCode
      *
-     * @param mContext
-     * @return
+     * @param mContext ...
+     * @return versionCode
      */
     public static int getVersionCode(Context mContext) {
         int versionCode = 0;
@@ -96,7 +107,7 @@ public class SystemUtils {
      * 获取版本号名称 versionName
      *
      * @param context 上下文
-     * @return
+     * @return versionName
      */
     public static String getVersionName(Context context) {
         String verName = "";
@@ -112,8 +123,8 @@ public class SystemUtils {
     /**
      * 获取versionCode
      *
-     * @param context
-     * @return
+     * @param context ...
+     * @return versionCode
      */
     public static String getAppVersionCode(Context context) {
         PackageInfo packageInfo = null;
@@ -123,14 +134,18 @@ public class SystemUtils {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        return packageInfo.versionCode + "";
+        if (packageInfo != null) {
+            return packageInfo.versionCode + "";
+        }
+        return "";
     }
+
     /**
      * 获取APP版本
      *
-     * @param context
-     * @return
-     * @throws PackageManager.NameNotFoundException
+     * @param context ...
+     * @return ...
+     * @throws PackageManager.NameNotFoundException ...
      */
     public static String getAppVersion(Context context) {
         PackageInfo packageInfo = null;
@@ -140,7 +155,10 @@ public class SystemUtils {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        return packageInfo.versionName;
+        if (packageInfo != null) {
+            return packageInfo.versionName;
+        }
+        return "";
     }
 
     /**
@@ -166,7 +184,7 @@ public class SystemUtils {
     }
 
     @SuppressLint("ResourceAsColor")
-    public void statusBar() {
+    public void statusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             View decorView = activity.getWindow().getDecorView();
 //            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -198,9 +216,9 @@ public class SystemUtils {
      */
     public void fullScreen(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = activity.getWindow();
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 //5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色
-                Window window = activity.getWindow();
                 View decorView = window.getDecorView();
                 //两个 flag 要结合使用，表示让应用的主体内容占用系统状态栏的空间
                 int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -211,7 +229,6 @@ public class SystemUtils {
                 //导航栏颜色也可以正常设置
 //                window.setNavigationBarColor(Color.TRANSPARENT);
             } else {
-                Window window = activity.getWindow();
                 WindowManager.LayoutParams attributes = window.getAttributes();
                 int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
                 int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
@@ -222,9 +239,10 @@ public class SystemUtils {
         }
     }
 
-    public void setTranslucentStatus() {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void setTranslucentStatus(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true);
+            setTranslucentStatus(true, activity);
         }
         // 透明状态栏
         activity.getWindow().addFlags(
@@ -239,7 +257,7 @@ public class SystemUtils {
     }
 
     @TargetApi(19)
-    public void setTranslucentStatus(boolean on) {
+    public void setTranslucentStatus(boolean on, Activity activity) {
         Window win = activity.getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
         final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
@@ -307,7 +325,6 @@ public class SystemUtils {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    static Activity activity;
     //TODO 指纹验证
     //此类基于Java加密API的一个包装类,用于防止在指纹扫描中被第三方恶意攻击
     static FingerprintManager.CryptoObject cryptoObject;
@@ -316,13 +333,12 @@ public class SystemUtils {
     static CancellationSignal signal = new CancellationSignal();
 
     @TargetApi(Build.VERSION_CODES.M)
-    public static void Fingerprint(Activity act) {
-        activity = act;
+    public static void Fingerprint(Activity activity) {
         //通过V4包获得对象
         manager = (FingerprintManager) activity.getSystemService(Context.FINGERPRINT_SERVICE);
         keyManager = (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
         if (isFingerprint()) {
-            startListen();
+            startListen(activity);
         }
     }
 
@@ -332,7 +348,7 @@ public class SystemUtils {
      * 开始指纹识别
      */
     @TargetApi(Build.VERSION_CODES.M)
-    public static void startListen() {
+    public static void startListen(Activity activity) {
         if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -370,7 +386,7 @@ public class SystemUtils {
                 i++;
                 if (i == 3) {
                     ToastUtils.showShort(activity, "失败次数过多,请输入锁屏密码");
-                    showLockScreenPass(keyManager);
+                    showLockScreenPass(keyManager, activity);
                     i = 0;
                 }
             }
@@ -386,7 +402,7 @@ public class SystemUtils {
             // selfCancelled = true;
             signal.cancel();
             signal = null;
-            ToastUtils.showShort(activity, "您已经取消指纹识别");
+            ToastUtils.showShort(mContext, "您已经取消指纹识别");
         }
     }
 
@@ -399,7 +415,7 @@ public class SystemUtils {
     public static final int REQUST_CODE = 1;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void showLockScreenPass(KeyguardManager keyManager) {
+    public static void showLockScreenPass(KeyguardManager keyManager, Activity activity) {
         Intent intent = keyManager.createConfirmDeviceCredentialIntent("finger", "开启锁屏密码");
         if (intent != null) {
             activity.startActivityForResult(intent, REQUST_CODE);
@@ -410,23 +426,23 @@ public class SystemUtils {
     @TargetApi(Build.VERSION_CODES.M)
     public static boolean isFingerprint() {
         //此方法为了保证判断是否支持支持指纹不报错
-        if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
-            ToastUtils.showShort(activity, "没有指纹解锁的权限");
+        if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.USE_FINGERPRINT) != PackageManager.PERMISSION_GRANTED) {
+            ToastUtils.showShort(mContext, "没有指纹解锁的权限");
             return false;
         }
         //硬件设备是否支持指纹解锁功能
         if (!manager.isHardwareDetected()) {
-            ToastUtils.showShort(activity, "该手机不支持指纹解锁");
+            ToastUtils.showShort(mContext, "该手机不支持指纹解锁");
             return false;
         }
         //判断是否有锁屏密码
         if (!keyManager.isKeyguardSecure()) {
-            ToastUtils.showShort(activity, "请设置锁屏密码");
+            ToastUtils.showShort(mContext, "请设置锁屏密码");
             return false;
         }
         //判断是否录入指纹
         if (!manager.hasEnrolledFingerprints()) {
-            ToastUtils.showShort(activity, "没有录入指纹");
+            ToastUtils.showShort(mContext, "没有录入指纹");
             return false;
         }
         return true;
@@ -438,24 +454,16 @@ public class SystemUtils {
         BiometricPrompt mBiometricPrompt;
         CancellationSignal mCancellationSignal;
         BiometricPrompt.AuthenticationCallback mAuthenticationCallback;
-        mBiometricPrompt = new BiometricPrompt.Builder(activity)
+        mBiometricPrompt = new BiometricPrompt.Builder(mContext)
                 .setTitle("指纹验证")
 //                .setDescription("描述")
-                .setNegativeButton("取消", activity.getMainExecutor(), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        ToastUtils.showShort(activity, "Cancel button clicked");
-                    }
-                })
+                .setNegativeButton("取消", mContext.getMainExecutor(), (dialogInterface, i) -> ToastUtils.showShort(mContext, "Cancel button clicked"))
                 .build();
 
         mCancellationSignal = new CancellationSignal();
-        mCancellationSignal.setOnCancelListener(new CancellationSignal.OnCancelListener() {
-            @Override
-            public void onCancel() {
-                //handle cancel result
-                ToastUtils.showShort(activity, "Canceled");
-            }
+        mCancellationSignal.setOnCancelListener(() -> {
+            //handle cancel result
+            ToastUtils.showShort(mContext, "Canceled");
         });
 
         mAuthenticationCallback = new BiometricPrompt.AuthenticationCallback() {
@@ -463,25 +471,25 @@ public class SystemUtils {
             public void onAuthenticationError(int errorCode, CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
 
-                ToastUtils.showShort(activity, "onAuthenticationError " + errString);
+                ToastUtils.showShort(mContext, "onAuthenticationError " + errString);
             }
 
             @Override
             public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
 
-                ToastUtils.showShort(activity, "验证成功");
+                ToastUtils.showShort(mContext, "验证成功");
             }
 
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
 
-                ToastUtils.showShort(activity, "onAuthenticationFailed ");
+                ToastUtils.showShort(mContext, "onAuthenticationFailed ");
             }
         };
 
-        mBiometricPrompt.authenticate(mCancellationSignal, activity.getMainExecutor(), mAuthenticationCallback);
+        mBiometricPrompt.authenticate(mCancellationSignal, mContext.getMainExecutor(), mAuthenticationCallback);
 
     }
 
@@ -537,13 +545,13 @@ public class SystemUtils {
                 }
 
             } else if (info.getType() == ConnectivityManager.TYPE_WIFI) {//当前使用无线网络
-                WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                 WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-                String ipAddress = intIP2StringIP(wifiInfo.getIpAddress());//得到IPV4地址
-                return ipAddress;
+                return intIP2StringIP(wifiInfo.getIpAddress());
             }
         } else {
             //当前无网络连接,请在设置中打开网络
+            ToastUtils.showShort("当前无网络连接,请在设置中打开网络");
         }
         return null;
     }
@@ -571,8 +579,9 @@ public class SystemUtils {
      * @Title: GetNetIp
      * @Description:
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String GetNetIp() {
-        URL infoUrl = null;
+        URL infoUrl;
         InputStream inStream = null;
         String ipLine = "";
         HttpURLConnection httpConnection = null;
@@ -584,11 +593,11 @@ public class SystemUtils {
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 inStream = httpConnection.getInputStream();
                 BufferedReader reader = new BufferedReader(
-                        new InputStreamReader(inStream, "utf-8"));
+                        new InputStreamReader(inStream, StandardCharsets.UTF_8));
                 StringBuilder strber = new StringBuilder();
-                String line = null;
+                String line;
                 while ((line = reader.readLine()) != null)
-                    strber.append(line + "\n");
+                    strber.append(line).append("\n");
 
                 Pattern pattern = Pattern
                         .compile("((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))");
@@ -631,12 +640,11 @@ public class SystemUtils {
                     InetAddress inet = enIp.nextElement();
                     if (!inet.isLoopbackAddress()
                             && (inet instanceof Inet4Address)) {
-                        return inet.getHostAddress().toString();
+                        return inet.getHostAddress();
                     }
                 }
             }
         } catch (SocketException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -649,7 +657,7 @@ public class SystemUtils {
             @Override
             public void onError(okhttp3.Call call, Exception e, int id) {
                 MyLog.e(e.toString());
-                ToastUtils.showShort(activity, getLocalIpAddress());
+                ToastUtils.showShort(mContext, getLocalIpAddress());
             }
 
             @Override
@@ -663,9 +671,9 @@ public class SystemUtils {
                     Gson gson = new Gson();
                     IpsSohu IpsSohu = gson.fromJson(string, IpsSohu.class);
                     MyLog.d(IpsSohu.cip);
-                    ToastUtils.showShort(activity, "外网IP：" + IpsSohu.cip);
+                    ToastUtils.showShort(mContext, "外网IP：" + IpsSohu.cip);
                 }
-                ToastUtils.showShort(activity, getLocalIpAddress());
+                ToastUtils.showShort(mContext, getLocalIpAddress());
             }
         });
     }
@@ -724,9 +732,6 @@ public class SystemUtils {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
-
-
-
 
 
     /**
@@ -806,13 +811,13 @@ public class SystemUtils {
      * @return
      * @throws UnsupportedEncodingException
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public static String utf8ToGBK(String str) {
         String utf8;
         try {
-            utf8 = new String(str.getBytes("UTF-8"));
-            String unicode = new String(utf8.getBytes(), "UTF-8");
-            String gbk = new String(unicode.getBytes("GBK"));
-            return gbk;
+            utf8 = new String(str.getBytes(StandardCharsets.UTF_8));
+            String unicode = new String(utf8.getBytes(), StandardCharsets.UTF_8);
+            return new String(unicode.getBytes("GBK"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -830,15 +835,15 @@ public class SystemUtils {
         File f = new File(filepath);
         if (f.exists() && f.isDirectory()) {
             //判断是文件还是目录
-            if (f.listFiles().length == 0) {
+            if (Objects.requireNonNull(f.listFiles()).length == 0) {
                 // 文件下没有目录直接删除
                 return f.delete();
             } else {
                 //有目录将目录下文件存放到数组中，并判断是否有下级目录
-                File delFile[] = f.listFiles();
-                int i = f.listFiles().length;
+                File[] delFile = f.listFiles();
+                int i = Objects.requireNonNull(f.listFiles()).length;
                 for (int j = 0; j < i; j++) {
-                    if (delFile[j].isDirectory()) {
+                    if (delFile != null && delFile[j].isDirectory()) {
                         //递归调用该方法并取得子目录路径
                         boolean b = del(delFile[j].getAbsolutePath());
                         if (!b) {
@@ -846,7 +851,9 @@ public class SystemUtils {
                         }
                     }
                     //删除文件
-                    flag = delFile[j].delete();
+                    if (delFile != null) {
+                        flag = delFile[j].delete();
+                    }
                 }
             }
         } else {
@@ -863,19 +870,19 @@ public class SystemUtils {
      * @return
      */
     public static Bitmap toRoundCorner(Bitmap bitmap, float ratio) {
-//        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-//        Canvas canvas = new Canvas(output);
-//
-//        final Paint paint = new Paint();
-//        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-//        final RectF rectF = new RectF(rect);
-//
-//        paint.setAntiAlias(true);
-//        canvas.drawARGB(0, 0, 0, 0);
-//        canvas.drawRoundRect(rectF, bitmap.getWidth() / ratio, bitmap.getHeight() / ratio, paint);
-//
-//        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-//        canvas.drawBitmap(bitmap, rect, rect, paint);
+        Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+
+        final Paint paint = new Paint();
+        final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        final RectF rectF = new RectF(rect);
+
+        paint.setAntiAlias(true);
+        canvas.drawARGB(0, 0, 0, 0);
+        canvas.drawRoundRect(rectF, bitmap.getWidth() / ratio, bitmap.getHeight() / ratio, paint);
+
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+        canvas.drawBitmap(bitmap, rect, rect, paint);
 
         return bitmap;
 
@@ -890,7 +897,7 @@ public class SystemUtils {
     public static String decodeUnicode(String theString) {
         char aChar;
         int len = theString.length();
-        StringBuffer outBuffer = new StringBuffer(len);
+        StringBuilder outBuffer = new StringBuilder(len);
         for (int x = 0; x < len; ) {
             aChar = theString.charAt(x++);
             if (aChar == '\\') {

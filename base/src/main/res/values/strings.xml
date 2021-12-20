@@ -2,4 +2,8 @@
     <string name="app_name">base</string>
     <string name="open_album">打开相册</string>
     <string name="open_camera">打开摄像机</string>
+    <string name="notification_name">CLYR通知</string>
+    <string name="description_tip">当程序处于后台时新的消息会通过通知栏提醒用户</string>
+    <string name="new_msg">这是一条新信息</string>
+    <string name="project_github">https://github.com/Clyr/TestUtils</string>
 </resources>
