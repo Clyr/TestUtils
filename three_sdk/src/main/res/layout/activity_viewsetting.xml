@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="地图中屏幕坐标X轴:"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/pointx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:inputType="number"
+            android:maxLength="5"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Y轴:"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/pointy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:inputType="number"
+            android:maxLength="5"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <Button
+            android:id="@+id/scalecontrol_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/btn_selector"
+            android:text="比例尺位置"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="地图中屏幕坐标X轴:"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/zoompointx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:inputType="number"
+            android:maxLength="5"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Y轴:"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/zoompointy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:inputType="number"
+            android:maxLength="5"
+            android:text="300"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <Button
+            android:id="@+id/zoomcontrol_btn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="0.7"
+            android:background="@drawable/btn_selector"
+            android:onClick="setControl"
+            android:text="缩放控件位置"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF444444">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:text="logo位置"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <CheckBox
+            android:id="@+id/scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:checked="true"
+            android:onClick="showScaleControl"
+            android:text="比例尺"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:checked="true"
+            android:onClick="showZoomControl"
+            android:text="缩放控件"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+    </LinearLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
+
+</LinearLayout>

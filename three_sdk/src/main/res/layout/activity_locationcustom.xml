@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/btn_selector"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/dkgray"
+            android:contentDescription="定位icon"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/defaulticon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="默认图层"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/customicon"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="自定义图层"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/btn_selector"
+            android:onClick="switchLayerOrder"
+            android:text="切换图层展示顺序"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:onClick="setLayerClickable"
+            android:text="关闭定位图层点击事件"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
+</LinearLayout>

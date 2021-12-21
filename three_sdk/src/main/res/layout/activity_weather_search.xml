@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:background="@color/dkgray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp">
+        <TextView
+                android:layout_gravity="center_vertical"
+                android:text="行政区域id:"
+                android:textColor="@color/white"
+                android:textSize="@dimen/poi_title_size"
+                android:layout_width="80dp"
+                android:layout_height="20dp"></TextView>
+        <TextView
+                android:layout_gravity="center_vertical"
+                android:id="@+id/districtID"
+                android:textColor="@color/white"
+                android:textSize="@dimen/poi_title_size"
+                android:layout_width="80dp"
+                android:layout_height="20dp"></TextView>
+        <Button
+                android:layout_gravity="center_vertical"
+                android:id="@+id/btn_search_weather"
+                android:text="@string/search_weather"
+                android:background="@drawable/btn_selector"
+                android:textColor="@color/white"
+                android:textSize="@dimen/poi_title_size"
+                android:layout_width="80dp"
+                android:layout_height="40dp"/>
+    </LinearLayout>
+    <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true" />
+
+
+</LinearLayout>

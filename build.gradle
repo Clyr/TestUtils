@@ -5,14 +5,15 @@ buildscript {
         google()
         mavenCentral()
         maven { url "https://jitpack.io" }
-        maven {
-            url "https://maven.google.com"
-        }
+        // hms
+        maven { url 'https://developer.huawei.com/repo/'}
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.3"
         classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // hms
+        classpath 'com.huawei.agconnect:agcp:1.4.1.300'
     }
 }
 

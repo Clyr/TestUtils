@@ -2,10 +2,9 @@ package com.clyr.testutils.activity;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
+import com.clyr.three_sdk.baidumapsdk.demo.BMapApiDemoMain;
 
 public class MapActivity extends BaseActivity {
 
@@ -17,6 +16,7 @@ public class MapActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        initBar();
+        findViewById(R.id.baidumap).setOnClickListener(v -> startActivity(BMapApiDemoMain.class));
     }
 }

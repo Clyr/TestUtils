@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dkgray"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/latLng_bounds_padding"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:onClick="setLatLngBoundsPadding"
+            android:text="展示有padding值的地图范围"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <Button
+            android:id="@+id/new_latLng_bounds"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="0.7"
+            android:background="@drawable/btn_selector"
+            android:onClick="setNewLatLngBounds"
+            android:text="设置地图显示区域宽高"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/new_latLng_zoom"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:onClick="setNewLatLngZoom"
+            android:text="更新中心点及缩放级别"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <Button
+            android:id="@+id/map_bounds"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="0.7"
+            android:background="@drawable/btn_selector"
+            android:onClick="setMapBounds"
+            android:text="设置地图显示区域"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <Button
+            android:id="@+id/new_map_status"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="0.7"
+            android:background="@drawable/btn_selector"
+            android:onClick="setNewMapStatus"
+            android:text="设置地图状态"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmap"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true" />
+
+        <Button
+            android:id="@+id/zoom_in"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="1dip"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="1dip"
+            android:background="#80D4D4D4"
+            android:onClick="setZoomIn"
+            android:text="放大地图"
+            android:textSize="@dimen/ui_size" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_below="@id/zoom_in"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="1dip"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="1dip"
+            android:background="#80D4D4D4"
+            android:onClick="setZoomOut"
+            android:text="缩小地图"
+            android:textSize="@dimen/ui_size" />
+    </RelativeLayout>
+
+</LinearLayout>

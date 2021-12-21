@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dkgray"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/input_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="城市:"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/st_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="北京"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="起点:"
+            android:textColor="@color/white" />
+
+        <AutoCompleteTextView
+            android:id="@+id/st_node"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.88"
+            android:text="天安门广场"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/customicon"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="0.6"
+            android:background="@drawable/btn_selector"
+            android:onClick="changeRouteIcon"
+            android:text="自定义起终点图标"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="城市:"
+            android:textColor="@color/white" />
+
+        <EditText
+            android:id="@+id/ed_city"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="上海"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="终点:"
+            android:textColor="@color/white" />
+
+        <AutoCompleteTextView
+            android:id="@+id/ed_node"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.88"
+            android:text="陆家嘴"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/drive"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="0.3"
+            android:background="@drawable/btn_selector"
+            android:onClick="searchButtonProcess"
+            android:text="查询路线"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/map"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:clickable="true" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="#80D4D4D4"
+            android:minWidth="100dip"
+            android:orientation="vertical"
+            android:padding="2dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="市内公交换乘策略" />
+
+                <Spinner
+                    android:id="@+id/tactics_incity_sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"></Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="跨城公交换乘策略" />
+
+                <Spinner
+                    android:id="@+id/tactics_intercity_sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"></Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="跨城交通方式策略" />
+
+                <Spinner
+                    android:id="@+id/transtype_intercity_sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"></Spinner>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="false"
+            android:layout_marginBottom="10dip">
+
+            <Button
+                android:id="@+id/pre"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/pre_"
+                android:onClick="nodeClick" />
+
+            <Button
+                android:id="@+id/next"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:layout_weight="1.0"
+                android:background="@drawable/next_"
+                android:onClick="nodeClick" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

@@ -116,6 +116,8 @@ public class App extends MultiDexApplication {
                 .setIUpdateHttpService(new OKHttpUpdateHttpService())           //这个必须设置！实现网络请求功能。
                 .init(this);
 
+
+
     }
 
     public static App getApplication() {

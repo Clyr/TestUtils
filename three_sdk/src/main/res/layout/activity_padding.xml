@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/dkgray">
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/paddingTop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bottom"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/paddingBottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="200"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Left"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/paddingLeft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <TextView
+            android:id="@+id/text4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Right"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/paddingRight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:text="50"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <Button
+            android:id="@+id/setPadding"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="0.4"
+            android:background="@drawable/btn_selector"
+            android:onClick="setPadding"
+            android:text="设置padding"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
+</LinearLayout>

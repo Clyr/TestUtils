@@ -5,6 +5,11 @@ dependencyResolutionManagement {
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
         maven { url "https://jitpack.io" }
+        // hms
+        maven {url 'https://developer.huawei.com/repo/'}
+        maven {
+            url "https://mvn.getui.com/nexus/content/repositories/releases/"
+        }
     }
 }
 rootProject.name = "TestUtils"
@@ -13,3 +18,4 @@ include ':utils'
 include ':view'
 include ':base'
 include ':test'
+include ':three_sdk'

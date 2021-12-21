@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/dottedline"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="虚线绘制"
+            android:textColor="@color/white" />
+        <CheckBox
+            android:id="@+id/clickline"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:checked="true"
+            android:onClick="setPolylineClick"
+            android:text="点击Polyline"
+            android:textColor="@color/white" />
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="0.8"
+            android:background="@drawable/btn_selector"
+            android:onClick="clearOverlay"
+            android:text="清除"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <Button
+            android:id="@+id/resert"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="0.8"
+            android:background="@drawable/btn_selector"
+            android:onClick="resetOverlay"
+            android:text="重置"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:text="Width"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <SeekBar
+            android:id="@+id/width_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="2dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginBottom="2dip"
+            android:layout_weight="1"
+            android:max="25"
+            android:progress="18" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dip"
+            android:layout_marginLeft="20dip"
+            android:text="Color"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <SeekBar
+            android:id="@+id/color_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="2dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginBottom="2dip"
+            android:layout_weight="1"
+            android:max="255"
+            android:progress="255" />
+
+    </LinearLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
+
+</LinearLayout>

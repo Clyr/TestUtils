@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/click_marker"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:checked="true"
+            android:onClick="setMarkerClick"
+            android:text="点击Marker"
+            android:textColor="@color/white" />
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:onClick="clearOverlay"
+            android:text="清除"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <Button
+            android:id="@+id/resert"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:onClick="resetOverlay"
+            android:text="重置"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray"
+        android:orientation="horizontal">
+
+        <SeekBar
+            android:id="@+id/alphaBar"
+            android:layout_width="155dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:max="10"
+            android:progress="10" />
+
+        <CheckBox
+            android:id="@+id/animation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:checked="true"
+            android:text="Marker添加动画"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>

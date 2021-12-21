@@ -6,7 +6,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        minSdk 16
+        minSdk 19
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -41,4 +41,9 @@ dependencies {
 
     /**拍照 & 视频录制*/
     implementation 'cjt.library.wheel:camera:1.1.9'
+
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }

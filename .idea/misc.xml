@@ -7,6 +7,7 @@
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.28055555555555556" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/drawable/vector_drawable_test.xml" value="0.27870370370370373" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/activity_chart.xml" value="0.3328125" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/activity_cool_view_pager.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/activity_custom_uiactivity.xml" value="0.3197463768115942" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/activity_dialog.xml" value="0.3328125" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/activity_empty.xml" value="0.34791666666666665" />
@@ -33,7 +34,9 @@
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/fragment_blank.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/fragment_dashboard.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/fragment_my_info.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/fragment_notifications.xml" value="0.19270833333333334" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/fragment_v_scroll.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/menu/bottom_nav_menu.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/base/src/main/res/drawable/bg_shape_black.xml" value="0.2833333333333333" />
         <entry key="..\:/AndroidProject/Test/TestUtils/base/src/main/res/drawable/btn_downup.xml" value="0.20885416666666667" />
@@ -52,11 +55,19 @@
         <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/layout/activity_main3.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/layout/activity_save_string.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/layout/activity_sqlite.xml" value="0.34148550724637683" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/three_sdk/src/main/res/layout/activity_cloud_search_demo.xml" value="0.34791666666666665" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/three_sdk/src/main/res/layout/activity_lbssearch.xml" value="0.34791666666666665" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/three_sdk/src/main/res/layout/mapmain.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/utils/src/main/res/layout/custom_title.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/bg_item.xml" value="0.35185185185185186" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/bg_room_blue_begin_with_stroke.xml" value="0.35185185185185186" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/bg_room_red.xml" value="0.35185185185185186" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/bg_white_gray_stroke.xml" value="0.35185185185185186" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/circle_big_red.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/circle_red.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/cirque_gray.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/echelon_bg.xml" value="0.3333333333333333" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/ic_launcher_background.xml" value="0.3333333333333333" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/selector_rednode.xml" value="0.33" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/drawable/unread_bg.xml" value="0.3111111111111111" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/activity_camera.xml" value="0.34791666666666665" />
@@ -68,6 +79,7 @@
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/dialogballtrans.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/home_recyclerview_item.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/item_popupwindows2.xml" value="0.3206672845227062" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/item_view_pager.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/layout_image.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/layout_video.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/list_item.xml" value="0.34148550724637683" />
@@ -77,6 +89,7 @@
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/listitem_title.xml" value="0.33605072463768115" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/listitem_vert_info.xml" value="0.33605072463768115" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/loadingdialog.xml" value="0.34791666666666665" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/scan_item.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/textdialog.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/title_easy.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/view/src/main/res/layout/unreadui.xml" value="1.5" />
@@ -89,5 +102,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="SuppressABINotification">
+    <option name="modulesWithSuppressedNotConfigured">
+      <set>
+        <option value="TestUtils.view" />
+      </set>
+    </option>
   </component>
 </project>

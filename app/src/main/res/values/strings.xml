@@ -13,4 +13,17 @@
     <string name="badge_remove">清除角标</string>
     <string name="keyboard_show">显示软键盘</string>
     <string name="keyboard_hide">隐藏软键盘</string>
+    <string name="jpush_text">极光推送</string>
+    <string name="gtpush_text">个推</string>
+    <string name="xiaomi_push_text">小米</string>
+    <string name="huawei_push_text">华为</string>
+    <string name="oppo_push_text">oppo</string>
+    <string name="vivo_push_text">vivo</string>
+    <string name="meizu_push_text">魅族</string>
+    <string name="online_push_text">在线通知</string>
+    <string name="notification_name">IM即时通讯</string>
+    <string name="off_noti_name">IM即时通讯离线推送</string>
+    <string name="off_tip">当程序处于离线时新的消息会通过通知栏提醒用户</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

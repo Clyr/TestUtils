@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.clyr.base.interfaces.OnItemClickListener;
 import com.clyr.testutils.R;
 import com.clyr.testutils.activity.ChartActivity;
+import com.clyr.testutils.activity.CoolViewPagerActivity;
 import com.clyr.testutils.activity.CustomUIActivity;
 import com.clyr.testutils.activity.DialogActivity;
 import com.clyr.testutils.activity.EmptyActivity;
@@ -172,6 +173,8 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 return ChartActivity.class;
             case "Fragment框架":
                 return FragmentActivity.class;
+            case "CoolViewPager":
+                return CoolViewPagerActivity.class;
         }
 
         return EmptyActivity.class;

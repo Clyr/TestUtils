@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/dkgray"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/poishore"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:onClick="sharePoi"
+            android:text="poi搜索结果分享"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/addrshare"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:onClick="shareAddr"
+            android:text="反向地理编码分享"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/routeMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/foot"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:checked="true"
+                android:onClick="setRouteMode"
+                android:text="步行"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/cycle"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:onClick="setRouteMode"
+                android:text="骑行"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/car"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:onClick="setRouteMode"
+                android:text="驾车"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/bus"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:onClick="setRouteMode"
+                android:text="公交"
+                android:textColor="@color/white" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/routeShare"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:onClick="shareRoute"
+            android:text="路线分享"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击地图上的搜索结果进行短串分享"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
+
+</LinearLayout>

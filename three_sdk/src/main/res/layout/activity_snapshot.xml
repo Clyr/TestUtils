@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选取区域矩形范围左上："
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Left"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/snapleft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:text="100"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/snaptop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:text="100"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选取区域矩形范围右下："
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Right"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/snapright"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:text="800"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bottom"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+
+        <EditText
+            android:id="@+id/snapbottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:inputType="number"
+            android:text="800"
+            android:textColor="@color/white"
+            android:textSize="@dimen/ui_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:onClick="snapShotAll"
+            android:text="全部地图展示区域"
+            android:textColor="@color/white" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_margin="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_selector"
+            android:onClick="snapShotRect"
+            android:text="选取区域"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true" />
+</LinearLayout>

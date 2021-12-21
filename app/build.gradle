@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.huawei.agconnect'
 }
 
 android {
@@ -7,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.clyr.testutils"
-        minSdk 16
+        minSdk 19
         targetSdk 31
         versionCode 1
         versionName "1.0.0"
@@ -15,6 +16,24 @@ android {
         resConfigs "en", "zh-rCN"/*,"其他应用需要支持的语言"*/
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "9f284c4fc3330b43c73ced5f", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                MEIZU_APPKEY : "MZ-魅族的APPKEY",
+                MEIZU_APPID : "MZ-魅族的APPID",
+                XIAOMI_APPID : "MI-小米的APPID",
+                XIAOMI_APPKEY : "MI-小米的APPKEY",
+                OPPO_APPKEY : "OP-oppo的APPKEY",
+                OPPO_APPID : "OP-oppo的APPID",
+                OPPO_APPSECRET : "OP-oppo的APPSECRET",
+                VIVO_APPKEY : "vivo的APPKEY",
+                VIVO_APPID : "vivo的APPID",
+                GETUI_APP_ID    : "LpWmdbaCti5Z2tI2UJAjc9",
+                GETUI_APP_KEY   : "SmXmxNayux8zghRwjMeP79",
+                GETUI_APP_SECRET: "POqOjmYLLu9FKjjyrgSvT8"
+        ]
     }
 
 
@@ -53,6 +72,8 @@ dependencies {
     implementation project(path: ':utils')
     implementation project(path: ':base')
     implementation project(path: ':test')
+    implementation project(path: ':three_sdk')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -105,4 +126,23 @@ dependencies {
 
     /**桌面提示圆点 暂无效果*/
     implementation 'me.leolin:ShortcutBadger:1.1.22@aar'
+
+    implementation 'cn.jiguang.sdk:jcore:3.1.0'  // 此处以JCore 2.7.2 版本为例。
+    implementation 'cn.jiguang.sdk:jpush:4.5.0'  // 此处以JPush 4.0.0 版本为例
+
+    // 接入华为厂商// 极光厂商插件版本与接入 JPush 版本保持一致，下同
+    implementation 'com.huawei.hms:push:6.1.0.300'
+    implementation 'cn.jiguang.sdk.plugin:huawei:4.5.0'
+    // 接入魅族厂商
+    implementation 'cn.jiguang.sdk.plugin:meizu:4.5.0'
+    // 接入 VIVO 厂商
+    implementation 'cn.jiguang.sdk.plugin:vivo:4.5.0'
+    // 接入 OPPO 厂商
+    implementation 'cn.jiguang.sdk.plugin:oppo:4.5.0'
+    // 接入小米厂商
+    implementation 'cn.jiguang.sdk.plugin:xiaomi:4.5.0'
+
+    implementation 'com.getui:gtsdk:3.2.6.0'  //个推SDK
+    implementation 'com.getui:gtc:3.1.6.0'  //个推核心组件
+
 }

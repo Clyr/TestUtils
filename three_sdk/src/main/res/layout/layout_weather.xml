@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:paddingLeft="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+    <TextView
+            android:id="@+id/txtTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"></TextView>
+
+    <TextView
+            android:id="@+id/txtSensoryTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"></TextView>
+
+    <TextView
+            android:id="@+id/txtRelativeHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"></TextView>
+
+
+    <TextView
+        android:id="@+id/txtPhenomenon"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"></TextView>
+
+    <TextView
+            android:id="@+id/txtWindDirection"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"></TextView>
+
+
+    <TextView
+            android:id="@+id/txtWindPower"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"></TextView>
+
+    <TextView
+            android:id="@+id/txtUpdateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"></TextView>
+
+
+</LinearLayout>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/dkgray"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/zoom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:onClick="setZoomEnable"
+            android:text="缩放"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/scroll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:onClick="setScrollEnable"
+            android:text="平移"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/rotate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:onClick="setRotateEnable"
+            android:text="旋转"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/overlook"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:onClick="setOverlookEnable"
+            android:text="俯视"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#FF444444"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/compass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:checked="true"
+            android:onClick="setCompassEnable"
+            android:text="开启指南针"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/doublezoom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            android:onClick="setCenterWithDoubleClickEnable"
+            android:text="双击按照地图中心点放大"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/allGesture"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:checked="false"
+            android:onClick="setAllGestureEnable"
+            android:text="禁用所有手势"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
+
+</LinearLayout>

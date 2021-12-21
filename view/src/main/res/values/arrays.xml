@@ -25,5 +25,6 @@
         <item>分享</item>
         <item>图表</item>
         <item>Fragment框架</item>
+        <item>CoolViewPager</item>
     </string-array>
 </resources>
