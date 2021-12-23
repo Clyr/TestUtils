@@ -15,6 +15,7 @@ import androidx.multidex.MultiDexApplication;
 import com.clyr.base.AppKit;
 import com.clyr.testutils.activity.MainActivity;
 import com.clyr.testutils.utils.OKHttpUpdateHttpService;
+import com.clyr.three_sdk.AppThreeSDKKit;
 import com.clyr.utils.MyLog;
 import com.clyr.utils.UtilsKit;
 import com.clyr.utils.utilshelper.ACache;
@@ -116,7 +117,9 @@ public class App extends MultiDexApplication {
                 .setIUpdateHttpService(new OKHttpUpdateHttpService())           //这个必须设置！实现网络请求功能。
                 .init(this);
 
-
+        //初始化第三方SDK
+        AppThreeSDKKit.init(this);
+        AppThreeSDKKit.initBMap();
 
     }
 

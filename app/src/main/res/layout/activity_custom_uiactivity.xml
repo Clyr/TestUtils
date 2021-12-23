@@ -8,25 +8,57 @@
     tools:context=".activity.CustomUIActivity">
 
     <include layout="@layout/title_easy"></include>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <com.clyr.view.UnReadView
-            android:id="@+id/unreadview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:gravity="center"
-            android:textSize="12dp"></com.clyr.view.UnReadView>
-
-        <EditText
-            android:id="@+id/edittext"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"></EditText>
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.clyr.view.UnReadView
+                android:id="@+id/unreadview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:gravity="center"
+                android:textSize="12dp"></com.clyr.view.UnReadView>
+
+            <EditText
+                android:id="@+id/edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"></EditText>
+        </LinearLayout>
+        <com.clyr.view.SlideUnlockView
+            android:id="@+id/slideUnlockView"
+            android:layout_width="100dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            app:slideUnlockBackgroundResource="@drawable/jiesuo_bg"
+            app:slideUnlockBlockResource="@drawable/jiesuo_button" />
+
+        <Button
+            android:id="@+id/captchadialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/captchadialog" />
+
+        <com.sunfusheng.marqueeview.MarqueeView
+            android:layout_marginTop="15dp"
+            android:id="@+id/marqueeView"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            app:mvAnimDuration="1000"
+            app:mvDirection="bottom_to_top"
+            app:mvInterval="3000"
+            app:mvTextColor="@color/colorPrimary"
+            app:mvTextSize="14sp"
+            app:mvSingleLine="true"/>
     </LinearLayout>
+
+
 </LinearLayout>

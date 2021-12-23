@@ -13,6 +13,9 @@
     <string name="badge_remove">清除角标</string>
     <string name="keyboard_show">显示软键盘</string>
     <string name="keyboard_hide">隐藏软键盘</string>
+    <string name="fingerprint">指纹验证</string>
+    <string name="captchadialog">拼图验证</string>
+    <string name="batterystate">电量</string>
     <string name="jpush_text">极光推送</string>
     <string name="gtpush_text">个推</string>
     <string name="xiaomi_push_text">小米</string>
@@ -26,4 +29,7 @@
     <string name="off_tip">当程序处于离线时新的消息会通过通知栏提醒用户</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="radar_text">雷达图</string>
+    <string name="table_text">表格</string>
+    <string name="chart_text">Chart</string>
 </resources>

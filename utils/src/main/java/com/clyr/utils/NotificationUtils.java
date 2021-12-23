@@ -85,7 +85,7 @@ public class NotificationUtils {
                 .setSubText("Subtext")
                 .setTicker("滚动消息......")
                 .setContentIntent(contentIntent)//设置通知栏被点击时的操作-由PendingIntent意图来表示
-                .setSound(Uri.parse("android.resource://com.matrix.myapplication/" + raw))
+                .setSound(Uri.parse("android.resource://com.clyr.testutils/" + raw))
                 .setVibrate(vibrate)//振动
                 .setLights(0xFF0000, 3000, 3000)//闪光灯 呼吸灯
                 .setWhen(System.currentTimeMillis());//设置通知时间，默认为系统发出通知的时间，通常不用设置
@@ -174,21 +174,22 @@ public class NotificationUtils {
         long[] vibrate = new long[]{0, 500, 1000, 1500};
 
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentTitle("TestList")//设置通知标题
+        String app_name = context.getResources().getString(R.string.app_name);
+        builder.setContentTitle(app_name)//设置通知标题
                 .setContentText("电源已充满")//设置通知内容
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), drawable))
                 .setSmallIcon(drawable)//不能缺少的一个属性 通知栏小图标 默认圆头安卓很丑
                 .setSubText("Subtext")
                 .setTicker("滚动消息......")
                 .setContentIntent(contentIntent)//设置通知栏被点击时的操作-由PendingIntent意图来表示
-                .setSound(Uri.parse("android.resource://com.matrix.myapplication/" + raw))
+                .setSound(Uri.parse("android.resource://com.clyr.testutils/" + raw))
                 .setVibrate(vibrate)//振动
                 .setLights(0xFF0000, 3000, 3000)//闪光灯 呼吸灯
                 .setWhen(System.currentTimeMillis());//设置通知时间，默认为系统发出通知的时间，通常不用设置
 
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(NOTIFICATION_TEST_ID, "TestList电源通知", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_TEST_ID, app_name + "电源通知", NotificationManager.IMPORTANCE_DEFAULT);
             channel.enableLights(true); //是否在桌面icon右上角展示小红点
             channel.setLightColor(Color.GREEN); //小红点颜色
             channel.setShowBadge(true); //是否在久按桌面图标时显示此渠道的通知

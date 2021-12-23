@@ -48,17 +48,17 @@ public class FragmentActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        setBar(R.color.mm131);
-        mViewPager = (ViewPager) findViewById(R.id.view_pager);
+        initBar();
+        setBar(R.color.colorPrimary);
+        mViewPager = findViewById(R.id.view_pager);
 //        mViewPager.setAdapter(mExamplePagerAdapter);
 
         FragmentManager fm = getSupportFragmentManager();
         List<Fragment> list = new ArrayList<>();
-        BlankFragment blankFragment = new BlankFragment();
         for (int i = 0; i < CHANNELS.length; i++) {
-            list.add(blankFragment);
+            list.add(new BlankFragment());
         }
-        myAdapter = new FragmentAdapter(fm,list);
+        myAdapter = new FragmentAdapter(fm, list);
 //        myAdapter = new MyAdapter(fm,new BlankFragment1());
         mViewPager.setAdapter(myAdapter);
 
@@ -91,7 +91,7 @@ public class FragmentActivity extends BaseActivity {
                 simplePagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ToastUtils.showShort(index+"");
+                        ToastUtils.showShort(index + "");
                         mViewPager.setCurrentItem(index);
                     }
                 });

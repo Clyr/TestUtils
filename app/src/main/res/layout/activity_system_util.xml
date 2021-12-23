@@ -56,6 +56,7 @@
             android:id="@+id/keyboard_show"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="@string/keyboard_show" />
 
         <Button
@@ -68,6 +69,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/keyboard_hide" />
+
+        <Button
+            android:id="@+id/fingerprint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fingerprint" />
+
+
+        <Button
+            android:id="@+id/batterystate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/batterystate" />
+
+        <Button
+            android:id="@+id/shortcuts"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/bg_selector_shortcuts"
+            android:gravity="center"
+            android:text="ShortCuts"
+            android:textColor="@color/white" />
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

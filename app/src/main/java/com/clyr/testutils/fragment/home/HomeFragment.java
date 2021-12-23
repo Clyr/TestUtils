@@ -33,12 +33,10 @@ import com.clyr.testutils.activity.MediaActivity;
 import com.clyr.testutils.activity.NotificationActivity;
 import com.clyr.testutils.activity.OkHttpActivity;
 import com.clyr.testutils.activity.PushActivity;
-import com.clyr.testutils.activity.RadarActivity;
 import com.clyr.testutils.activity.RefrashActivity;
 import com.clyr.testutils.activity.RxjavaActivity;
 import com.clyr.testutils.activity.ShareActivity;
 import com.clyr.testutils.activity.SystemUtilActivity;
-import com.clyr.testutils.activity.TableActivity;
 import com.clyr.testutils.activity.TreeListActivity;
 import com.clyr.testutils.adapter.HomeFragmentAdapter;
 import com.clyr.testutils.base.Const;
@@ -135,20 +133,12 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 return MediaActivity.class;
             case "Tree_list":
                 return TreeListActivity.class;
-            case "雷达图":
-                return RadarActivity.class;
-            case "滚动新闻":
-                return MarqueeActivity.class;
-            case "表格":
-                return TableActivity.class;
             case "测试调用三方软件":
                 startThreeApp();
                 return null;
             case "测试获取网络地址":
                 getIpAddress();
                 return null;
-            case "刷新":
-                return RefrashActivity.class;
             case "系统工具":
                 return SystemUtilActivity.class;
             case "UpDate":
@@ -175,6 +165,10 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 return FragmentActivity.class;
             case "CoolViewPager":
                 return CoolViewPagerActivity.class;
+            case "滚动新闻":
+                return MarqueeActivity.class;
+            case "刷新":
+                return RefrashActivity.class;
         }
 
         return EmptyActivity.class;

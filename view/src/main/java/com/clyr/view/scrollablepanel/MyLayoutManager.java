@@ -32,12 +32,12 @@ public class MyLayoutManager extends LinearLayoutManager implements RecyclerView
         mPagerSnapHelper.attachToRecyclerView(view);
         super.onAttachedToWindow(view);
     }
-//当Item添加进来了  调用这个方法
+    //当Item添加进来了  调用这个方法
 
     //
     @Override
     public void onChildViewAttachedToWindow(@NonNull View view) {
-//        播放视频操作 即将要播放的是上一个视频 还是下一个视频
+        // 播放视频操作 即将要播放的是上一个视频 还是下一个视频
         int position = getPosition(view);
         if (0 == position) {
             if (mOnViewPagerListener != null) {
@@ -56,14 +56,15 @@ public class MyLayoutManager extends LinearLayoutManager implements RecyclerView
         switch (state) {
             case RecyclerView.SCROLL_STATE_IDLE:
                 View view = mPagerSnapHelper.findSnapView(this);
-                int position = getPosition(view);
+                int position = 0;
+                if (view != null) {
+                    position = getPosition(view);
+                }
                 if (mOnViewPagerListener != null) {
                     mOnViewPagerListener.onPageSelected(position, position == getItemCount() - 1);
 
                 }
-//                postion  ---回调 ----》播放
-
-
+                //postion  ---回调 ----》播放
                 break;
         }
         super.onScrollStateChanged(state);
@@ -71,7 +72,7 @@ public class MyLayoutManager extends LinearLayoutManager implements RecyclerView
 
     @Override
     public void onChildViewDetachedFromWindow(@NonNull View view) {
-//暂停播放操作
+        //暂停播放操作
         if (mDrift >= 0) {
             if (mOnViewPagerListener != null)
                 mOnViewPagerListener.onPageRelease(true, getPosition(view));

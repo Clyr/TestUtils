@@ -32,7 +32,7 @@
 
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="请输入百度开放平台申请的Android端API KEY" />
+            android:value="q5rwhiGNGnVQ45mOM8XX9Re5YEianuzt" />
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
@@ -398,5 +398,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/demo_title_map_type_frag"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".baidumapsdk.WebViewForBaiduMap" />
     </application>
 </manifest>

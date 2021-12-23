@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<title>百度地图</title>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=wRHWyVq0fKFnKLQz0Ww6MUOksqxZ4vbj"></script>
+<script type="text/javascript" src="file:///android_asset/baidumap/jquery.min.js"></script>
+<style type="text/css">
+body, html,#container {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+
+.tViewAlarm{position: absolute; top: -35px;left: 50%;color: #fff;margin-left: -16px}
+.BMapLabel{z-index:0 !important}
+.BMap_Marker img{width: 42px;height: 42px}
+</style>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+</html>
+<script type="text/javascript">
+	var bdMap = null;
+
+	$(function(){
+
+	    bdMap = new BMap.Map("container");
+		bdMap.centerAndZoom(new BMap.Point(118.348589,35.044029), 11);
+		bdMap.disableScrollWheelZoom();
+		var top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL});
+		bdMap.addControl(top_right_navigation);
+
+	    initMapAddMarkerData();
+	});
+    
+	function initMapAddMarkerData(){
+		mLogH(mainUrl);
+
+		$.ajax({
+			url:"http://112.6.130.232:8078/ceims/screennew_getScreenStatusViewList.action?isCheck=false",
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				alert("");
+				mLogJsonH(data);
+				bdMap.clearOverlays();
+				$(data.data.rows).each(function(i,e){
+					
+					if(e.viewType == "gd")
+						mapAddMarker(bdMap,e);
+				});
+
+				//mapAddMarker(bdMap,BondedArea);
+			},
+			error:function(xhr){
+				mLogH(xhr.status)
+				alert(xhr.status);
+			}
+			
+			
+		});
+	}
+	
+	
+	function mapAddMarker(map,data){
+		
+		var pt = new BMap.Point(data.longitude,data.latitude);
+
+		var iconUrl = "file:///android_asset/baidumap/green.png";
+		
+		if(data.alarmNum > 0 ) iconUrl = "file:///android_asset/baidumap/red.png";
+		
+		var myIcon = new BMap.Icon(iconUrl, new BMap.Size(42,42));
+		var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+		var PM10Value = funstr(data.PM10);
+		var labelHtml = "<label class='tViewAlarm' style='margin-left: -"+(PM10Value.length ==2 ?"12":"16")+"px'>"+PM10Value+"</label><label class='viewID' data-vid='"+data.id+"'>"+data.text+"</label>";
+		var leftpx = ((data.text.length - 4) / 2) * 12;
+		var label = new BMap.Label(labelHtml,{position : pt,offset:new BMap.Size(-leftpx,43)}); //高速中标签(设备名称)的位置
+
+		marker.setLabel(label);
+		map.addOverlay(marker);
+	}
+    function funstr(str){
+    	str = str.substring(0,str.indexOf("."));
+
+        if(str.length==1){
+        	return "0"+str;
+        }
+        return str;
+    }
+</script>
