@@ -58,6 +58,18 @@
             app:mvTextColor="@color/colorPrimary"
             app:mvTextSize="14sp"
             app:mvSingleLine="true"/>
+
+        <Button
+            android:id="@+id/alertdialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alertdialog" />
+
+        <Button
+            android:id="@+id/loaddialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/loaddialog" />
     </LinearLayout>
 
 

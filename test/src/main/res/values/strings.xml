@@ -1,1 +1,4 @@
-<resources></resources>
+<resources>
+    <string name="int_obj_double"><![CDATA[int->obj->double]]></string>
+    <string name="num_to_move">位移运算</string>
+</resources>

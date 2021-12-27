@@ -16,24 +16,21 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.clyr.base.interfaces.OnItemClickListener;
+import com.clyr.test.CheckTestActivity;
 import com.clyr.testutils.R;
 import com.clyr.testutils.activity.ChartActivity;
 import com.clyr.testutils.activity.CoolViewPagerActivity;
 import com.clyr.testutils.activity.CustomUIActivity;
-import com.clyr.testutils.activity.DialogActivity;
 import com.clyr.testutils.activity.EmptyActivity;
 import com.clyr.testutils.activity.FragmentActivity;
 import com.clyr.testutils.activity.GridActivity;
 import com.clyr.testutils.activity.IOActivity;
-import com.clyr.testutils.activity.LoadActivity;
 import com.clyr.testutils.activity.MainActivity;
 import com.clyr.testutils.activity.MapActivity;
-import com.clyr.testutils.activity.MarqueeActivity;
 import com.clyr.testutils.activity.MediaActivity;
 import com.clyr.testutils.activity.NotificationActivity;
 import com.clyr.testutils.activity.OkHttpActivity;
 import com.clyr.testutils.activity.PushActivity;
-import com.clyr.testutils.activity.RefrashActivity;
 import com.clyr.testutils.activity.RxjavaActivity;
 import com.clyr.testutils.activity.ShareActivity;
 import com.clyr.testutils.activity.SystemUtilActivity;
@@ -119,10 +116,6 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     private Class<?> getActivityClass(String str) {
         MyLog.d(str);
         switch (str) {
-            case "AlertDialog":
-                return DialogActivity.class;
-            case "LoadDialog":
-                return LoadActivity.class;
             case "OkHttp":
                 return OkHttpActivity.class;
             case "IO存储":
@@ -165,10 +158,8 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 return FragmentActivity.class;
             case "CoolViewPager":
                 return CoolViewPagerActivity.class;
-            case "滚动新闻":
-                return MarqueeActivity.class;
-            case "刷新":
-                return RefrashActivity.class;
+            case "验证测试":
+                return CheckTestActivity.class;
         }
 
         return EmptyActivity.class;

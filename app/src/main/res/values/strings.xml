@@ -32,4 +32,6 @@
     <string name="radar_text">雷达图</string>
     <string name="table_text">表格</string>
     <string name="chart_text">Chart</string>
+    <string name="alertdialog">AlertDialog</string>
+    <string name="loaddialog">LoadDialog</string>
 </resources>

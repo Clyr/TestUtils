@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="home_fun_list">
-        <item>AlertDialog</item>
-        <item>LoadDialog</item>
+        <item>验证测试</item>
         <item>OkHttp</item>
         <item>IO存储</item>
         <item>GridView</item>
@@ -22,5 +21,6 @@
         <item>图表</item>
         <item>Fragment框架</item>
         <item>CoolViewPager</item>
+
     </string-array>
 </resources>

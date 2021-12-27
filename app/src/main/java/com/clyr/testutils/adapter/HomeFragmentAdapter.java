@@ -1,6 +1,5 @@
 package com.clyr.testutils.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.clyr.base.interfaces.OnItemClickListener;
 import com.clyr.testutils.R;
-import com.clyr.testutils.fragment.home.HomeFragment;
 
 import java.util.List;
 
@@ -58,12 +56,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
 
         public void bindData(String name, int position) {
             textView.setText(name);
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mCon.onClick(position, name);
-                }
-            });
+            textView.setOnClickListener(v -> mCon.onClick(position, name));
         }
     }
 }

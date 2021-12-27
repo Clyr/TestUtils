@@ -1,6 +1,7 @@
 package com.clyr.testutils.activity;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
+import com.clyr.testutils.base.Const;
 import com.clyr.utils.ToastUtils;
 import com.clyr.view.SlideUnlockView;
 import com.clyr.view.UnReadView;
@@ -87,6 +89,18 @@ public class CustomUIActivity extends BaseActivity {
         findViewById(R.id.captchadialog).setOnClickListener(v -> showCaptchaDialog());
 
         initMarqueeView();
+        findViewById(R.id.alertdialog).setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setClass(this, DialogActivity.class);
+            intent.putExtra(Const.TITLE, getResources().getString(R.string.alertdialog));
+            startActivity(intent);
+        });
+        findViewById(R.id.loaddialog).setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setClass(this, LoadActivity.class);
+            intent.putExtra(Const.TITLE, getResources().getString(R.string.loaddialog));
+            startActivity(intent);
+        });
     }
 
     private void initMarqueeView() {
