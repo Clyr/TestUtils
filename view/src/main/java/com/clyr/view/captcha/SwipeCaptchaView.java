@@ -27,6 +27,7 @@ import android.util.TypedValue;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.interpolator.view.animation.FastOutLinearInInterpolator;
+
 import com.clyr.utils.MyLog;
 import com.clyr.view.R;
 
@@ -79,7 +80,7 @@ public class SwipeCaptchaView extends AppCompatImageView {
     private Paint mSuccessPaint;//画笔
     private int mSuccessAnimOffset;//动画的offset
     private Path mSuccessPath;//成功动画 平行四边形Path
-    private int anInt = 0;
+    private final int anInt = 0;
 
 
     public SwipeCaptchaView(Context context) {
@@ -148,12 +149,7 @@ public class SwipeCaptchaView extends AppCompatImageView {
         //动画区域 会用到宽高
         createMatchAnim();
 
-        post(new Runnable() {
-            @Override
-            public void run() {
-                createCaptcha();
-            }
-        });
+        post(this::createCaptcha);
     }
 
     //验证动画初始化区域
@@ -169,30 +165,20 @@ public class SwipeCaptchaView extends AppCompatImageView {
                 onCaptchaMatchCallback.matchFailed(SwipeCaptchaView.this);
             }
         });
-        mFailAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                float animatedValue = (float) animation.getAnimatedValue();
-                Log.d(TAG, "onAnimationUpdate: " + animatedValue);
-                if (animatedValue < 0.5f) {
-                    isDrawMask = false;
-                } else {
-                    isDrawMask = true;
-                }
-                invalidate();
-            }
+        mFailAnim.addUpdateListener(animation -> {
+            float animatedValue = (float) animation.getAnimatedValue();
+            Log.d(TAG, "onAnimationUpdate: " + animatedValue);
+            isDrawMask = !(animatedValue < 0.5f);
+            invalidate();
         });
 
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
         mSuccessAnim = ValueAnimator.ofInt(mWidth + width, 0);
         mSuccessAnim.setDuration(500);
         mSuccessAnim.setInterpolator(new FastOutLinearInInterpolator());
-        mSuccessAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                mSuccessAnimOffset = (int) animation.getAnimatedValue();
-                invalidate();
-            }
+        mSuccessAnim.addUpdateListener(animation -> {
+            mSuccessAnimOffset = (int) animation.getAnimatedValue();
+            invalidate();
         });
         mSuccessAnim.addListener(new AnimatorListenerAdapter() {
             @Override
@@ -208,14 +194,14 @@ public class SwipeCaptchaView extends AppCompatImageView {
             }
         });
         mSuccessPaint = new Paint();
-        mSuccessPaint.setShader(new LinearGradient(0, 0, width / 2 * 3, mHeight, new int[]{
+        mSuccessPaint.setShader(new LinearGradient(0, 0, (width >> 1) * 3, mHeight, new int[]{
                 0x00ffffff, 0x88ffffff}, new float[]{0, 0.5f},
                 Shader.TileMode.MIRROR));
         //模仿斗鱼 是一个平行四边形滚动过去
         mSuccessPath = new Path();
         mSuccessPath.moveTo(0, 0);
         mSuccessPath.rLineTo(width, 0);
-        mSuccessPath.rLineTo(width / 2, mHeight);
+        mSuccessPath.rLineTo(width >> 1, mHeight);
         mSuccessPath.rLineTo(-width, 0);
         mSuccessPath.close();
     }
@@ -240,13 +226,13 @@ public class SwipeCaptchaView extends AppCompatImageView {
     //生成验证码Path
     private void createCaptchaPath() {
         //原本打算随机生成gap，后来发现 宽度/3 效果比较好，
-        int gap = mRandom.nextInt(mCaptchaWidth / 2);
-        gap = mCaptchaWidth / 3;
+        //int gap = mRandom.nextInt(mCaptchaWidth / 2);
+        int gap = mCaptchaWidth / 3;
 
         //随机生成验证码阴影左上角 x y 点，
 //        mCaptchaX = mRandom.nextInt(mWidth - mCaptchaWidth - gap);
         mCaptchaX = mRandom.nextInt(mWidth / 2) + 2 * mWidth / 5;
-        mCaptchaX = mCaptchaX > 4 * mWidth / 5 ? 4 * mWidth / 5 : mCaptchaX;
+        mCaptchaX = Math.min(mCaptchaX, 4 * mWidth / 5);
 //        mCaptchaY = mRandom.nextInt(mHeight - mCaptchaHeight - gap);
         mCaptchaY = mRandom.nextInt(mHeight / 3) + mHeight / 3;
         Log.d(TAG, "createCaptchaPath() called mWidth:" + mWidth + ", mHeight:" + mHeight + ", mCaptchaX:" + mCaptchaX + ", mCaptchaY:" + mCaptchaY);
@@ -419,10 +405,10 @@ public class SwipeCaptchaView extends AppCompatImageView {
      * @param value
      */
     public void setCurrentSwipeValue(int value) {
-        MyLog.d(TAG,"value = "+value+" mWidth = "+mWidth);
+        MyLog.d(TAG, "value = " + value + " mWidth = " + mWidth);
         mDragerOffset = value;
-        mDragerOffset = mDragerOffset+anInt;
-        mDragerOffset = mDragerOffset>mWidth-4*anInt? mWidth-4*anInt:mDragerOffset;
+        //mDragerOffset = mDragerOffset + anInt;
+        mDragerOffset = Math.min(mDragerOffset, mWidth - 4 * anInt);
         invalidate();
     }
 
@@ -445,10 +431,8 @@ public class SwipeCaptchaView extends AppCompatImageView {
      * 设置验证码验证回调
      *
      * @param onCaptchaMatchCallback
-     * @return
      */
-    public SwipeCaptchaView setOnCaptchaMatchCallback(OnCaptchaMatchCallback onCaptchaMatchCallback) {
+    public void setOnCaptchaMatchCallback(OnCaptchaMatchCallback onCaptchaMatchCallback) {
         this.onCaptchaMatchCallback = onCaptchaMatchCallback;
-        return this;
     }
 }

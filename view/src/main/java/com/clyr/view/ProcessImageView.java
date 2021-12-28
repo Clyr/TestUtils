@@ -46,8 +46,7 @@ public class ProcessImageView extends ImageView {
         mPaint.setStyle(Paint.Style.FILL);
 
         mPaint.setColor(Color.parseColor("#70000000"));// 半透明
-        canvas.drawRect(0, 0, getWidth(), getHeight()- getHeight() * progress
-                / 100, mPaint);
+        canvas.drawRect(0, 0, getWidth(), getHeight() - getHeight() * progress / 100, mPaint);
 
         mPaint.setColor(Color.parseColor("#00000000"));// 全透明
         canvas.drawRect(0, getHeight() - getHeight() * progress / 100,
@@ -59,23 +58,25 @@ public class ProcessImageView extends ImageView {
         Rect rect = new Rect();
         mPaint.getTextBounds("100%", "00".length(), "100%".length(), rect);// 确定文字的宽度
 //        mPaint.getTextBounds("100%", "0%".length(), "100%".length(), rect);// 确定文字的宽度
-        canvas.drawText(mPro, (getWidth() - rect.width())/ 2,
-                (getHeight()+rect.height()) / 2, mPaint);
+        canvas.drawText(mPro, (getWidth() - rect.width()) >> 1,
+                (getHeight() + rect.height()) >> 1, mPaint);
 
     }
 
     public void setProgress(int progress) {
         this.progress = progress;
-        if(progress==100){
-            mPro="";
-        }else {
-            if(progress>=0&&progress<10){
-             mPro = "0"+ progress + "%";
-            }else {
+        if (progress == 100) {
+            mPro = "";
+        } else {
+            if (progress >= 0 && progress < 10) {
+                mPro = "0" + progress + "%";
+            } else {
                 mPro = progress + "%";
             }
         }
         postInvalidate();
-    };
+    }
+
+    ;
 
 }

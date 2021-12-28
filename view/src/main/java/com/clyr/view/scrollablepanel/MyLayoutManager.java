@@ -53,19 +53,17 @@ public class MyLayoutManager extends LinearLayoutManager implements RecyclerView
 
     @Override
     public void onScrollStateChanged(int state) {
-        switch (state) {
-            case RecyclerView.SCROLL_STATE_IDLE:
-                View view = mPagerSnapHelper.findSnapView(this);
-                int position = 0;
-                if (view != null) {
-                    position = getPosition(view);
-                }
-                if (mOnViewPagerListener != null) {
-                    mOnViewPagerListener.onPageSelected(position, position == getItemCount() - 1);
+        if (state == RecyclerView.SCROLL_STATE_IDLE) {
+            View view = mPagerSnapHelper.findSnapView(this);
+            int position = 0;
+            if (view != null) {
+                position = getPosition(view);
+            }
+            if (mOnViewPagerListener != null) {
+                mOnViewPagerListener.onPageSelected(position, position == getItemCount() - 1);
 
-                }
-                //postion  ---回调 ----》播放
-                break;
+            }
+            //postion  ---回调 ----》播放
         }
         super.onScrollStateChanged(state);
     }

@@ -22,6 +22,21 @@
             android:text="@string/num_to_move"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/check_final"
+            android:text="@string/check_final"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/check_Assert"
+            android:text="@string/check_assert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/duplicate_removal"
+            android:text="@string/duplicate_removal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

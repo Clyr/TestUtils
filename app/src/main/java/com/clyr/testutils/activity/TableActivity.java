@@ -1,5 +1,6 @@
 package com.clyr.testutils.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +34,7 @@ public class TableActivity extends BaseActivity implements View.OnClickListener 
     LinearLayout mLinearLayout;
     private ScrollablePanelAdapter mScrollablePanelAdapter;
     private String mUrl;
-    private String url = "http://60.208.80.55:9999/TRAMS";
+    private final String url = "http://60.208.80.55:9999/TRAMS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +156,7 @@ public class TableActivity extends BaseActivity implements View.OnClickListener 
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
         switch (view.getId()) {

@@ -126,9 +126,7 @@ public class CustomUIActivity extends BaseActivity {
         // String notice = "心中有阳光，脚底有力量！心中有阳光，脚底有力量！心中有阳光，脚底有力量！";
         // marqueeView.startWithText(notice);
 
-        marqueeView.setOnItemClickListener((position, textView) -> {
-            Toast.makeText(this, textView.getText(), Toast.LENGTH_SHORT).show();
-        });
+        marqueeView.setOnItemClickListener((position, textView) -> ToastUtils.showShort((String) textView.getText()));
     }
 
     private void showCaptchaDialog() {

@@ -41,7 +41,7 @@ import okhttp3.Request;
  */
 public class OKHttpUpdateHttpService implements IUpdateHttpService {
 
-    private boolean mIsPostJson;
+    private final boolean mIsPostJson;
 
     public OKHttpUpdateHttpService() {
         this(false);

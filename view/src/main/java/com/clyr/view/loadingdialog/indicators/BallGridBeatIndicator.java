@@ -4,9 +4,9 @@ import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import java.util.ArrayList;
-
 import com.clyr.view.loadingdialog.Indicator;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jack on 2015/10/20.
@@ -29,8 +29,8 @@ public class BallGridBeatIndicator extends Indicator {
     public void draw(Canvas canvas, Paint paint) {
         float circleSpacing=4;
         float radius=(getWidth()-circleSpacing*4)/6;
-        float x = getWidth()/ 2-(radius*2+circleSpacing);
-        float y = getWidth()/ 2-(radius*2+circleSpacing);
+        float x = (getWidth() >> 1) -(radius*2+circleSpacing);
+        float y = (getWidth() >> 1) -(radius*2+circleSpacing);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -58,12 +58,9 @@ public class BallGridBeatIndicator extends Indicator {
             alphaAnim.setDuration(durations[i]);
             alphaAnim.setRepeatCount(-1);
             alphaAnim.setStartDelay(delays[i]);
-            addUpdateListener(alphaAnim,new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    alphas[index] = (int) animation.getAnimatedValue();
-                    postInvalidate();
-                }
+            addUpdateListener(alphaAnim, animation -> {
+                alphas[index] = (int) animation.getAnimatedValue();
+                postInvalidate();
             });
             animators.add(alphaAnim);
         }

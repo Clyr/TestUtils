@@ -52,9 +52,9 @@ public class ScrollablePanelAdapter extends PanelAdapter {
             case VERT_TYPE:
                 setRoomView(row, (VertViewHolder) holder);
                 break;
-            case ORDER_TYPE:
+            /*case ORDER_TYPE:
                 setOrderView(row, column, (OrderViewHolder) holder);
-                break;
+                break;*/
             case TITLE_TYPE:
                 break;
             default:
@@ -130,12 +130,7 @@ public class ScrollablePanelAdapter extends PanelAdapter {
                 viewHolder.statusTextView.setText(orderInfo.isBegin() ? "reverse" : "");
                 viewHolder.view.setBackgroundResource(orderInfo.isBegin() ? R.drawable.bg_room_blue_begin_with_stroke : R.drawable.bg_room_blue_middle);
             }
-            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(v.getContext(), orderInfo.getGuestName(), Toast.LENGTH_SHORT).show();
-                }
-            });
+            viewHolder.itemView.setOnClickListener(v -> Toast.makeText(v.getContext(), orderInfo.getGuestName(), Toast.LENGTH_SHORT).show());
 
 
         }
@@ -148,8 +143,8 @@ public class ScrollablePanelAdapter extends PanelAdapter {
 
         public HoriViewHolder(View itemView) {
             super(itemView);
-            this.horiNameTextView = (TextView) itemView.findViewById(R.id.date);
-            this.horiMsgTextView = (TextView) itemView.findViewById(R.id.msg);
+            this.horiNameTextView = itemView.findViewById(R.id.date);
+            this.horiMsgTextView = itemView.findViewById(R.id.msg);
         }
 
     }
@@ -160,8 +155,8 @@ public class ScrollablePanelAdapter extends PanelAdapter {
 
         public VertViewHolder(View view) {
             super(view);
-            this.vertTypeTextView = (TextView) view.findViewById(R.id.vert_type);
-            this.vertNameTextView = (TextView) view.findViewById(R.id.vert_name);
+            this.vertTypeTextView = view.findViewById(R.id.vert_type);
+            this.vertNameTextView = view.findViewById(R.id.vert_name);
         }
     }
 
@@ -173,8 +168,8 @@ public class ScrollablePanelAdapter extends PanelAdapter {
         public OrderViewHolder(View view) {
             super(view);
             this.view = view;
-            this.statusTextView = (TextView) view.findViewById(R.id.status);
-            this.nameTextView = (TextView) view.findViewById(R.id.guest_name);
+            this.statusTextView = view.findViewById(R.id.status);
+            this.nameTextView = view.findViewById(R.id.guest_name);
         }
     }
 
@@ -183,7 +178,7 @@ public class ScrollablePanelAdapter extends PanelAdapter {
 
         public TitleViewHolder(View view) {
             super(view);
-            this.titleTextView = (TextView) view.findViewById(R.id.title);
+            this.titleTextView = view.findViewById(R.id.title);
         }
     }
 

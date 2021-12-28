@@ -29,9 +29,9 @@ public class ThreadManager {
 
     public static class ThreadPool {
         private ThreadPoolExecutor mExecutor;
-        private int corePoolSize;
-        private int maximumPoolSize;
-        private long keepAliveTime;
+        private final int corePoolSize;
+        private final int maximumPoolSize;
+        private final long keepAliveTime;
 
         private ThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime) {
             this.corePoolSize = corePoolSize;
@@ -48,7 +48,7 @@ public class ThreadManager {
                         maximumPoolSize, // 最大线程数
                         keepAliveTime, // 闲置线程存活时间
                         TimeUnit.MILLISECONDS,// 时间单位
-                        new LinkedBlockingDeque<Runnable>(Integer.MAX_VALUE),// 线程队列
+                        new LinkedBlockingDeque<>(Integer.MAX_VALUE),// 线程队列
                         Executors.defaultThreadFactory(),// 线程工厂
                         new ThreadPoolExecutor.AbortPolicy() {// 队列已满,而且当前线程数已经超过最大线程数时的异常处理策略
                             @Override

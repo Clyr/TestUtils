@@ -1,5 +1,6 @@
 package com.clyr.testutils.fragment.home;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.clyr.base.interfaces.OnItemClickListener;
 import com.clyr.test.CheckTestActivity;
+import com.clyr.testutils.App;
+import com.clyr.testutils.BuildConfig;
 import com.clyr.testutils.R;
 import com.clyr.testutils.activity.ChartActivity;
 import com.clyr.testutils.activity.CoolViewPagerActivity;
@@ -38,6 +41,7 @@ import com.clyr.testutils.activity.TreeListActivity;
 import com.clyr.testutils.adapter.HomeFragmentAdapter;
 import com.clyr.testutils.base.Const;
 import com.clyr.testutils.databinding.FragmentHomeBinding;
+import com.clyr.testutils.push.PushUtils;
 import com.clyr.utils.MyLog;
 import com.clyr.utils.SystemUtils;
 import com.clyr.utils.ToastUtils;
@@ -48,19 +52,20 @@ import com.xuexiang.xupdate.UpdateManager;
 import com.xuexiang.xupdate.XUpdate;
 import com.xuexiang.xupdate.entity.UpdateEntity;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 public class HomeFragment extends Fragment implements OnItemClickListener {
 
-    private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private AppBarLayout appBarLayout;
+    private final Context mContext = getContext() == null ? App.getContext() : getContext();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -73,13 +78,19 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     }
 
     private void initView() {
-        LinearLayoutManager layout = new LinearLayoutManager(getContext());
+        LinearLayoutManager layout = new LinearLayoutManager(mContext);
         binding.recyclerview.setLayoutManager(layout);
 
-        String[] stringArray = getResources().getStringArray(R.array.home_fun_list);
-        HomeFragmentAdapter homeFragmentAdapter = new HomeFragmentAdapter(Arrays.asList(stringArray), this);
+        List<String> mList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.home_fun_list)));
+        if (BuildConfig.DEBUG) {
+            //UnsupportedOperationException
+            //如果在将String[]转化为List< String >的时候，是不能对转化出来的结果进行add，remove操作的，
+            //因为他们并不是我们熟悉的ArrayList，而是Arrays里面的内部类ArrayList
+            mList.remove(0);
+        }
+        HomeFragmentAdapter homeFragmentAdapter = new HomeFragmentAdapter(mList, this);
         binding.recyclerview.setAdapter(homeFragmentAdapter);
-        binding.recyclerview.addItemDecoration(new RecycleViewDivider(getContext(), LinearLayoutManager.VERTICAL));
+        binding.recyclerview.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL));
     }
 
 
@@ -106,7 +117,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         Class<?> aClass = getActivityClass(title);
         if (aClass != null) {
             Intent intent = new Intent();
-            intent.setClass(getContext(), aClass);
+            intent.setClass(mContext, aClass);
             intent.putExtra(Const.TITLE, title);
             startActivity(intent);
         }
@@ -170,22 +181,25 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     private void checkVPN() {
         vpn = !vpn;
         ToastUtils.showShort(vpn ? "正在监测VPN" : "关闭监测VPN");
-        if (vpn)
-            if (SystemUtils.isVpnUsed()) {
-                ToastUtils.showShort("使用VPN中...\n" + SystemUtils.getIPAddress(getContext()));
-            } else {
-                ToastUtils.showShort("未使用使用VPN\n" + SystemUtils.getIPAddress(getContext()));
+        if (vpn) {
+            if (mContext != null) {
+                if (SystemUtils.isVpnUsed()) {
+                    ToastUtils.showShort("使用VPN中...\n" + SystemUtils.getIPAddress(mContext));
+                } else {
+                    ToastUtils.showShort("未使用使用VPN\n" + SystemUtils.getIPAddress(mContext));
+                }
             }
+        }
     }
 
-    private void onClickshortcutsAdd() {
+    private void onClickShortCutsAdd() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N_MR1) {
-            ShortcutManager shortcutManager = getContext().getSystemService(ShortcutManager.class);
+            ShortcutManager shortcutManager = mContext.getSystemService(ShortcutManager.class);
 
-            Intent intent = new Intent(getContext(), MainActivity.class);
+            Intent intent = new Intent(mContext, MainActivity.class);
             intent.setAction(Intent.ACTION_VIEW);
-            ShortcutInfo shortcut = new ShortcutInfo.Builder(getContext(), "noti_channel_demo")
-                    .setIcon(Icon.createWithResource(getContext(), R.drawable.logo))
+            ShortcutInfo shortcut = new ShortcutInfo.Builder(mContext, "notification_channel_demo")
+                    .setIcon(Icon.createWithResource(mContext, R.drawable.logo))
                     .setShortLabel("通知渠道")
                     .setLongLabel("通知渠道演示")
                     .setIntent(intent)
@@ -196,16 +210,16 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
 
     private void getUpdate() {
 
-        String appurl = "http://182.38.207.125:49155/imtt.dd.qq.com/16891/apk/912E6414B2549FFC49C8C63887F4C536.apk?mkey=618a0eb9700b56835a0410fc7dcf0043&arrive_key=23364718829&fsname=com.heiguang.hgrcwandroid_2.4.9_60.apk&hsr=4d5s&cip=122.4.199.97&proto=http";
+        String app_url = "http://182.38.207.125:49155/imtt.dd.qq.com/16891/apk/912E6414B2549FFC49C8C63887F4C536.apk?mkey=618a0eb9700b56835a0410fc7dcf0043&arrive_key=23364718829&fsname=com.heiguang.hgrcwandroid_2.4.9_60.apk&hsr=4d5s&cip=122.4.199.97&proto=http";
         UpdateEntity updateEntity = new UpdateEntity().setHasUpdate(true)
                 .setIsIgnorable(true)
-                .setVersionCode(SystemUtils.getVersionCode(getContext()))
-                .setVersionName(SystemUtils.getAppVersion(getContext()))
+                .setVersionCode(SystemUtils.getVersionCode(mContext))
+                .setVersionName(SystemUtils.getAppVersion(mContext))
                 .setUpdateContent("Fix bug")
-                .setDownloadUrl(appurl).setSize(30 * 1024);
-        UpdateManager build = XUpdate.newBuild(getContext())
+                .setDownloadUrl(app_url).setSize(30 * 1024);
+        UpdateManager build = XUpdate.newBuild(mContext)
                 .supportBackgroundUpdate(true)
-                //.promptThemeColor(getContext().getResources().getColor(R.color.zerofiveczeroab))
+                //.promptThemeColor(mContext.getResources().getColor(R.color.white))
                 //.promptTopResId() //顶部图片
                 //.promptButtonTextColor() //按钮颜色
                 //.promptWidthRatio((float) 0.5) //提示器宽度占屏幕的比例
@@ -222,31 +236,20 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     }
 
     private void startThreeApp() {
+        String class_name = mContext.getResources().getString(R.string.class_name);
         try {
             Intent intent = new Intent();
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setClassName("com.heiguang.hgrcwandroid", "com.heiguang.hgrcwandroid.activity.SplashActivity");
-            intent.putExtra("PushUtils", "PushUtils");
+            intent.setClassName(class_name, class_name + ".activity.SplashActivity");
+            intent.putExtra(PushUtils.pushTag, PushUtils.pushTag);
             startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
             ToastUtils.showLong("╮(╯▽╰)╭");
         }
 
-
-
-        /*try {
-            Intent intent = new Intent();
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setClassName("com.matrix.tramsh5", "io.dcloud.PandoraEntry");
-            intent.putExtra("test", "测试");
-            startActivity(intent);
-            LoadingDialog.showLoading(getActivity());
-        } catch (Exception e) {
-            e.printStackTrace();
-            ToastUtils.showLong("╮(╯▽╰)╭");
-        }*/
     }
+
 
     @Override
     public void onResume() {

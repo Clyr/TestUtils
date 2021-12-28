@@ -1,10 +1,8 @@
 package com.clyr.view.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.clyr.utils.BitmapUtils;
 import com.clyr.view.R;
@@ -73,7 +73,7 @@ public class SimpleLookActivity extends AppCompatActivity {
     private void setImageView(Object img) {
         BitmapUtils.setBitmap(this, img, mImageView);
         mPop = new PopupWindow(this);
-        View view = getLayoutInflater().inflate(R.layout.item_popupwindows2, null);
+        @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.item_popupwindows2, null);
         mPop.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         mPop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         mPop.setBackgroundDrawable(new BitmapDrawable());

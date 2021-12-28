@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,9 +74,7 @@ public class VScrollFragment extends Fragment {
             public void onPageRelease(boolean isNext, int position) {
                 Log.e(TAG, "释放位置:" + position + " 下一页:" + isNext);
                 int index = 0;
-                if (isNext) {
-                    index = 0;
-                } else {
+                if (!isNext) {
                     index = 1;
                 }
                 releaseVideo(index);
@@ -96,9 +93,9 @@ public class VScrollFragment extends Fragment {
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         private final int[] imgs = {R.mipmap.img_video_1, R.mipmap.img_video_2, R.mipmap.img_video_3, R.mipmap.img_video_4, R.mipmap.img_video_5, R.mipmap.img_video_6, R.mipmap.img_video_7, R.mipmap.img_video_8};
-        private final int[] videos = {R.raw.video_1, R.raw.video_2, R.raw.video_3, R.raw.video_4, R.raw.video_5, R.raw.video_6, R.raw.video_7, R.raw.video_8};
+        //private final int[] videos = {R.raw.video_1, R.raw.video_2, R.raw.video_3, R.raw.video_4, R.raw.video_5, R.raw.video_6, R.raw.video_7, R.raw.video_8};
         private int index = 0;
-        private Context mContext;
+        private final Context mContext;
 
         public MyAdapter(Context context) {
             this.mContext = context;
@@ -115,7 +112,8 @@ public class VScrollFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
             holder.img_thumb.setImageResource(imgs[index]);
-            holder.videoView.setVideoURI(Uri.parse("android.resource://" + getContext().getPackageName() + "/" + videos[index]));
+            //holder.videoView.setVideoURI(Uri.parse("android.resource://" + mContext.getPackageName() + "/" + videos[index]));
+            holder.videoView.setVideoPath("https://github.com/Clyr/TestUtils/blob/master/view/src/main/res/raw/video_1.mp4");
             index++;
             if (index >= 7) {
                 index = 0;
@@ -162,20 +160,14 @@ public class VScrollFragment extends Fragment {
         final ImageView imgThumb = itemView.findViewById(R.id.img_thumb);
         final RelativeLayout rootView = itemView.findViewById(R.id.root_view);
         final MediaPlayer[] mediaPlayer = new MediaPlayer[1];
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
+        videoView.setOnPreparedListener(mp -> {
 
-            }
         });
-        videoView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
-            @Override
-            public boolean onInfo(MediaPlayer mp, int what, int extra) {
-                mediaPlayer[0] = mp;
-                mp.setLooping(true);
-                imgThumb.animate().alpha(0).setDuration(200).start();
-                return false;
-            }
+        videoView.setOnInfoListener((mp, what, extra) -> {
+            mediaPlayer[0] = mp;
+            mp.setLooping(true);
+            imgThumb.animate().alpha(0).setDuration(200).start();
+            return false;
         });
 
         videoView.start();

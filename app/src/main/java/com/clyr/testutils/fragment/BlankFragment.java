@@ -1,5 +1,6 @@
 package com.clyr.testutils.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +24,10 @@ import butterknife.Unbinder;
 
 
 public class BlankFragment extends BaseFragment implements OnItemClickListener {
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.layout_refresh)
     SmartRefreshLayout mRefreshLayout;
+    @SuppressLint("NonConstantResourceId")
     @BindView(R.id.recyclerview)
     RecyclerView recyclerview;
     Unbinder unbinder;
@@ -58,7 +61,7 @@ public class BlankFragment extends BaseFragment implements OnItemClickListener {
         String[] stringArray = getResources().getStringArray(R.array.home_fun_list);
         mList = Arrays.asList(stringArray);
 
-        homeFragmentAdapter = new HomeFragmentAdapter(mList, this::onClick);
+        homeFragmentAdapter = new HomeFragmentAdapter(mList, this);
         recyclerview.setAdapter(homeFragmentAdapter);
     }
 

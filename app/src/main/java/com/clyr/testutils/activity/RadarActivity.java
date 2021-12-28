@@ -1,7 +1,6 @@
 package com.clyr.testutils.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.LinearLayout;
 
 import com.clyr.testutils.R;
@@ -10,8 +9,8 @@ import com.clyr.view.RadarImageView;
 
 public class RadarActivity extends BaseActivity {
     LinearLayout mLin;
-    private String[] titles = {"预警", "网络中断", "报警", "数据获取异常"};
-    private float[] values = {8, 6, 3, 10}; // 各维度分值
+    private final String[] titles = {"预警", "网络中断", "报警", "数据获取异常"};
+    private final float[] values = {8, 6, 3, 10}; // 各维度分值
     //    private LifeWheelRadarGraph mLf;
     private RadarImageView mImageView;
 
@@ -31,11 +30,6 @@ public class RadarActivity extends BaseActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT));*/
         mImageView = RadarImageView.newInstance(this, titles, values, 16);
         mLin.addView(mImageView);
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mImageView.changeValues(new float[]{(float) (Math.random() * 10), (float) (Math.random() * 10), (float) (Math.random() * 10), (float) (Math.random() * 10)});
-            }
-        });
+        findViewById(R.id.button).setOnClickListener(v -> mImageView.changeValues(new float[]{(float) (Math.random() * 10), (float) (Math.random() * 10), (float) (Math.random() * 10), (float) (Math.random() * 10)}));
     }
 }

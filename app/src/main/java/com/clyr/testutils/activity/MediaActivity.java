@@ -1,10 +1,10 @@
 package com.clyr.testutils.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.provider.MediaStore;
 import android.view.View;
 import android.view.animation.Animation;
@@ -83,16 +83,11 @@ public class MediaActivity extends BaseActivity {
     }
 
     private void initImageView() {
-        processImageView = (ProcessImageView) findViewById(R.id.image);
+        processImageView = findViewById(R.id.image);
         //模拟图片上传进度
-        mButton = (Button) findViewById(R.id.buttonimage);
+        mButton = findViewById(R.id.buttonimage);
         final Animation animation = AnimationUtils.loadAnimation(MediaActivity.this, R.anim.revolve_refresh);
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mButton.startAnimation(animation);
-            }
-        });
+        mButton.setOnClickListener(v -> mButton.startAnimation(animation));
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -117,53 +112,46 @@ public class MediaActivity extends BaseActivity {
         mButton.setVisibility(View.GONE);
         processImageView.setImageResource(R.drawable.image);
         progress = 0;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    if (progress == 100) {//图片上传完成
-                        handler.sendEmptyMessage(SUCCESS);
-                        return;
-                    }
-                    progress++;
-                    processImageView.setProgress(progress);
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+        new Thread(() -> {
+            while (true) {
+                if (progress == 100) {//图片上传完成
+                    handler.sendEmptyMessage(SUCCESS);
+                    return;
+                }
+                progress++;
+                processImageView.setProgress(progress);
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
     }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case SUCCESS:
-                    Toast.makeText(MediaActivity.this, "上传完成", Toast.LENGTH_SHORT).show();
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler(msg -> {
+        if (msg.what == SUCCESS) {
+            Toast.makeText(MediaActivity.this, "上传完成", Toast.LENGTH_SHORT).show();
 //                    processImageView.setVisibility(View.GONE);
-                    processImageView.setImageResource(R.drawable.error);
-                    mButton.setVisibility(View.VISIBLE);
-                    break;
-            }
+            processImageView.setImageResource(R.drawable.error);
+            mButton.setVisibility(View.VISIBLE);
         }
-    };
+        return false;
+    });
 
     private boolean getPermissions(int tag) {
         if (tag == 0) {
             if (EasyPermissions.hasPermissions(this, storagePermission)) {
                 return true;
             } else {
-                EasyPermissions.requestPermissions(this, null, 0, storagePermission);
+                EasyPermissions.requestPermissions(this, "", 0, storagePermission);
             }
         } else {
             if (EasyPermissions.hasPermissions(this, permissions)) {
                 return true;
             } else {
-                EasyPermissions.requestPermissions(this, null, 0, permissions);
+                EasyPermissions.requestPermissions(this, "", 0, permissions);
             }
         }
 

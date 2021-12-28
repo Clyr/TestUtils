@@ -28,17 +28,17 @@ public class PushMessageReceiver extends JPushMessageReceiver {
     @Override
     public void onNotifyMessageOpened(Context context, NotificationMessage message) {
         Log.e(TAG, "[onNotifyMessageOpened] " + message);
-        try{
+        try {
             //打开自定义的Activity
             Intent i = new Intent(context, TestActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putString(JPushInterface.EXTRA_NOTIFICATION_TITLE,message.notificationTitle);
-            bundle.putString(JPushInterface.EXTRA_ALERT,message.notificationContent);
+            bundle.putString(JPushInterface.EXTRA_NOTIFICATION_TITLE, message.notificationTitle);
+            bundle.putString(JPushInterface.EXTRA_ALERT, message.notificationContent);
             i.putExtras(bundle);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(i);
-        }catch (Throwable throwable){
-
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
         }
     }
 
@@ -52,14 +52,19 @@ public class PushMessageReceiver extends JPushMessageReceiver {
             Log.d(TAG, "ACTION_NOTIFICATION_CLICK_ACTION nActionExtra is null");
             return;
         }
-        if (nActionExtra.equals("my_extra1")) {
-            Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮一");
-        } else if (nActionExtra.equals("my_extra2")) {
-            Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮二");
-        } else if (nActionExtra.equals("my_extra3")) {
-            Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮三");
-        } else {
-            Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮未定义");
+        switch (nActionExtra) {
+            case "my_extra1":
+                Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮一");
+                break;
+            case "my_extra2":
+                Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮二");
+                break;
+            case "my_extra3":
+                Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮三");
+                break;
+            default:
+                Log.e(TAG, "[onMultiActionClicked] 用户点击通知栏按钮未定义");
+                break;
         }
     }
 
@@ -92,25 +97,25 @@ public class PushMessageReceiver extends JPushMessageReceiver {
 
     @Override
     public void onTagOperatorResult(Context context, JPushMessage jPushMessage) {
-        TagAliasOperatorHelper.getInstance().onTagOperatorResult(context,jPushMessage);
+        TagAliasOperatorHelper.getInstance().onTagOperatorResult(context, jPushMessage);
         super.onTagOperatorResult(context, jPushMessage);
     }
 
     @Override
     public void onCheckTagOperatorResult(Context context, JPushMessage jPushMessage) {
-        TagAliasOperatorHelper.getInstance().onCheckTagOperatorResult(context,jPushMessage);
+        TagAliasOperatorHelper.getInstance().onCheckTagOperatorResult(context, jPushMessage);
         super.onCheckTagOperatorResult(context, jPushMessage);
     }
 
     @Override
     public void onAliasOperatorResult(Context context, JPushMessage jPushMessage) {
-        TagAliasOperatorHelper.getInstance().onAliasOperatorResult(context,jPushMessage);
+        TagAliasOperatorHelper.getInstance().onAliasOperatorResult(context, jPushMessage);
         super.onAliasOperatorResult(context, jPushMessage);
     }
 
     @Override
     public void onMobileNumberOperatorResult(Context context, JPushMessage jPushMessage) {
-        TagAliasOperatorHelper.getInstance().onMobileNumberOperatorResult(context,jPushMessage);
+        TagAliasOperatorHelper.getInstance().onMobileNumberOperatorResult(context, jPushMessage);
         super.onMobileNumberOperatorResult(context, jPushMessage);
     }
 

@@ -1,12 +1,8 @@
 package com.clyr.testutils.adapter;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.annotation.SuppressLint;
 import android.graphics.BitmapFactory;
-import android.media.MediaPlayer;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +23,8 @@ import com.clyr.view.ProcessImageView;
  */
 public class GridViewAdapter extends BaseAdapter {
     private final GridActivity gridActivity;
-    private LayoutInflater mInflater;
-    private OnItemClickListener listener;
+    private final LayoutInflater mInflater;
+    private final OnItemClickListener listener;
 
     public GridViewAdapter(GridActivity gridActivity) {
         this.gridActivity = gridActivity;
@@ -57,6 +53,7 @@ public class GridViewAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint("InflateParams")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder = new ViewHolder();
@@ -64,7 +61,7 @@ public class GridViewAdapter extends BaseAdapter {
             if ("image".equals(gridActivity.mList.get(position).getTag())) {
                 convertView = mInflater.inflate(R.layout.layout_image,
                         null);
-                holder.image = (ProcessImageView) convertView
+                holder.image = convertView
                         .findViewById(R.id.image);
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 10;
@@ -73,7 +70,7 @@ public class GridViewAdapter extends BaseAdapter {
                 holder.image.setOnLongClickListener(v -> {
                     AlertDialog.Builder alert = new AlertDialog.Builder(gridActivity);
                     alert.setTitle("温馨提示").setMessage("是否要删除该图片？").setPositiveButton("确定", (dialog, which) -> {
-                        if (gridActivity.mList != null || gridActivity.mList.size() >= position) {
+                        if (gridActivity.mList != null && gridActivity.mList.size() >= position) {
                             gridActivity.mList.remove(position);
                             notifyDataSetChanged();
                         }
@@ -85,7 +82,7 @@ public class GridViewAdapter extends BaseAdapter {
             } else if ("video".equals(gridActivity.mList.get(position).getTag())) {
                 convertView = mInflater.inflate(R.layout.layout_video,
                         null);
-                holder.video = (MyVideoView) convertView
+                holder.video = convertView
                         .findViewById(R.id.video);
                 Uri uri = Uri.parse(gridActivity.mList.get(position).getInfo());
                 final MyVideoView videoView = holder.video;
@@ -94,16 +91,13 @@ public class GridViewAdapter extends BaseAdapter {
                 holder.video.setVideoURI(uri);
                 //开始播放视频
                 holder.video.start();
-                holder.videoRe = (RelativeLayout) convertView.findViewById(R.id.videolin);
+                holder.videoRe = convertView.findViewById(R.id.videolin);
                 holder.videoRe.setOnClickListener(v -> {
                     AlertDialog.Builder alert = new AlertDialog.Builder(gridActivity);
-                    alert.setTitle("温馨提示").setMessage("是否要删除该视频？").setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (gridActivity.mList != null || gridActivity.mList.size() >= position) {
-                                gridActivity.mList.remove(position);
-                                notifyDataSetChanged();
-                            }
+                    alert.setTitle("温馨提示").setMessage("是否要删除该视频？").setPositiveButton("确定", (dialog, which) -> {
+                        if (gridActivity.mList != null && gridActivity.mList.size() >= position) {
+                            gridActivity.mList.remove(position);
+                            notifyDataSetChanged();
                         }
                     }).setNegativeButton("取消", (dialog, which) -> {
 
@@ -113,7 +107,7 @@ public class GridViewAdapter extends BaseAdapter {
             } else if ("out".equals(gridActivity.mList.get(position).getTag())) {
                 convertView = mInflater.inflate(R.layout.layout_image,
                         null);
-                holder.image = (ProcessImageView) convertView
+                holder.image = convertView
                         .findViewById(R.id.image);
                 holder.image.setImageResource(R.drawable.icon_addpic_unfocused);
                 holder.image.setOnClickListener(v -> listener.onClick(-1, "ADD"));

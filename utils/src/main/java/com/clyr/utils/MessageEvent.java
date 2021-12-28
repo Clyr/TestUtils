@@ -1,5 +1,7 @@
 package com.clyr.utils;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by 11635 of clyr on 2021/9/22.
  */
@@ -35,6 +37,7 @@ public class MessageEvent {
         this.count = count;
     }
 
+    @NonNull
     @Override
     public String toString() {
 

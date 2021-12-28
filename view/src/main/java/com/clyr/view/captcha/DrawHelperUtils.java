@@ -29,7 +29,7 @@ public class DrawHelperUtils {
             //绘制竖直方向的
 
             //是否是从上到下
-            boolean topToBottom = end.y - start.y > 0 ? true : false;
+            boolean topToBottom = end.y - start.y > 0;
             //以下是我写出了所有的计算公式后推的，不要问我过程，只可意会。
             int flag;//旋转系数
             if (topToBottom) {
@@ -58,7 +58,7 @@ public class DrawHelperUtils {
             //绘制水平方向的
 
             //是否是从左到右
-            boolean leftToRight = end.x - start.x > 0 ? true : false;
+            boolean leftToRight = end.x - start.x > 0;
             //以下是我写出了所有的计算公式后推的，不要问我过程，只可意会。
             int flag;//旋转系数
             if (leftToRight) {

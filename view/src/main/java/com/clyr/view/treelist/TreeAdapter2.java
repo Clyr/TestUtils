@@ -3,7 +3,6 @@ package com.clyr.view.treelist;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
@@ -17,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TreeAdapter2 extends BaseAdapter{
-	private Context con;
-	private LayoutInflater lif;
-	private List<Model> all = new ArrayList<Model>();//展示
-	private List<Model> cache = new ArrayList<Model>();//缓存
-	private TreeAdapter2 tree = this;
+	private final Context con;
+	private final LayoutInflater lif;
+	private final List<Model> all = new ArrayList<>();//展示
+	private final List<Model> cache = new ArrayList<>();//缓存
+	private final TreeAdapter2 tree = this;
 	boolean hasCheckBox;
 	private int expandIcon = -1;//展开图标
 	private int collapseIcon = -1;//收缩图标
@@ -89,7 +88,7 @@ public class TreeAdapter2 extends BaseAdapter{
 	 *
 	 */
 	public List<Node>getSelectedNode(){
-		List<Node>checks =new ArrayList<Node>()	;
+		List<Node>checks = new ArrayList<>()	;
 		for(int i = 0;i<cache.size();i++){
 			Model n =(Model)cache.get(i);
 //			if(n.isChecked())
@@ -183,7 +182,7 @@ public class TreeAdapter2 extends BaseAdapter{
 	@Override
 	public View getView(int location, View view, ViewGroup viewgroup) {
 
-		ViewItem vi = null;
+		ViewItem vi;
 		if(view == null){
 			view = lif.inflate(R.layout.list_item, null);
 			vi = new ViewItem();
@@ -191,15 +190,11 @@ public class TreeAdapter2 extends BaseAdapter{
 			vi.flagIcon = (ImageView)view.findViewById(R.id.ivec);
 			vi.tv = (TextView)view.findViewById(R.id.itemvalue);
 			vi.icon =(ImageView)view.findViewById(R.id.ivicon);
-			vi.cb.setOnClickListener(new OnClickListener() {
+			vi.cb.setOnClickListener(v -> {
 
-				@Override
-				public void onClick(View v) {
-
-					Node n = (Node)v.getTag();
-					checkNode(n, ((CheckBox)v).isChecked());
-					tree.notifyDataSetChanged();
-				}
+				Node n = (Node)v.getTag();
+				checkNode(n, ((CheckBox)v).isChecked());
+				tree.notifyDataSetChanged();
 			});
 			view.setTag(vi);
 		}

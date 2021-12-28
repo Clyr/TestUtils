@@ -10,14 +10,10 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.clyr.base.bean.ListBean;
@@ -25,7 +21,6 @@ import com.clyr.base.interfaces.OnItemClickListener;
 import com.clyr.testutils.R;
 import com.clyr.testutils.adapter.GridViewAdapter;
 import com.clyr.testutils.base.BaseActivity;
-import com.clyr.testutils.base.Const;
 import com.clyr.view.DialogHelper;
 import com.clyr.view.activity.CameraActivity;
 import com.clyr.view.activity.SimpleLookActivity;
@@ -39,7 +34,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class GridActivity extends BaseActivity implements OnItemClickListener, EasyPermissions.PermissionCallbacks {
 
-    private GridView mGridview;
     public List<ListBean> mList = new ArrayList<>();
     private GridViewAdapter mAdapter;
 
@@ -61,7 +55,7 @@ public class GridActivity extends BaseActivity implements OnItemClickListener, E
     @Override
     protected void initView() {
         initBar();
-        mGridview = findViewById(R.id.gridview);
+        GridView mGridview = findViewById(R.id.gridview);
         ListBean listBean = new ListBean();
         listBean.setTag("out");
         listBean.setInfo("");
@@ -108,8 +102,7 @@ public class GridActivity extends BaseActivity implements OnItemClickListener, E
         Cursor cursor = managedQuery(data.getData(), imgPath, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
-        String path = cursor.getString(column_index);
-        return path;
+        return cursor.getString(column_index);
     }
 
     protected void openCamera() {
@@ -153,7 +146,7 @@ public class GridActivity extends BaseActivity implements OnItemClickListener, E
                     if (EasyPermissions.hasPermissions(this, storagePermission)) {
                         openAlbum();
                     } else {
-                        EasyPermissions.requestPermissions(this, null, PERMISSION_STORAGE_CODE, storagePermission);
+                        EasyPermissions.requestPermissions(this, "", PERMISSION_STORAGE_CODE, storagePermission);
                     }
                     Intent intent2 = new Intent(Intent.ACTION_PICK,
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -179,7 +172,7 @@ public class GridActivity extends BaseActivity implements OnItemClickListener, E
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);

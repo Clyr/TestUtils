@@ -1,8 +1,6 @@
 package com.clyr.utils.utilshelper;
 
-/**
- * Created by M S I of clyr on 2019/6/14.
- */
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -11,6 +9,8 @@ import android.os.Environment;
 import android.os.Process;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -42,7 +43,8 @@ public class CrashHandler2 implements UncaughtExceptionHandler {
      */
     private static final String FILE_NAME_SUFFIX = ".trace";
 
-    private static CrashHandler2 sInstance = new CrashHandler2();
+    @SuppressLint("StaticFieldLeak")
+    private static final CrashHandler2 sInstance = new CrashHandler2();
     private UncaughtExceptionHandler mDefaultCrashHandler;
     private Context mContext;
 
@@ -77,7 +79,7 @@ public class CrashHandler2 implements UncaughtExceptionHandler {
      * @param ex     为未捕获的异常 ，可以通过e 拿到异常信息
      */
     @Override
-    public void uncaughtException(Thread thread, Throwable ex) {
+    public void uncaughtException(@NonNull Thread thread, @NonNull Throwable ex) {
 
         //导入异常信息到SD卡中
         try {
@@ -117,7 +119,7 @@ public class CrashHandler2 implements UncaughtExceptionHandler {
         }
         //得到当前年月日时分秒
         long current = System.currentTimeMillis();
-        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(current));
+        @SuppressLint("SimpleDateFormat") String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(current));
         //在定义的Crash文件夹下创建文件
         File file = new File(PATH + FILE_NAME + time + FILE_NAME_SUFFIX);
 
@@ -164,7 +166,7 @@ public class CrashHandler2 implements UncaughtExceptionHandler {
         //CPU架构
         pw.print("CPU ABI: ");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            pw.println(Build.SUPPORTED_ABIS);
+            pw.println(Arrays.toString(Build.SUPPORTED_ABIS));
         }else {
             pw.println(Build.CPU_ABI);
         }

@@ -18,9 +18,8 @@ public class HttpLog {
     );
     public static OkHttpClient getLogClient(){
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()//okhttp设置部分，此处还可再设置网络参数
+        return new OkHttpClient.Builder()//okhttp设置部分，此处还可再设置网络参数
                 .addInterceptor(loggingInterceptor)
                 .build();
-        return client;
     }
 }

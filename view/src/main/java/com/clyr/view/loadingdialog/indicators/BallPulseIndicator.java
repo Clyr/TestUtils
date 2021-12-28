@@ -4,9 +4,9 @@ import android.animation.ValueAnimator;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import java.util.ArrayList;
-
 import com.clyr.view.loadingdialog.Indicator;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jack on 2015/10/16.
@@ -16,7 +16,7 @@ public class BallPulseIndicator extends Indicator {
     public static final float SCALE=1.0f;
 
     //scale x ,y
-    private float[] scaleFloats=new float[]{SCALE,
+    private final float[] scaleFloats=new float[]{SCALE,
             SCALE,
             SCALE};
 
@@ -26,8 +26,8 @@ public class BallPulseIndicator extends Indicator {
     public void draw(Canvas canvas, Paint paint) {
         float circleSpacing=4;
         float radius=(Math.min(getWidth(),getHeight())-circleSpacing*2)/6;
-        float x = getWidth()/ 2-(radius*2+circleSpacing);
-        float y=getHeight() / 2;
+        float x = (getWidth() >> 1) -(radius*2+circleSpacing);
+        float y= getHeight() >> 1;
         for (int i = 0; i < 3; i++) {
             canvas.save();
             float translateX=x+(radius*2)*i+circleSpacing*i;
@@ -51,12 +51,9 @@ public class BallPulseIndicator extends Indicator {
             scaleAnim.setRepeatCount(-1);
             scaleAnim.setStartDelay(delays[i]);
 
-            addUpdateListener(scaleAnim,new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    scaleFloats[index] = (float) animation.getAnimatedValue();
-                    postInvalidate();
-                }
+            addUpdateListener(scaleAnim, animation -> {
+                scaleFloats[index] = (float) animation.getAnimatedValue();
+                postInvalidate();
             });
             animators.add(scaleAnim);
         }

@@ -20,13 +20,11 @@ import com.jaeger.library.StatusBarUtil;
 
 public class MainActivity extends BaseActivity {
 
-    private ActivityMainBinding binding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        com.clyr.testutils.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -50,9 +48,6 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onMessageEvent(MessageEvent event) {
         super.onMessageEvent(event);
-        if (event != null) {
-
-        }
     }
 
     @Override
@@ -77,7 +72,7 @@ public class MainActivity extends BaseActivity {
             String shortcuts = SystemUtilActivity.shortcuts;
             if (!TextUtils.isEmpty(intent.getStringExtra(shortcuts)) && shortcuts.equals(intent.getStringExtra(shortcuts))) {
                 startActivity(SystemUtilActivity.class);
-                intent.putExtra(shortcuts,"");
+                intent.putExtra(shortcuts, "");
             }
         }
     }

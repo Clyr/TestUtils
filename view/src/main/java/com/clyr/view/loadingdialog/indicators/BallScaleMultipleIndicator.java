@@ -5,9 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.animation.LinearInterpolator;
 
-import java.util.ArrayList;
-
 import com.clyr.view.loadingdialog.Indicator;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jack on 2015/10/19.
@@ -22,8 +22,8 @@ public class BallScaleMultipleIndicator extends Indicator {
         float circleSpacing=4;
         for (int i = 0; i < 3; i++) {
             paint.setAlpha(alphaInts[i]);
-            canvas.scale(scaleFloats[i],scaleFloats[i],getWidth()/2,getHeight()/2);
-            canvas.drawCircle(getWidth()/2,getHeight()/2,getWidth()/2-circleSpacing,paint);
+            canvas.scale(scaleFloats[i],scaleFloats[i], getWidth() >> 1, getHeight() >> 1);
+            canvas.drawCircle(getWidth() >> 1, getHeight() >> 1, (getWidth() >> 1) -circleSpacing,paint);
         }
     }
 
@@ -37,12 +37,9 @@ public class BallScaleMultipleIndicator extends Indicator {
             scaleAnim.setInterpolator(new LinearInterpolator());
             scaleAnim.setDuration(1000);
             scaleAnim.setRepeatCount(-1);
-            addUpdateListener(scaleAnim,new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    scaleFloats[index] = (float) animation.getAnimatedValue();
-                    postInvalidate();
-                }
+            addUpdateListener(scaleAnim, animation -> {
+                scaleFloats[index] = (float) animation.getAnimatedValue();
+                postInvalidate();
             });
             scaleAnim.setStartDelay(delays[i]);
 
@@ -50,12 +47,9 @@ public class BallScaleMultipleIndicator extends Indicator {
             alphaAnim.setInterpolator(new LinearInterpolator());
             alphaAnim.setDuration(1000);
             alphaAnim.setRepeatCount(-1);
-            addUpdateListener(alphaAnim,new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    alphaInts[index] = (int) animation.getAnimatedValue();
-                    postInvalidate();
-                }
+            addUpdateListener(alphaAnim, animation -> {
+                alphaInts[index] = (int) animation.getAnimatedValue();
+                postInvalidate();
             });
             scaleAnim.setStartDelay(delays[i]);
 

@@ -1,5 +1,6 @@
 package com.clyr.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -61,9 +62,8 @@ public class BitmapUtils {
         float scaleHeight = ((float) newHeight) / height;
         // 缩放图片动作
         matrix.postScale(scaleWidth, scaleHeight);
-        Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width,
+        return Bitmap.createBitmap(bgimage, 0, 0, (int) width,
                 (int) height, matrix, true);
-        return bitmap;
     }
 
     /**
@@ -82,8 +82,7 @@ public class BitmapUtils {
             if (responseCode == 200) {
                 //访问成功
                 InputStream is = conn.getInputStream(); //获得服务器返回的流数据
-                Bitmap bitmap = BitmapFactory.decodeStream(is); //根据流数据 创建一个bitmap对象
-                return bitmap;
+                return BitmapFactory.decodeStream(is);
             } else {
                 //访问失败
                 Log.d("imagenet", "访问失败===responseCode：" + responseCode);
@@ -110,8 +109,7 @@ public class BitmapUtils {
     }
 
     public static Bitmap drawableToBitmap(int drawble, Context context) {
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), drawble);
-        return bitmap;
+        return BitmapFactory.decodeResource(context.getResources(), drawble);
     }
 
     /**
@@ -121,7 +119,7 @@ public class BitmapUtils {
      * @return
      */
     public static Drawable bitmapToDrawable(Bitmap bitmap) {
-        return new BitmapDrawable(bitmap);
+        return new BitmapDrawable(null, bitmap);
     }
 
 
@@ -134,7 +132,7 @@ public class BitmapUtils {
 
     public static String GetImageStr() {
         String imgFile = "C:/Users/Star/Desktop/test.png";// 待处理的图片
-        InputStream in = null;
+        InputStream in;
         byte[] data = null;
         // 读取图片字节数组
         try {
@@ -190,6 +188,7 @@ public class BitmapUtils {
      * @param imgUrl
      * @param imageView
      */
+    @SuppressLint("CheckResult")
     public static void getImgForGlide(Context context, String imgUrl, ImageView imageView) {
         //加载
         Glide.with(context).load(imgUrl).into(imageView);
@@ -365,7 +364,7 @@ public class BitmapUtils {
         return bitmap;
     }
 
-    public static void setBitmap(Context context,Object imgUrl,ImageView imageView){
+    public static void setBitmap(Context context, Object imgUrl, ImageView imageView) {
         Glide.with(context)
                 .load(imgUrl)
                 .centerCrop()

@@ -100,11 +100,11 @@ public class NotificationUtils {
             builder.setChannelId(NOTIFICATION_TEST_ID);
         }
 
-        Notification noti = builder.build();
+        Notification notification = builder.build();
 
-        noti.flags = flagNoClear;//不能删除通知
+        notification.flags = flagNoClear;//不能删除通知
         //3、manager.notify()
-        mManager.notify(NOTIFICATION_ID, noti);
+        mManager.notify(NOTIFICATION_ID, notification);
         addIDToList(new NotificationType(NOTIFICATION_ID, NotificationType.NotifiType.normal));
 
     }
@@ -197,11 +197,11 @@ public class NotificationUtils {
             builder.setChannelId(NOTIFICATION_TEST_ID);
         }
 
-        Notification noti = builder.build();
-        // noti.flags = Notification.FLAG_NO_CLEAR;//不能删除通知
-        noti.flags = flagNoClear;//不能删除通知
+        Notification notification = builder.build();
+        // notification.flags = Notification.FLAG_NO_CLEAR;//不能删除通知
+        notification.flags = flagNoClear;//不能删除通知
         //3、manager.notify()
-        mManager.notify(NOTIFICATION_ID, noti);
+        mManager.notify(NOTIFICATION_ID, notification);
         addIDToList(new NotificationType(NOTIFICATION_ID, NotificationType.NotifiType.normal));
     }
 
@@ -213,7 +213,7 @@ public class NotificationUtils {
      * @param drawable 图标
      * @return
      */
-    public Notification showNotfi(Context context, String title, String content, Class<? extends Activity> cla, int drawable) {
+    public Notification showNotification(Context context, String title, String content, Class<? extends Activity> cla, int drawable) {
         String channelOneId = "getui_" + context.getString(R.string.app_name);
         CharSequence channelName = "个推";
 
@@ -252,7 +252,7 @@ public class NotificationUtils {
         return notification;
     }
 
-    public Notification showNotfi(Context context, String title, String content, int drawable) {
+    public Notification showNotification(Context context, String title, String content, int drawable) {
         String channelOneId = context.getString(R.string.app_name) + "_Test";
         CharSequence channelName = context.getString(R.string.app_name);
 
@@ -362,13 +362,6 @@ public class NotificationUtils {
     }
 
     private void addIDToList(NotificationType notificationType) {
-        /*for (NotificationType noti : mList) {
-            if (noti.getNotifiId() == notificationType.getNotifiId()) {
-                return;
-            }
-        }
-        mList.add(notificationType);*/
-
         if (!mList.contains(notificationType)) {
             mList.add(notificationType);
         } else {
@@ -377,9 +370,9 @@ public class NotificationUtils {
     }
 
     private void deleteIDToList(int notifiId) {
-        for (NotificationType noti : mList) {
-            if (noti.getNotifiId() == notifiId) {
-                mList.remove(noti);
+        for (NotificationType notification : mList) {
+            if (notification.getNotifiId() == notifiId) {
+                mList.remove(notification);
                 return;
             }
         }

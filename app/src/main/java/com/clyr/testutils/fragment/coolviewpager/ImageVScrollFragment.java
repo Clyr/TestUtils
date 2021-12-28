@@ -39,7 +39,7 @@ public class ImageVScrollFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
     MyLayoutManager myLayoutManager;
-    private List<Integer> mList = new ArrayList<>();
+    private final List<Integer> mList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +97,7 @@ public class ImageVScrollFragment extends Fragment {
 
     class MyAdapter extends RecyclerView.Adapter<ImageVScrollFragment.MyAdapter.ViewHolder> {
         private final Context mContext;
-        private List<Integer> list;
+        private final List<Integer> list;
 
         public MyAdapter(Context context, List<Integer> list) {
             this.mContext = context;

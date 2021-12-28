@@ -16,22 +16,22 @@ import android.view.View;
 
 public class RadarImageView extends View {
     private static int count = 4;
-    private float angle = 360 / count;
-    private int point_radius = 1; // 画点的半径
-    private int regionwidth = 40; // 选择分值小区域宽度
-    private int valueRulingCount = 5; // 画等分值线
+    private final float angle = 360 / count;
+    private final int point_radius = 1; // 画点的半径
+    private final int regionwidth = 40; // 选择分值小区域宽度
+    private final int valueRulingCount = 5; // 画等分值线
     private int radius;
     private int centerX;
     private int centerY;
     private static String[] titles = {"工作", "财富", "健康", "娱乐"/*, "家庭", "社交",
             "精神", "贡献"*/};
-    private static RadarImageView lfrg = null;
+    private static final RadarImageView lfrg = null;
     private Point[] pts; // 维度端点
     private Region[] regions; // 打分点区域
     private float[] regionValues; // 打分点分数
     private Path valuePath;
     private static float[] values = {8, 6, 8, 6/*, 6, 6, 4, 5*/}; // 各维度分值
-    private int maxValue = 10;
+    private final int maxValue = 10;
     private Point[] value_pts; // 维度端点
     private Paint paint;
     private Paint valuePaint;

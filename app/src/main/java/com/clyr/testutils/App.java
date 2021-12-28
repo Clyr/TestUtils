@@ -2,6 +2,7 @@ package com.clyr.testutils;
 
 import static com.xuexiang.xupdate.entity.UpdateError.ERROR.CHECK_NO_NEW_VERSION;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
@@ -22,8 +23,6 @@ import com.clyr.utils.utilshelper.ACache;
 import com.lzy.okgo.OkGo;
 import com.tencent.bugly.crashreport.CrashReport;
 import com.xuexiang.xupdate.XUpdate;
-import com.xuexiang.xupdate.entity.UpdateError;
-import com.xuexiang.xupdate.listener.OnUpdateFailureListener;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.https.HttpsUtils;
 
@@ -33,9 +32,6 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
-
 import okhttp3.OkHttpClient;
 
 
@@ -44,6 +40,7 @@ import okhttp3.OkHttpClient;
  */
 
 public class App extends MultiDexApplication {
+    @SuppressLint("StaticFieldLeak")
     private static App mApp = null;
     // user your appid the key.
     private static final String APP_ID = "2882303761518025201";
@@ -54,8 +51,11 @@ public class App extends MultiDexApplication {
     // com.xiaomi.mipushdemo
     public static final String TAG = "com.xiaomi.mipushdemo";
 
+    @SuppressLint("StaticFieldLeak")
     private static DemoHandler sHandler = null;
+    @SuppressLint("StaticFieldLeak")
     private static MainActivity sMainActivity = null;
+    @SuppressLint("StaticFieldLeak")
     private static Context mContext;
     public static final String CACHE_NAME = "picasso-cache";
     private static ACache mACache;
@@ -70,12 +70,7 @@ public class App extends MultiDexApplication {
         HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
-                .hostnameVerifier(new HostnameVerifier() {
-                    @Override
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                })
+                .hostnameVerifier((hostname, session) -> true)
                 .connectTimeout(15000L, TimeUnit.MILLISECONDS)
                 .readTimeout(15000L, TimeUnit.MILLISECONDS)
                 //其他配置
@@ -98,6 +93,7 @@ public class App extends MultiDexApplication {
          * 参数3：是否开启调试模式，调试模式下会输出'CrashReport'tag的日志
          */
         CrashReport.initCrashReport(getApplicationContext(), "e349a84b8a", true);
+        //设置版本更新出错的监听
         XUpdate.get()
                 .debug(true)
                 .isWifiOnly(true)                                               //默认设置只在wifi下检查版本更新
@@ -105,12 +101,9 @@ public class App extends MultiDexApplication {
                 .isAutoMode(false)                                              //默认设置非自动模式，可根据具体使用配置
                 //.param("versionCode", UpdateUtils.getVersionCode(this))         //设置默认公共请求参数
                 //.param("appKey", getPackageName())
-                .setOnUpdateFailureListener(new OnUpdateFailureListener() {     //设置版本更新出错的监听
-                    @Override
-                    public void onFailure(UpdateError error) {
-                        if (error.getCode() != CHECK_NO_NEW_VERSION) {          //对不同错误进行处理
-                            //ToastUtils.toast(error.toString());
-                        }
+                .setOnUpdateFailureListener(error -> {
+                    if (error.getCode() != CHECK_NO_NEW_VERSION) {          //对不同错误进行处理
+                        //ToastUtils.toast(error.toString());
                     }
                 })
                 .supportSilentInstall(true)                                     //设置是否支持静默安装，默认是true

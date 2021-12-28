@@ -22,6 +22,7 @@ import android.widget.FrameLayout.LayoutParams;
 import java.lang.reflect.Method;
 
 
+@SuppressLint("ObsoleteSdkInt")
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class SystemStatusManager 
 {
@@ -29,7 +30,7 @@ public class SystemStatusManager
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             try {
-                Class c = Class.forName("android.os.SystemProperties");
+                @SuppressLint("PrivateApi") Class c = Class.forName("android.os.SystemProperties");
                 Method m = c.getDeclaredMethod("get", String.class);
                 m.setAccessible(true);
                 sNavBarOverride = (String) m.invoke(null, "qemu.hw.mainkeys");

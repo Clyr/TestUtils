@@ -1,5 +1,6 @@
 package com.clyr.testutils.base;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
@@ -9,11 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.clyr.testutils.R;
-import com.clyr.utils.EventBusMsg;
 import com.clyr.utils.GsonUtil;
 import com.clyr.utils.MessageEvent;
 import com.clyr.utils.MyLog;
+import com.clyr.utils.ToastUtils;
 import com.clyr.utils.UtilsKit;
+import com.clyr.view.loadingdialog.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,6 +29,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public LinearLayout left_lin;
     public TextView title_center_text;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,11 +54,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onNewIntent(intent);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
 
     protected abstract void initView();
 
@@ -64,9 +62,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         MyLog.d(GsonUtil.toJson(event));
         if (event != null) {
             if (event.Type == MessageEvent.NOLOGIN) {
-
+                ToastUtils.showShort(event.message);
             } else if (event.Type == MessageEvent.CHATRELOAD) {
-
+                ToastUtils.showShort(event.message);
             }
         }
     }
@@ -95,4 +93,34 @@ public abstract class BaseActivity extends AppCompatActivity {
     public LinearLayout getTitleBody() {
         return findViewById(R.id.title_body);
     }
+
+    private void showLoadding() {
+        if (this.isFinishing()) {
+            return;
+        }
+        if (dialog == null) {
+            dialog = LoadingDialog.showLoading(this);
+        } else {
+            dialog.show();
+        }
+    }
+
+    private void hideLoadding() {
+        if (this.isFinishing()) {
+            return;
+        }
+        if (dialog != null) {
+            dialog.hide();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+        if (dialog != null) {
+            dialog.hide();
+        }
+    }
+
 }

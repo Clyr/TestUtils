@@ -1,5 +1,6 @@
 package com.clyr.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,7 +19,7 @@ import com.clyr.utils.ScreenUtil;
 
 public class UnReadView extends AppCompatTextView {
 
-    private int mNormalSize = ScreenUtil.getPxByDp(16f);
+    private final int mNormalSize = ScreenUtil.getPxByDp(16f);
     private Paint mPaint;
 
     public UnReadView(Context context) {
@@ -44,21 +45,20 @@ public class UnReadView extends AppCompatTextView {
     }
 
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {
         int pxByDp = ScreenUtil.getPxByDp(3);
         if (getText().length() == 0) {
             // 没有字符，就在本View中心画一个小圆点
             int l = (getMeasuredWidth() - ScreenUtil.getPxByDp(8)) / 2;
-            int t = l;
             int r = getMeasuredWidth() - l;
-            int b = r;
-            canvas.drawOval(new RectF(l, t, r, b), mPaint);
+            canvas.drawOval(new RectF(l, l, r, r), mPaint);
         } else if (getText().length() == 1) {
-            canvas.drawOval(new RectF(0, 0, mNormalSize , mNormalSize), mPaint);
+            canvas.drawOval(new RectF(0, 0, mNormalSize, mNormalSize), mPaint);
             //canvas.drawOval(new RectF(pxByDp/2, pxByDp, mNormalSize - pxByDp/2 , mNormalSize), mPaint);
         } else if (getText().length() > 1) {
-            canvas.drawRoundRect(new RectF(0, 0, getMeasuredWidth(), getMeasuredHeight()), getMeasuredHeight() / 2, getMeasuredHeight() / 2, mPaint);
+            canvas.drawRoundRect(new RectF(0, 0, getMeasuredWidth(), getMeasuredHeight()), getMeasuredHeight() >> 1, getMeasuredHeight() >> 1, mPaint);
         }
         super.onDraw(canvas);
 
@@ -67,10 +67,9 @@ public class UnReadView extends AppCompatTextView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = mNormalSize;
-        int height = mNormalSize;
         if (getText().length() > 1) {
             width = mNormalSize + ScreenUtil.getPxByDp((getText().length() - 1) * 10);
         }
-        setMeasuredDimension(width, height);
+        setMeasuredDimension(width, mNormalSize);
     }
 }

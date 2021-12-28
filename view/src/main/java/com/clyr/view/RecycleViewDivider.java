@@ -8,6 +8,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     private Paint mPaint;
     private Drawable mDivider;
     private int mDividerHeight = 2;//分割线高度，默认为1px
-    private int mOrientation;//列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
+    private final int mOrientation;//列表的方向：LinearLayoutManager.VERTICAL或LinearLayoutManager.HORIZONTAL
     private static final int[] ATTRS = new int[]{android.R.attr.listDivider};
 
     /**
@@ -51,7 +52,9 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     public RecycleViewDivider(Context context, int orientation, int drawableId) {
         this(context, orientation);
         mDivider = ContextCompat.getDrawable(context, drawableId);
-        mDividerHeight = mDivider.getIntrinsicHeight();
+        if (mDivider != null) {
+            mDividerHeight = mDivider.getIntrinsicHeight();
+        }
     }
 
     /**
@@ -73,7 +76,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
 
     //获取分割线尺寸
     @Override
-    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         if (mOrientation == LinearLayoutManager.VERTICAL) {
             outRect.set(0, 0, 0, mDividerHeight);
@@ -84,7 +87,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
 
     //绘制分割线
     @Override
-    public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+    public void onDraw(@NonNull Canvas c, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
         super.onDraw(c, parent, state);
         if (mOrientation == LinearLayoutManager.VERTICAL) {
             drawVertical(c, parent);
@@ -96,6 +99,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     /**
      * 绘制纵向列表时的分隔线  这时分隔线是横着的
      * 每次 left相同，top根据child变化，right相同，bottom也变化
+     *
      * @param canvas
      * @param parent
      */
@@ -121,6 +125,7 @@ public class RecycleViewDivider extends RecyclerView.ItemDecoration {
     /**
      * 绘制横向列表时的分隔线  这时分隔线是竖着的
      * l、r 变化； t、b 不变
+     *
      * @param canvas
      * @param parent
      */

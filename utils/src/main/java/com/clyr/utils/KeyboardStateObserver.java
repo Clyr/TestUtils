@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
 /**
@@ -18,7 +17,7 @@ public class KeyboardStateObserver {
         return new KeyboardStateObserver(activity);
     }
 
-    private View mChildOfContent;
+    private final View mChildOfContent;
     private int usableHeightPrevious;
     private OnKeyboardVisibilityListener listener;
 
@@ -27,13 +26,9 @@ public class KeyboardStateObserver {
     }
 
     private KeyboardStateObserver(Activity activity) {
-        FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
+        FrameLayout content = activity.findViewById(android.R.id.content);
         mChildOfContent = content.getChildAt(0);
-        mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            public void onGlobalLayout() {
-                possiblyResizeChildOfContent();
-            }
-        });
+        mChildOfContent.getViewTreeObserver().addOnGlobalLayoutListener(this::possiblyResizeChildOfContent);
     }
 
     private void possiblyResizeChildOfContent() {

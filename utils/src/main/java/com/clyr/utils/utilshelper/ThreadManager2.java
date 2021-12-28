@@ -26,9 +26,9 @@ public class ThreadManager2 {
     //通过ThreadPoolExecutor的代理类来对线程池的管理
     public static class ThreadPollProxy{
         private ThreadPoolExecutor poolExecutor;//线程池执行者 ，java内部通过该api实现对线程池管理
-        private int corePoolSize;
-        private int maximumPoolSize;
-        private long keepAliveTime;
+        private final int corePoolSize;
+        private final int maximumPoolSize;
+        private final long keepAliveTime;
 
         public ThreadPollProxy(int corePoolSize,int maximumPoolSize,long keepAliveTime){
             this.corePoolSize=corePoolSize;
@@ -48,7 +48,7 @@ public class ThreadManager2 {
                         //时间单元 ，毫秒级
                         TimeUnit.MILLISECONDS,
                         //线程任务队列
-                        new LinkedBlockingQueue<Runnable>(),
+                        new LinkedBlockingQueue<>(),
                         //创建线程的工厂
                         Executors.defaultThreadFactory());
             }
@@ -95,13 +95,13 @@ public class ThreadManager2 {
     public static ExecutorService newFixedThreadPool(int nThreads) {
         return new ThreadPoolExecutor(nThreads, nThreads,
                 0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<Runnable>());
+                new LinkedBlockingQueue<>());
     }
 
     public static ExecutorService newCachedThreadPool() {
         return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
                 60L, TimeUnit.SECONDS,
-                new SynchronousQueue<Runnable>());
+                new SynchronousQueue<>());
     }
     /*public ScheduledThreadPoolExecutor(int corePoolSize) {
         super(corePoolSize, Integer.MAX_VALUE, 0, NANOSECONDS, new DelayedWorkQueue());

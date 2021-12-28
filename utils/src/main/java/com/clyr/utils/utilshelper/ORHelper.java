@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by M S I of clyr on 2019/5/20.
  */
 public class ORHelper {
-    private static String BASE_URl = "";
+    private static final String BASE_URl = "";
 
     public static Retrofit.Builder retrofit(String url) {
         OkHttpClient client = getClient();
@@ -53,14 +53,13 @@ public class ORHelper {
         return retrofit.create(service);
     }
     public static Retrofit getHttpApi() {
-        Retrofit retrofit = new Retrofit.Builder()
+
+        return new Retrofit.Builder()
                 .baseUrl(BASE_URl)
                 .client(ORHelper.getClient())
 //                .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setDateFormat("yyyy-MM-dd").create()))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-
-        return retrofit;
     }
 }

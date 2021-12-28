@@ -310,17 +310,19 @@ public class StringUtils {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         String s = hour >= 0 && hour < 12 ? "上午" : "下午";
         s += " HH:mm";
-
-        if (mCurrentDate.get(Calendar.DATE) == calendar.get(Calendar.DATE)) {
-            formatter.applyPattern(s);
-        } else if (mCurrentDate.get(Calendar.DATE) - calendar.get(Calendar.DATE) == 1) {
-            formatter.applyPattern("昨天 " + s);
-        } else if (mCurrentDate.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)) {
-            formatter.applyPattern("MM-dd " + s);
-        } else {
-            formatter.applyPattern("YYYY-MM-dd " + s);
+        if (formatter != null) {
+            if (mCurrentDate.get(Calendar.DATE) == calendar.get(Calendar.DATE)) {
+                formatter.applyPattern(s);
+            } else if (mCurrentDate.get(Calendar.DATE) - calendar.get(Calendar.DATE) == 1) {
+                formatter.applyPattern("昨天 " + s);
+            } else if (mCurrentDate.get(Calendar.YEAR) == calendar.get(Calendar.YEAR)) {
+                formatter.applyPattern("MM-dd " + s);
+            } else {
+                formatter.applyPattern("yyyy-MM-dd " + s);
+            }
+            return formatter.format(calendar.getTime());
         }
-        return formatter.format(calendar.getTime());
+        return "";
     }
 
 
@@ -336,9 +338,7 @@ public class StringUtils {
         if (time != null) {
             String nowDate = YYYYMMDD.get().format(today);
             String timeDate = YYYYMMDD.get().format(time);
-            if (nowDate.equals(timeDate)) {
-                return true;
-            }
+            return nowDate.equals(timeDate);
         }
         return false;
     }
@@ -368,6 +368,7 @@ public class StringUtils {
 
     /**
      * 获取当前时间戳
+     *
      * @return
      */
     public static String getCurrentTimeStr() {
@@ -500,7 +501,7 @@ public class StringUtils {
     public static long toLong(String obj) {
         try {
             return Long.parseLong(obj);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return 0;
     }

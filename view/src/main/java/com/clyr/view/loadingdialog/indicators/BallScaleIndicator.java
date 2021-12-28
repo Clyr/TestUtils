@@ -5,9 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.animation.LinearInterpolator;
 
-import java.util.ArrayList;
-
 import com.clyr.view.loadingdialog.Indicator;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jack on 2015/10/19.
@@ -21,9 +21,9 @@ public class BallScaleIndicator extends Indicator {
     public void draw(Canvas canvas, Paint paint) {
         float circleSpacing=4;
         paint.setAlpha(alpha);
-        canvas.scale(scale,scale,getWidth()/2,getHeight()/2);
+        canvas.scale(scale,scale, getWidth() >> 1, getHeight() >> 1);
         paint.setAlpha(alpha);
-        canvas.drawCircle(getWidth()/2,getHeight()/2,getWidth()/2-circleSpacing,paint);
+        canvas.drawCircle(getWidth() >> 1, getHeight() >> 1, (getWidth() >> 1) -circleSpacing,paint);
     }
 
     @Override
@@ -33,24 +33,18 @@ public class BallScaleIndicator extends Indicator {
         scaleAnim.setInterpolator(new LinearInterpolator());
         scaleAnim.setDuration(1000);
         scaleAnim.setRepeatCount(-1);
-        addUpdateListener(scaleAnim,new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                scale = (float) animation.getAnimatedValue();
-                postInvalidate();
-            }
+        addUpdateListener(scaleAnim, animation -> {
+            scale = (float) animation.getAnimatedValue();
+            postInvalidate();
         });
 
         ValueAnimator alphaAnim=ValueAnimator.ofInt(255, 0);
         alphaAnim.setInterpolator(new LinearInterpolator());
         alphaAnim.setDuration(1000);
         alphaAnim.setRepeatCount(-1);
-        addUpdateListener(alphaAnim,new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                alpha = (int) animation.getAnimatedValue();
-                postInvalidate();
-            }
+        addUpdateListener(alphaAnim, animation -> {
+            alpha = (int) animation.getAnimatedValue();
+            postInvalidate();
         });
         animators.add(scaleAnim);
         animators.add(alphaAnim);

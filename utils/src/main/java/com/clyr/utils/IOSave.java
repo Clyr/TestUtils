@@ -74,6 +74,7 @@ public class IOSave {
      * @param key key
      * @param value value
      */
+    @SuppressLint("ApplySharedPref")
     public void spSaveBoolean(Context context, String key, boolean value) {
         if (context == null) {
             return;
@@ -83,7 +84,7 @@ public class IOSave {
         edit.putBoolean(key, value);
         edit.commit();
     }
-
+    @SuppressLint("ApplySharedPref")
     public void spSaveInt(Context context, String key, int value) {
         if (context == null) {
             return;
@@ -93,7 +94,7 @@ public class IOSave {
         edit.putInt(key, value);
         edit.commit();
     }
-
+    @SuppressLint("ApplySharedPref")
     public void spSaveString(Context context, String key, String value) {
         if (context == null) {
             return;
@@ -161,8 +162,9 @@ public class IOSave {
     /**
      * Sqlite 数据库
      */
-    private static String mSql = "sql_db";
-    private static Context mContext = null; //todo 通过Applaction获取context
+    private static final String mSql = "sql_db";
+    @SuppressLint("StaticFieldLeak")
+    private static final Context mContext = UtilsKit.getContext(); //todo 通过Applaction获取context
 
     /**
      * 创建数据库
@@ -208,7 +210,7 @@ public class IOSave {
         //参数5：分组方式
         //参数6：having条件
         //参数7：排序方式
-        Cursor cursor = db.query("date_table", new String[]{"dbkey", "dbvalue"}, "dbkey=?", new String[]{string}, null, null, null);
+        @SuppressLint("Recycle") Cursor cursor = db.query("date_table", new String[]{"dbkey", "dbvalue"}, "dbkey=?", new String[]{string}, null, null, null);
         while (cursor.moveToNext()) {//设置只有一条
             @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex("dbvalue"));
         }
@@ -422,7 +424,7 @@ public class IOSave {
         BufferedOutputStream bos = null;
         FileOutputStream fos = null;
 
-        File file = null;
+        File file;
         try {
 //            Environment.getExternalStorageState()
             filePath = filePath == null ? Environment.getExternalStorageDirectory().getPath() : filePath;
@@ -507,7 +509,7 @@ public class IOSave {
         // 接下来是广播接收器
 
         // 广播接受者，接收下载状态
-        private BroadcastReceiver receiver = new BroadcastReceiver() {
+        private final BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 checkDownloadStatus();// 检查下载状态
@@ -600,11 +602,11 @@ public class IOSave {
         }
     }
     public class DownloadObserver extends ContentObserver {
-        private Handler mHandler;
-        private Context mContext;
+        private final Handler mHandler;
+        private final Context mContext;
         private int progress;
-        private DownloadManager mDownloadManager;
-        private DownloadManager.Query query;
+        private final DownloadManager mDownloadManager;
+        private final DownloadManager.Query query;
         private Cursor cursor;
         @SuppressLint("NewApi")
         public DownloadObserver(Handler handler, Context context, long downId) {
@@ -627,7 +629,7 @@ public class IOSave {
                 cursor.moveToFirst();
                 int bytes_downloaded = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
                 int bytes_total = cursor.getInt(cursor.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
-                progress = (int) ((bytes_downloaded * 100) / bytes_total);
+                progress = (bytes_downloaded * 100) / bytes_total;
                 cursor.close();
                 mHandler.sendEmptyMessageDelayed(progress, 100);
                 if (cursor.getInt(

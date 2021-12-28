@@ -3,7 +3,6 @@ package com.clyr.utils;
 import android.app.Activity;
 import android.app.AppOpsManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -12,6 +11,7 @@ import android.os.Build;
 import android.provider.Settings;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -43,9 +43,9 @@ public class CheckUtils {
      */
     public static void checkPermission(Activity activity) {
         List<String> list = new ArrayList<>();
-        for (int i = 0; i < mPermission.length; i++) {
-            if (ContextCompat.checkSelfPermission(activity, mPermission[i]) != PackageManager.PERMISSION_GRANTED) {
-                list.add(mPermission[i]);
+        for (String s : mPermission) {
+            if (ContextCompat.checkSelfPermission(activity, s) != PackageManager.PERMISSION_GRANTED) {
+                list.add(s);
             }
         }
         if (list.size() > 0) {
@@ -69,21 +69,13 @@ public class CheckUtils {
             return true;
         } else {
             if (obj instanceof String) {
-                if ("".equals(obj) || ((String) obj).length() <= 0) {
-                    return true;
-                }
+                return "".equals(obj) || ((String) obj).length() <= 0;
             } else if (obj instanceof List) {
-                if (((List) obj).size() <= 0) {
-                    return true;
-                }
+                return ((List) obj).size() <= 0;
             } else if (obj instanceof Object[]) {
-                if (((Object[]) obj).length <= 0) {
-                    return true;
-                }
+                return ((Object[]) obj).length <= 0;
             } else if (obj instanceof Map) {
-                if (((Map) obj).size() <= 0) {
-                    return true;
-                }
+                return ((Map) obj).size() <= 0;
             }
         }
         return false;
@@ -94,12 +86,9 @@ public class CheckUtils {
             return true;
         } else {
 
-            if ("".equals(obj) || obj.length() <= 0) {
-                return true;
-            }
+            return "".equals(obj) || obj.length() <= 0;
 
         }
-        return false;
     }
 
     public static boolean checkNull(List obj) {
@@ -211,6 +200,7 @@ public class CheckUtils {
         return false;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public static void startWindowsPermission(Context context) {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
         intent.setData(Uri.parse("package:" + context.getPackageName()));
@@ -237,17 +227,9 @@ public class CheckUtils {
         new AlertDialog.Builder(con)
                 .setTitle("存储权限不可用")
                 .setMessage("由于支付宝需要获取存储空间，为你存储个人信息；\n否则，您将无法正常使用支付宝")
-                .setPositiveButton("立即开启", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startRequestPermission();
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton("立即开启", (dialog, which) -> startRequestPermission())
+                .setNegativeButton("取消", (dialog, which) -> {
 //                        finish();
-                    }
                 }).setCancelable(false).show();
     }
 

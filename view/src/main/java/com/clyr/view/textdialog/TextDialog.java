@@ -21,17 +21,17 @@ import com.clyr.view.R;
  */
 public class TextDialog extends Dialog implements View.OnClickListener {
 
-    private Context context;
+    private final Context context;
 
-    private int layoutResID;
+    private final int layoutResID;
 
     /**
      * 要监听的控件id
      */
-    private int[] listenedItems;
+    private final int[] listenedItems;
 
     private OnCenterItemClickListener listener;
-    private SetBackground mSetBackground;
+    private final SetBackground mSetBackground;
     public TextDialog(Context context, int layoutResID, int[] listenedItems, SetBackground mSetBackground) {
         super(context, R.style.MyDialog);
         this.context = context;
@@ -53,7 +53,7 @@ public class TextDialog extends Dialog implements View.OnClickListener {
         WindowManager windowManager = ((Activity) context).getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.width = display.getWidth() * 3 / 4; // 设置dialog宽度为屏幕的4/5
+        lp.width = display.getWidth() * 3 >> 2; // 设置dialog宽度为屏幕的4/5
         getWindow().setAttributes(lp);
         // 点击Dialog外部消失
         setCanceledOnTouchOutside(true);

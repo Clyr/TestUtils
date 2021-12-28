@@ -31,7 +31,7 @@ public class TreeListActivity extends BaseActivity {
     }
 
     public List<NodeResource> initNodeTree() {
-        List<NodeResource> list = new ArrayList<NodeResource>();
+        List<NodeResource> list = new ArrayList<>();
         NodeResource n1 = new NodeResource("", "" + 0, "根节点,自己是0", "dfs", R.drawable.icon_department);
         list.add(n1);
         NodeResource n2 = new NodeResource(null, "" + 4, "根节点，自己是4", "dfs", R.drawable.icon_department);
@@ -55,7 +55,7 @@ public class TreeListActivity extends BaseActivity {
     }
 
     public List<NodeResource> initNodeTree2() {
-        List<NodeResource> list = new ArrayList<NodeResource>();
+        List<NodeResource> list = new ArrayList<>();
         NodeResource n1 = new NodeResource("-1", "" + 0, "根节点,自己是0", "dfs", R.drawable.icon_department);
         list.add(n1);
         NodeResource n2 = new NodeResource("-1", "" + 1, "根节点，自己是1", "dfs", R.drawable.icon_department);

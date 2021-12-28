@@ -1,4 +1,7 @@
 <resources>
     <string name="int_obj_double"><![CDATA[int->obj->double]]></string>
     <string name="num_to_move">位移运算</string>
+    <string name="check_final">校验final</string>
+    <string name="check_assert">校验Assert</string>
+    <string name="duplicate_removal">去重</string>
 </resources>

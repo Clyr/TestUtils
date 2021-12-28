@@ -22,6 +22,7 @@ import com.clyr.base.AppKit;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -97,7 +98,12 @@ public class PublicTools {
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }
-        return packageInfo.versionName;
+
+        if (packageInfo != null) {
+            return packageInfo.versionName;
+        }
+
+        return null;
     }
 
     /**
@@ -114,7 +120,10 @@ public class PublicTools {
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }
-        return packageInfo.versionCode + "";
+        if (packageInfo != null) {
+            return packageInfo.versionCode + "";
+        }
+        return null;
     }
 
     public static int getAppVersionCode() {
@@ -125,7 +134,10 @@ public class PublicTools {
         } catch (NameNotFoundException e) {
             e.printStackTrace();
         }
-        return packageInfo.versionCode;
+        if (packageInfo != null) {
+            return packageInfo.versionCode;
+        }
+        return -1;
     }
 
     /**
@@ -208,10 +220,9 @@ public class PublicTools {
     public static String utf8ToGBK(String str) {
         String utf8;
         try {
-            utf8 = new String(str.getBytes("UTF-8"));
-            String unicode = new String(utf8.getBytes(), "UTF-8");
-            String gbk = new String(unicode.getBytes("GBK"));
-            return gbk;
+            utf8 = new String(str.getBytes(StandardCharsets.UTF_8));
+            String unicode = new String(utf8.getBytes(), StandardCharsets.UTF_8);
+            return new String(unicode.getBytes("GBK"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -228,24 +239,27 @@ public class PublicTools {
         //定义文件路径
         File f = new File(filepath);
         if (f.exists() && f.isDirectory()) {
+            File[] delFile = f.listFiles();
             //判断是文件还是目录
-            if (f.listFiles().length == 0) {
-                // 文件下没有目录直接删除
-                return f.delete();
-            } else {
-                //有目录将目录下文件存放到数组中，并判断是否有下级目录
-                File delFile[] = f.listFiles();
-                int i = f.listFiles().length;
-                for (int j = 0; j < i; j++) {
-                    if (delFile[j].isDirectory()) {
-                        //递归调用该方法并取得子目录路径
-                        boolean b = del(delFile[j].getAbsolutePath());
-                        if (!b) {
-                            return false;
+            if (delFile != null) {
+                if (delFile.length == 0) {
+                    // 文件下没有目录直接删除
+                    return f.delete();
+                } else {
+                    //有目录将目录下文件存放到数组中，并判断是否有下级目录
+
+                    int i = delFile.length;
+                    for (File file : delFile) {
+                        if (file.isDirectory()) {
+                            //递归调用该方法并取得子目录路径
+                            boolean b = del(file.getAbsolutePath());
+                            if (!b) {
+                                return false;
+                            }
                         }
+                        //删除文件
+                        flag = file.delete();
                     }
-                    //删除文件
-                    flag = delFile[j].delete();
                 }
             }
         } else {
@@ -289,7 +303,7 @@ public class PublicTools {
     public static String decodeUnicode(String theString) {
         char aChar;
         int len = theString.length();
-        StringBuffer outBuffer = new StringBuffer(len);
+        StringBuilder outBuffer = new StringBuilder(len);
         for (int x = 0; x < len; ) {
             aChar = theString.charAt(x++);
             if (aChar == '\\') {

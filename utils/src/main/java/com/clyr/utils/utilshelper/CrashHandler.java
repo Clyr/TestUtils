@@ -1,9 +1,8 @@
 package com.clyr.utils.utilshelper;
 
-/**
- * Created by M S I of clyr on 2019/6/14.
- */
 
+
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -13,6 +12,8 @@ import android.os.Looper;
 import android.os.Process;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -36,11 +37,12 @@ import java.util.Map;
  */
 public class CrashHandler implements Thread.UncaughtExceptionHandler {
 
+    @SuppressLint("StaticFieldLeak")
     private static CrashHandler sInstance = null;
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     private Context mContext;
     // 保存手机信息和异常信息
-    private Map<String, String> mMessage = new HashMap<>();
+    private final Map<String, String> mMessage = new HashMap<>();
 
     public static CrashHandler getInstance() {
         if (sInstance == null) {
@@ -72,7 +74,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     }
 
     @Override
-    public void uncaughtException(Thread t, Throwable e) {
+    public void uncaughtException(@NonNull Thread t, @NonNull Throwable e) {
         if (!handleException(e)) {
             // 未经过人为处理,则调用系统默认处理异常,弹出系统强制关闭的对话框
             if (mDefaultHandler != null) {
@@ -128,7 +130,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
             }
             // 通过反射拿到错误信息
             Field[] fields = Build.class.getFields();
-            if (fields != null && fields.length > 0) {
+            if (fields.length > 0) {
                 for (Field field : fields) {
                     field.setAccessible(true);
                     try {

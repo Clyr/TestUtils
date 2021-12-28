@@ -22,8 +22,6 @@ import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import java.io.IOException;
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -40,8 +38,8 @@ import retrofit2.Retrofit;
 public class OkHttpActivity extends BaseActivity {
     private final String mUrl = "https://api.apishop.net/common/air/getCityPM25Detail";
     private final String mRUrl = "https://api.apishop.net/";
-    private String apiKey = "n2yeWil241d1a7d235c308e8556bccf5ec185de68768979";
-    private String city = "潍坊";
+    private final String apiKey = "n2yeWil241d1a7d235c308e8556bccf5ec185de68768979";
+    private final String city = "潍坊";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +63,15 @@ public class OkHttpActivity extends BaseActivity {
                 .build();
         ORService orService = retrofit.create(ORService.class);
 
-        retrofit2.Call<ResponseBody> bodyCall = orService.get(apiKey,city);
+        retrofit2.Call<ResponseBody> bodyCall = orService.get(apiKey, city);
         bodyCall.enqueue(new retrofit2.Callback<ResponseBody>() {
             @Override
-            public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+            public void onResponse(@NonNull retrofit2.Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
-                        MyLog.d(response.body().string());
+                        if (response.body() != null) {
+                            MyLog.d(response.body().string());
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -79,7 +79,7 @@ public class OkHttpActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull retrofit2.Call<ResponseBody> call, @NonNull Throwable t) {
                 MyLog.e(t.getMessage());
             }
         });
@@ -96,36 +96,35 @@ public class OkHttpActivity extends BaseActivity {
         //body.add("act", "login").add("email", "jn01").add("pwd", "000000");
         //body.add("act","loadmyinfo").add("loginname","jn01");
         Map<String, String> mapData = getStringMap();
-        String murl = "";
+        StringBuilder murl = new StringBuilder();
         for (Map.Entry<String, String> en : mapData.entrySet()) {
             if (en.getKey() == null || en.getValue() == null) {
                 continue;
             }
             body.add(en.getKey(), en.getValue());
-            murl += en.getKey() + "=" + en.getValue() + "&";
+            murl.append(en.getKey()).append("=").append(en.getValue()).append("&");
         }
-        Log.d("okhttp3url", murl);
+        Log.d("okhttp3url", murl.toString());
         Request.Builder builder = new Request.Builder().url(mUrl).post(body.build());
         Call call = client.newCall(builder.build());
         call.enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                if (e instanceof SocketTimeoutException) {//判断超时异常
-
-                }
-                if (e instanceof ConnectException) {//判断连接异常，我这里是报Failed to connect to 10.7.5.144
-
-                }
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                //判断超时异常
+                //判断连接异常，我这里是报Failed to connect to 10.7.5.144
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String string = response.body().toString();
-                //extracted(response.body().string());
-                Message msg = new Message();
-                msg.what = 1;
-                msg.obj = response.body().string();
-                handler.sendMessage(msg);
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.body() != null) {
+                    String string = response.body().toString();
+                    //extracted(response.body().string());
+                    Message msg = new Message();
+                    msg.what = 1;
+                    msg.obj = response.body().string();
+                    handler.sendMessage(msg);
+                }
+
             }
         });
 
@@ -183,14 +182,11 @@ public class OkHttpActivity extends BaseActivity {
 
     }
 
-    Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(@NonNull Message msg) {
-            if (msg.what == 1) {
-                extracted((String) msg.obj);
-            }
-            return false;
+    Handler handler = new Handler(msg -> {
+        if (msg.what == 1) {
+            extracted((String) msg.obj);
         }
+        return false;
     });
 
     @NonNull

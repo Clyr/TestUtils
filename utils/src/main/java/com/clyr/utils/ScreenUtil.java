@@ -58,7 +58,7 @@ public class ScreenUtil {
     }
 
     public static int[] getScreenSize() {
-        int size[] = new int[2];
+        int[] size = new int[2];
         DisplayMetrics dm = AppKit.getContext().getResources().getDisplayMetrics();
         size[0] = dm.widthPixels;
         size[1] = dm.heightPixels;
@@ -132,8 +132,8 @@ public class ScreenUtil {
                 + " realWidth: " + realWidth + " realHeight: " + realHeight);
         float deviceRate = (float) containerWidth / (float) containerHeight;
         float rate = (float) realWidth / (float) realHeight;
-        int width = 0;
-        int height = 0;
+        int width;
+        int height;
         if (rate < deviceRate) {
             height = containerHeight;
             width = (int) (containerHeight * rate);

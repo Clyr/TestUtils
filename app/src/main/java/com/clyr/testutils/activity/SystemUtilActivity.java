@@ -1,42 +1,29 @@
 package com.clyr.testutils.activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.SeekBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
 import com.clyr.utils.NotificationUtils;
 import com.clyr.utils.SystemUtils;
 import com.clyr.utils.ToastUtils;
-import com.clyr.view.captcha.SwipeCaptchaView;
 
 import java.util.Arrays;
 
@@ -112,8 +99,6 @@ public class SystemUtilActivity extends BaseActivity {
 
 
         //showSoftInputFromWindow(this, findViewById(R.id.edittext_none));
-
-
 
 
         //获取电量
@@ -218,7 +203,6 @@ public class SystemUtilActivity extends BaseActivity {
         editText.requestFocus();
         activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
-
 
 
     private void getBatteryState() {

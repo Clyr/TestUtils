@@ -57,7 +57,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.URL;
@@ -168,19 +167,17 @@ public class SystemUtils {
      * @param color
      */
     public static void setTranslucentStatus(Activity activity, int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = activity.getWindow();
-            // 透明状态栏
-            window.addFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            // 透明导航栏
-            window.addFlags(
-                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            SystemStatusManager tintManager = new SystemStatusManager(activity);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(color);
-            window.getDecorView().setFitsSystemWindows(true);
-        }
+        Window window = activity.getWindow();
+        // 透明状态栏
+        window.addFlags(
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        // 透明导航栏
+        window.addFlags(
+                WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        SystemStatusManager tintManager = new SystemStatusManager(activity);
+        tintManager.setStatusBarTintEnabled(true);
+        tintManager.setStatusBarTintResource(color);
+        window.getDecorView().setFitsSystemWindows(true);
     }
 
     @SuppressLint("ResourceAsColor")
@@ -215,35 +212,31 @@ public class SystemUtils {
      * @param activity
      */
     public void fullScreen(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window window = activity.getWindow();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色
-                View decorView = window.getDecorView();
-                //两个 flag 要结合使用，表示让应用的主体内容占用系统状态栏的空间
-                int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-                decorView.setSystemUiVisibility(option);
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.setStatusBarColor(Color.TRANSPARENT);
-                //导航栏颜色也可以正常设置
+        Window window = activity.getWindow();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色
+            View decorView = window.getDecorView();
+            //两个 flag 要结合使用，表示让应用的主体内容占用系统状态栏的空间
+            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            //导航栏颜色也可以正常设置
 //                window.setNavigationBarColor(Color.TRANSPARENT);
-            } else {
-                WindowManager.LayoutParams attributes = window.getAttributes();
-                int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-                int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
-                attributes.flags |= flagTranslucentStatus;
+        } else {
+            WindowManager.LayoutParams attributes = window.getAttributes();
+            int flagTranslucentStatus = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+            int flagTranslucentNavigation = WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION;
+            attributes.flags |= flagTranslucentStatus;
 //                attributes.flags |= flagTranslucentNavigation;
-                window.setAttributes(attributes);
-            }
+            window.setAttributes(attributes);
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void setTranslucentStatus(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setTranslucentStatus(true, activity);
-        }
+        setTranslucentStatus(true, activity);
         // 透明状态栏
         activity.getWindow().addFlags(
                 WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -607,8 +600,6 @@ public class SystemUtils {
                 }
             }
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -1011,7 +1002,33 @@ public class SystemUtils {
         }
         return false;
     }
+    public static boolean isAppAlive(Context context,String packageName) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> list = am.getRunningTasks(100);
 
+        for (ActivityManager.RunningTaskInfo info : list) {
+            if (info.topActivity.getPackageName().equals(packageName) && info.baseActivity.getPackageName().equals(packageName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String getProcessName(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningApps = am.getRunningAppProcesses();
+        if (runningApps == null) {
+            return null;
+        }
+        for (ActivityManager.RunningAppProcessInfo proInfo : runningApps) {
+            if (proInfo.pid == android.os.Process.myPid()) {
+                if (proInfo.processName != null) {
+                    return proInfo.processName;
+                }
+            }
+        }
+        return null;
+    }
     public static String md5(String string) {
         if (TextUtils.isEmpty(string)) {
             return "";

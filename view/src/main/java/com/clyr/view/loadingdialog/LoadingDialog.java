@@ -1,5 +1,6 @@
 package com.clyr.view.loadingdialog;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.view.Gravity;
@@ -17,6 +18,7 @@ import com.clyr.view.R;
 /**
  * description:弹窗浮动加载进度条
  */
+@SuppressLint("InflateParams")
 public class LoadingDialog {
     /**
      * 加载数据对话框
@@ -32,14 +34,14 @@ public class LoadingDialog {
      */
     public static Dialog showLoading(Activity context, String msg, boolean cancelable) {
         View view = LayoutInflater.from(context).inflate(R.layout.loadingdialog, null);
-        TextView loadingText = (TextView) view.findViewById(R.id.tv_reminder);
+        TextView loadingText = view.findViewById(R.id.tv_reminder);
         loadingText.setText(msg);
         return getDialog(context, view);
     }
 
     public static Dialog showLoading(Activity context) {
         View view = LayoutInflater.from(context).inflate(R.layout.loadingdialog, null);
-        TextView loadingText = (TextView) view.findViewById(R.id.tv_reminder);
+        TextView loadingText = view.findViewById(R.id.tv_reminder);
         loadingText.setText("加载中...");
         mLoadingDialog = new Dialog(context, R.style.ProgressDialog);
 
@@ -80,15 +82,15 @@ public class LoadingDialog {
 
     public static Dialog showLoadingBall(Activity context) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialogball, null);
-        TextView loadingText = (TextView) view.findViewById(R.id.tv_reminder);
+        TextView loadingText = view.findViewById(R.id.tv_reminder);
         loadingText.setText("加载中...");
         return getDialog(context, view);
     }
 
     public static Dialog showLoadingBall(Activity context, String msg) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialogball, null);
-        TextView loadingText = (TextView) view.findViewById(R.id.tv_reminder);
-        if (msg != null && msg != "") {
+        TextView loadingText = view.findViewById(R.id.tv_reminder);
+        if (msg != null && !msg.equals("")) {
             loadingText.setText(msg);
         } else {
             loadingText.setText("加载中...");
@@ -98,14 +100,14 @@ public class LoadingDialog {
 
     public static Dialog showLoadingBall(Activity context, int style) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialogballtrans, null);
-        TextView loadingText = (TextView) view.findViewById(R.id.tv_reminder);
+        TextView loadingText = view.findViewById(R.id.tv_reminder);
         loadingText.setText("加载中...");
         return getDialog(context, view, style);
     }
 
     public static Dialog showLoadingBall(Activity context, String msg, int style) {
         View view = LayoutInflater.from(context).inflate(R.layout.dialogballtrans, null);
-        TextView loadingText = (TextView) view.findViewById(R.id.tv_reminder);
+        TextView loadingText = view.findViewById(R.id.tv_reminder);
         if (msg != null && msg != "") {
             loadingText.setText(msg);
         } else {
@@ -146,7 +148,7 @@ public class LoadingDialog {
 
     public static Dialog showLoading(Activity context, @StyleRes int proStyle) {
         View view = LayoutInflater.from(context).inflate(R.layout.loadingdialog, null);
-        TextView loadingText = (TextView) view.findViewById(R.id.tv_reminder);
+        TextView loadingText = view.findViewById(R.id.tv_reminder);
         loadingText.setText("加载中...");
         mLoadingDialog = new Dialog(context, proStyle);
 
@@ -168,7 +170,7 @@ public class LoadingDialog {
 
     public static Dialog showLoading(Activity context, @StyleRes int proStyle, String IndicatorName) {
         View view = LayoutInflater.from(context).inflate(R.layout.loadingdialog, null);
-        TextView loadingText = (TextView) view.findViewById(R.id.tv_reminder);
+        TextView loadingText = view.findViewById(R.id.tv_reminder);
         loadingText.setText("加载中...");
         AVLoadingIndicatorView indicatorView = view.findViewById(R.id.avi);
         indicatorView.setIndicator(IndicatorName);

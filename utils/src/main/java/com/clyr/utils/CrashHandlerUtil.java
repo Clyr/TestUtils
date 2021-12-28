@@ -1,10 +1,13 @@
 package com.clyr.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Looper;
+
+import androidx.annotation.NonNull;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -26,14 +29,15 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
     //系统默认的UncaughtException处理类
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     //CrashHandler实例
-    private static CrashHandlerUtil INSTANCE = new CrashHandlerUtil();
+    @SuppressLint("StaticFieldLeak")
+    private static final CrashHandlerUtil INSTANCE = new CrashHandlerUtil();
     //程序的Context对象
     private Context mContext;
     //用来存储设备信息和异常信息
-    private Map<String, String> infos = new HashMap<>();
+    private final Map<String, String> infos = new HashMap<>();
 
     //用于格式化日期,作为日志文件名的一部分
-    private DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.CHINA);
+    private final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.CHINA);
     private String crashTip = "应用开小差了，稍后重启下，亲！";
 
     public String getCrashTip() {
@@ -69,7 +73,7 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
      * @param ex     异常
      */
     @Override
-    public void uncaughtException(Thread thread, Throwable ex) {
+    public void uncaughtException(@NonNull Thread thread, @NonNull Throwable ex) {
         if (!handleException(ex) && mDefaultHandler != null) {
             //如果用户没有处理则让系统默认的异常处理器来处理
             mDefaultHandler.uncaughtException(thread, ex);
@@ -149,15 +153,14 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
      * 保存错误信息到文件中
      *
      * @param ex 异常
-     * @return 返回文件名称, 便于将文件传送到服务器
      */
-    private String saveCrashInfo2File(Throwable ex) {
+    private void saveCrashInfo2File(Throwable ex) {
 
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> entry : infos.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            sb.append(key + "=" + value + "\n");
+            sb.append(key).append("=").append(value).append("\n");
         }
 
         Writer writer = new StringWriter();
@@ -173,7 +176,7 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
         sb.append(result);
         MyLog.e(sb.toString());
         if(BuildConfig.DEBUG) {
-            return null;
+            return;
         }
 
         /*
@@ -181,6 +184,5 @@ public class CrashHandlerUtil implements Thread.UncaughtExceptionHandler {
          */
         String crashInfo = sb.toString();
 
-        return null;
     }
 }

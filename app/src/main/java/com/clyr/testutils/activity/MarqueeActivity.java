@@ -1,7 +1,6 @@
 package com.clyr.testutils.activity;
 
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.clyr.testutils.R;
@@ -47,13 +46,10 @@ public class MarqueeActivity extends BaseActivity {
 //// 在代码里设置自己的动画
 //        marqueeView.startWithText(notice, R.anim.anim_bottom_in, R.anim.anim_top_out);
 
-        marqueeView.setOnItemClickListener(new MarqueeView.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, TextView textView) {
+        marqueeView.setOnItemClickListener((position, textView) -> {
 //                Toast.makeText(getApplicationContext(), String.valueOf(marqueeView.getPosition()) + ". " + textView.getText(), Toast.LENGTH_SHORT).show();
 //                Toast.makeText(getApplicationContext(), String.valueOf(position) + ". " + textView.getText(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(getApplicationContext(), textView.getText(), Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(getApplicationContext(), textView.getText(), Toast.LENGTH_SHORT).show();
         });
     }
 

@@ -13,7 +13,7 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper {
     private static final String TAG = "TestSQLite";
     public static final int VERSION = 2;
-    private static String mSql = "sql_db";
+    private static final String mSql = "sql_db";
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }

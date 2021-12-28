@@ -46,7 +46,7 @@ public class RxBus {
      * subject.onNext("three");
      * subject.onCompleted();
      */
-    private PublishSubject<Object> mEventBus = PublishSubject.create();
+    private final PublishSubject<Object> mEventBus = PublishSubject.create();
 
     public void post(Object event) {
         mEventBus.onNext(event);

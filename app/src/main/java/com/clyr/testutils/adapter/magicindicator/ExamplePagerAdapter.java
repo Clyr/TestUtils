@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  */
 
 public class ExamplePagerAdapter extends PagerAdapter {
-    private List<String> mDataList;
+    private final List<String> mDataList;
 
     public ExamplePagerAdapter(List<String> dataList) {
         mDataList = dataList;
@@ -30,10 +31,11 @@ public class ExamplePagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
+    @NonNull
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
@@ -47,12 +49,12 @@ public class ExamplePagerAdapter extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
     }
 
     @Override
-    public int getItemPosition(Object object) {
+    public int getItemPosition(@NonNull Object object) {
         TextView textView = (TextView) object;
         String text = textView.getText().toString();
         int index = mDataList.indexOf(text);

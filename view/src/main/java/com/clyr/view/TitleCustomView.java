@@ -1,20 +1,17 @@
 package com.clyr.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 
 /**
  * Created by 11635 of clyr on 2021/11/26.
@@ -51,7 +48,7 @@ public class TitleCustomView extends LinearLayout {
 
     public TitleCustomView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TitleCustomView, defStyleAttr, 0);
+        @SuppressLint("Recycle") TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TitleCustomView, defStyleAttr, 0);
 
         mode = array.getInt(R.styleable.TitleCustomView_mode, MODE_DEFAULT);
         leftIcon = array.getResourceId(R.styleable.TitleCustomView_left_icon, R.drawable.back_icon);
@@ -111,13 +108,11 @@ public class TitleCustomView extends LinearLayout {
     private void init(int defa) {
         switch (defa) {
             case MODE_DEFAULT:
+            case MODE_ONLY_LEFT:
                 modeDefault();
                 break;
             case MODE_ALL_SHOW:
                 modeAllShow();
-                break;
-            case MODE_ONLY_LEFT:
-                modeDefault();
                 break;
             case MODE_ONLY_RIGHT:
                 modeOnlyRight();

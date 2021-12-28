@@ -1,5 +1,6 @@
 package com.clyr.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -18,6 +19,7 @@ public final class SPUtils {
 	 * @param key
 	 * @param value
 	 */
+	@SuppressLint("ApplySharedPref")
 	public static void saveBoolean(Context context, String key, boolean value){
 		if(context==null){
 			return;
@@ -27,6 +29,7 @@ public final class SPUtils {
 		edit.putBoolean(key, value);
 		edit.commit();
 	}
+	@SuppressLint("ApplySharedPref")
 	public static void saveInt(Context context, String key, int value){
 		if(context==null){
 			return;
@@ -36,6 +39,7 @@ public final class SPUtils {
 		edit.putInt(key, value);
 		edit.commit();
 	}
+	@SuppressLint("ApplySharedPref")
 	public static void saveString(Context context, String key, String value){
 		if(context==null){
 			return;

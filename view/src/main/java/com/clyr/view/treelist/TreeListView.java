@@ -12,16 +12,16 @@ import com.clyr.view.R;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+@SuppressLint("ViewConstructor")
 public class TreeListView extends ListView {
-	ListView treelist = null;
+	ListView treelist;
 	TreeAdapter ta = null;
 
-	@SuppressLint("WrongConstant")
+	@SuppressLint({"WrongConstant", "UseCompatLoadingForDrawables"})
 	public TreeListView(Context context, List<NodeResource> res) {
 		super(context);
 		treelist = this;
@@ -68,9 +68,9 @@ public class TreeListView extends ListView {
 	 * 
 	 */
 	public List<Node> initNodRoot(List<NodeResource> res) {
-		ArrayList<Node> list = new ArrayList<Node>();
-		ArrayList<Node> roots = new ArrayList<Node>();
-		Map<String, Node> nodemap = new HashMap<String, Node>();
+		ArrayList<Node> list = new ArrayList<>();
+		ArrayList<Node> roots = new ArrayList<>();
+		Map<String, Node> nodemap = new HashMap<>();
 		for (int i = 0; i < res.size(); i++) {
 			NodeResource nr = res.get(i);
 			Node n = new Node(nr.title, nr.value, nr.parentId, nr.curId,
@@ -79,9 +79,7 @@ public class TreeListView extends ListView {
 		}
 		Set<String> set = nodemap.keySet();
 		Collection<Node> collections = nodemap.values();
-		Iterator<Node> iterator = collections.iterator();
-		while (iterator.hasNext()) {// 添加所有根节点到root中
-			Node n = iterator.next();
+		for (Node n : collections) {// 添加所有根节点到root中
 			if (!set.contains(n.getParentId()))
 				roots.add(n);
 			list.add(n);

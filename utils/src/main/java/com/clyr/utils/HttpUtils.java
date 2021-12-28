@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+
 import com.clyr.utils.utilshelper.ORHelper;
 import com.clyr.utils.utilshelper.ORService;
 import com.google.gson.GsonBuilder;
@@ -23,9 +25,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
 
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
@@ -115,9 +114,11 @@ public class HttpUtils {
     public static void sprintLog(String url, Map<String, String> params) {
         if (url != null && params != null) {
             url += "?";
+            StringBuilder urlBuilder = new StringBuilder(url);
             for (Map.Entry<String, String> en : params.entrySet()) {
-                url += en.getKey() + "=" + en.getValue() + "&";
+                urlBuilder.append(en.getKey()).append("=").append(en.getValue()).append("&");
             }
+            url = urlBuilder.toString();
             url = url.substring(0, url.length() - 1);
             Log.d("OkHttpUtils", url);
         }
@@ -136,19 +137,14 @@ public class HttpUtils {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(new LoggerInterceptor("OkHttpUtils"))
                 .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
-                .hostnameVerifier(new HostnameVerifier() {
-                    @Override
-                    public boolean verify(String hostname, SSLSession session) {
-                        return true;
-                    }
-                })
+                .hostnameVerifier((hostname, session) -> true)
                 .connectTimeout(10000L, TimeUnit.MILLISECONDS)
                 .readTimeout(10000L, TimeUnit.MILLISECONDS)
                 .build();
 
         return OkHttpUtils.initClient(okHttpClient);
     }
-    /** OkHttpUtils end */
+    /* OkHttpUtils end */
 
 
     /**
@@ -210,7 +206,7 @@ public class HttpUtils {
         return orService.get(url);
     }
 
-    private static String BASE_URl = "";
+    private static final String BASE_URl = "";
 
     public static Retrofit.Builder retrofit(String url) {
         OkHttpClient client = getClient();
@@ -244,15 +240,14 @@ public class HttpUtils {
     }
 
     public static Retrofit getHttpApi() {
-        Retrofit retrofit = new Retrofit.Builder()
+
+        return new Retrofit.Builder()
                 .baseUrl(BASE_URl)
                 .client(ORHelper.getClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setDateFormat("yyyy-MM-dd").create()))
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-
-        return retrofit;
     }
 
 
@@ -266,10 +261,9 @@ public class HttpUtils {
 
     public static OkHttpClient getLogClient() {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()//okhttp设置部分，此处还可再设置网络参数
+        return new OkHttpClient.Builder()//okhttp设置部分，此处还可再设置网络参数
                 .addInterceptor(loggingInterceptor)
                 .build();
-        return client;
     }
 
 
@@ -288,9 +282,10 @@ public class HttpUtils {
         Call<ResponseBody> calln = orService.post("cuGetDevTreeEx");
         calln.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response != null && response.isSuccessful()) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
                     try {
+                        assert response.body() != null;
                         MyLog.d(response.body().toString());
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -299,7 +294,7 @@ public class HttpUtils {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 MyLog.e(t.getMessage());
             }
         });

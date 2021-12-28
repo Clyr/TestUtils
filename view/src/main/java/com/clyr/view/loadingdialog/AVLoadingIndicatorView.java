@@ -36,25 +36,17 @@ public class AVLoadingIndicatorView extends View {
 
     private boolean mDismissed = false;
 
-    private final Runnable mDelayedHide = new Runnable() {
-
-        @Override
-        public void run() {
-            mPostedHide = false;
-            mStartTime = -1;
-            setVisibility(View.GONE);
-        }
+    private final Runnable mDelayedHide = () -> {
+        mPostedHide = false;
+        mStartTime = -1;
+        setVisibility(View.GONE);
     };
 
-    private final Runnable mDelayedShow = new Runnable() {
-
-        @Override
-        public void run() {
-            mPostedShow = false;
-            if (!mDismissed) {
-                mStartTime = System.currentTimeMillis();
-                setVisibility(View.VISIBLE);
-            }
+    private final Runnable mDelayedShow = () -> {
+        mPostedShow = false;
+        if (!mDismissed) {
+            mStartTime = System.currentTimeMillis();
+            setVisibility(View.VISIBLE);
         }
     };
 
@@ -177,9 +169,7 @@ public class AVLoadingIndicatorView extends View {
             setIndicator(indicator);
         } catch (ClassNotFoundException e) {
             Log.e(TAG,"Didn't find your class , check the name again !");
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }

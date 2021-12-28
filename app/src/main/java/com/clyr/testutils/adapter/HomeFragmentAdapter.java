@@ -18,8 +18,8 @@ import java.util.List;
  */
 
 public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.HomeViewHolder> {
-    private List<String> mList;
-    private OnItemClickListener mCon;
+    private final List<String> mList;
+    private final OnItemClickListener mCon;
 
     public HomeFragmentAdapter(List<String> mList, OnItemClickListener mCon) {
         this.mList = mList;
@@ -30,8 +30,7 @@ public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapte
     @Override
     public HomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_recyclerview_item, parent, false);
-        HomeViewHolder holder = new HomeViewHolder(view);
-        return holder;
+        return new HomeViewHolder(view);
     }
 
     @Override

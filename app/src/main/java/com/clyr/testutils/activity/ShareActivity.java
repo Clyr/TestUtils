@@ -1,5 +1,6 @@
 package com.clyr.testutils.activity;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -21,8 +22,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
+@SuppressLint("NonConstantResourceId")
 public class ShareActivity extends BaseActivity {
+
 
     @BindView(R.id.share_text)
     TextView shareText;
@@ -129,11 +131,10 @@ public class ShareActivity extends BaseActivity {
 
     private String getResourcesUri(@DrawableRes int id) {
         Resources resources = getResources();
-        String uriPath = ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+        //Toast.makeText(this, "Uri:" + uriPath, Toast.LENGTH_SHORT).show();
+        return ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
                 resources.getResourcePackageName(id) + "/" +
                 resources.getResourceTypeName(id) + "/" +
                 resources.getResourceEntryName(id);
-        //Toast.makeText(this, "Uri:" + uriPath, Toast.LENGTH_SHORT).show();
-        return uriPath;
     }
 }

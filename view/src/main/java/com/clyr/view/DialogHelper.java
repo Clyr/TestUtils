@@ -3,7 +3,6 @@ package com.clyr.view;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Handler;
 import android.view.View;
 import android.view.WindowManager;
@@ -13,7 +12,6 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AlertDialog;
 
 import com.clyr.base.interfaces.OnItemClickListener;
-import com.clyr.base.interfaces.SetBackground;
 import com.clyr.view.loadingdialog.LoadingDialog;
 import com.clyr.view.textdialog.TextDialog;
 
@@ -91,6 +89,7 @@ public class DialogHelper {
         activity.getWindow().setAttributes(lp);
     }
 
+    @SuppressLint("SetTextI18n")
     public static void dialogShow(Activity activity) {
         final View view = (LinearLayout) activity.getLayoutInflater().inflate(
                 R.layout.dialog_edittext, null);

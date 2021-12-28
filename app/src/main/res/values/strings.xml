@@ -34,4 +34,6 @@
     <string name="chart_text">Chart</string>
     <string name="alertdialog">AlertDialog</string>
     <string name="loaddialog">LoadDialog</string>
+
+    <string name="class_name">com.heiguang.hgrcwandroid</string>
 </resources>

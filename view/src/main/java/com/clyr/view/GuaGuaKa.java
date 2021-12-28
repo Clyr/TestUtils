@@ -1,5 +1,6 @@
 package com.clyr.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -24,7 +25,7 @@ public class GuaGuaKa extends View {
     /**
      * 绘制线条的Paint,即用户手指绘制Path
      */
-    private Paint mOutterPaint = new Paint();
+    private final Paint mOutterPaint = new Paint();
     /**
      * 记录用户绘制的Path
      */
@@ -44,8 +45,8 @@ public class GuaGuaKa extends View {
     // private Bitmap mBackBitmap;
     private boolean isComplete;
 
-    private Paint mBackPint = new Paint();
-    private Rect mTextBound = new Rect();
+    private final Paint mBackPint = new Paint();
+    private final Rect mTextBound = new Rect();
 
     public static String getText() {
         return mText;
@@ -98,8 +99,8 @@ public class GuaGuaKa extends View {
     protected void onDraw(Canvas canvas) {
         // canvas.drawBitmap(mBackBitmap, 0, 0, null);
         // 绘制奖项
-        canvas.drawText(mText, getWidth() / 2 - mTextBound.width() / 2,
-                getHeight() / 2 + mTextBound.height() / 2, mBackPint);
+        canvas.drawText(mText, (getWidth() >> 1) - (mTextBound.width() >> 1),
+                (getHeight() >> 1) + (mTextBound.height() >> 1), mBackPint);
         if (!isComplete) {
             drawPath();
             canvas.drawBitmap(mBitmap, 0, 0, null);
@@ -107,6 +108,7 @@ public class GuaGuaKa extends View {
 
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -153,6 +155,7 @@ public class GuaGuaKa extends View {
         mCanvas.drawPath(mPath, mOutterPaint);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
@@ -187,7 +190,7 @@ public class GuaGuaKa extends View {
     /**
      * 统计擦除区域任务
      */
-    private Runnable mRunnable = new Runnable() {
+    private final Runnable mRunnable = new Runnable() {
         private int[] mPixels;
 
         @Override
@@ -203,14 +206,10 @@ public class GuaGuaKa extends View {
 
             mPixels = new int[w * h];
 
-            /**
-             * 拿到所有的像素信息
-             */
+            //拿到所有的像素信息
             bitmap.getPixels(mPixels, 0, w, 0, 0, w, h);
 
-            /**
-             * 遍历统计擦除的区域
-             */
+            //遍历统计擦除的区域
             for (int i = 0; i < w; i++) {
                 for (int j = 0; j < h; j++) {
                     int index = i + j * w;
@@ -220,9 +219,7 @@ public class GuaGuaKa extends View {
                 }
             }
 
-            /**
-             * 根据所占百分比，进行一些操作
-             */
+            //根据所占百分比，进行一些操作
             if (wipeArea > 0 && totalArea > 0) {
                 int percent = (int) (wipeArea * 100 / totalArea);
                 Log.e("TAG", percent + "");
