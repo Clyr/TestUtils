@@ -12,6 +12,7 @@ import com.clyr.test.bean.NumberInt;
 import com.clyr.utils.MyLog;
 import com.clyr.utils.ToastUtils;
 import com.google.gson.Gson;
+import com.simple.spiderman.SpiderMan;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,6 +35,26 @@ public class CheckTestActivity extends AppCompatActivity {
         findViewById(R.id.check_final).setOnClickListener(v -> checkFinal());
         findViewById(R.id.check_Assert).setOnClickListener(this::chechAssert);
         findViewById(R.id.duplicate_removal).setOnClickListener(this::duplicateRemoval);
+        findViewById(R.id.spider_man).setOnClickListener(this::SpiderMan);
+        findViewById(R.id.spider_man_throw).setOnClickListener(this::SpiderManThrow);
+
+        SpiderMan.setTheme(R.style.SpiderManTheme_Custom);
+
+
+    }
+
+    private void SpiderManThrow(View view) {
+        String text = null;
+        text.toUpperCase();
+    }
+
+    private void SpiderMan(View view) {
+        try {
+            String text = null;
+            text.toUpperCase();
+        } catch (Exception e) {
+            SpiderMan.show(e);
+        }
     }
 
     private void checkFinal() {

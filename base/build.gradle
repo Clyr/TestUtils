@@ -76,5 +76,6 @@ dependencies {
     /** GreenDao */
     implementation 'org.greenrobot:greendao:3.2.2'
 
+    implementation "com.github.simplepeng.SpiderMan:spiderman:1.1.9"
 
 }

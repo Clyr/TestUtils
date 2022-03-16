@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.clyr.test">
+    package="com.clyr.test" >
 
     <application>
+        <activity
+            android:name=".AnimActivity"
+            android:exported="false" />
         <activity
             android:name=".CheckTestActivity"
             android:exported="false" />
@@ -19,6 +22,7 @@
         <activity android:name=".cache.SaveDrawableActivity" />
         <activity android:name=".cache.SaveJsonArrayActivity" />
         <activity android:name=".SqliteActivity" />
+        <activity android:name=".ScanActivity" />
     </application>
 
 </manifest>

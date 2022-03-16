@@ -50,7 +50,14 @@ public class MyLayoutManager extends LinearLayoutManager implements RecyclerView
     public void setOnViewPagerListener(OnViewPagerListener mOnViewPagerListener) {
         this.mOnViewPagerListener = mOnViewPagerListener;
     }
-
+    /**
+     * 滑动状态的改变
+     * 缓慢拖拽-> SCROLL_STATE_DRAGGING
+     * 快速滚动-> SCROLL_STATE_SETTLING
+     * 空闲状态-> SCROLL_STATE_IDLE
+     *
+     * @param state
+     */
     @Override
     public void onScrollStateChanged(int state) {
         if (state == RecyclerView.SCROLL_STATE_IDLE) {
@@ -66,6 +73,24 @@ public class MyLayoutManager extends LinearLayoutManager implements RecyclerView
             //postion  ---回调 ----》播放
         }
         super.onScrollStateChanged(state);
+        /*switch (state) {
+            case RecyclerView.SCROLL_STATE_IDLE:
+                View viewIdle = mPagerSnapHelper.findSnapView(this);
+                int positionIdle = getPosition(viewIdle);
+                if (mOnViewPagerListener != null && getChildCount() == 1) {
+                    mOnViewPagerListener.onPageSelected(positionIdle,positionIdle == getItemCount() - 1);
+                }
+                break;
+            case RecyclerView.SCROLL_STATE_DRAGGING:
+                View viewDrag = mPagerSnapHelper.findSnapView(this);
+                int positionDrag = getPosition(viewDrag);
+                break;
+            case RecyclerView.SCROLL_STATE_SETTLING:
+                View viewSettling = mPagerSnapHelper.findSnapView(this);
+                int positionSettling = getPosition(viewSettling);
+                break;
+
+        }*/
     }
 
     @Override
@@ -87,8 +112,10 @@ public class MyLayoutManager extends LinearLayoutManager implements RecyclerView
         return super.scrollVerticallyBy(dy, recycler, state);
     }
 
+
     @Override
     public boolean canScrollVertically() {
         return true;
     }
+
 }

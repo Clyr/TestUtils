@@ -4,4 +4,6 @@
     <string name="check_final">校验final</string>
     <string name="check_assert">校验Assert</string>
     <string name="duplicate_removal">去重</string>
+    <string name="spider_man">SpiderMan</string>
+    <string name="spider_man_throw">SpiderMan_Throw</string>
 </resources>

@@ -8,7 +8,6 @@ import androidx.viewpager.widget.ViewPager;
 import com.clyr.testutils.R;
 import com.clyr.testutils.adapter.FragmentAdapter;
 import com.clyr.testutils.base.BaseActivity;
-import com.clyr.testutils.fragment.coolviewpager.ImageVScrollFragment;
 import com.clyr.testutils.fragment.coolviewpager.MyInfoFragment;
 import com.clyr.testutils.fragment.coolviewpager.VScrollFragment;
 
@@ -28,7 +27,7 @@ public class CoolViewPagerActivity extends BaseActivity {
     protected void initView() {
         ViewPager view_pager = findViewById(R.id.view_pager);
         List<Fragment> list = new ArrayList<>();
-        list.add(new ImageVScrollFragment());
+        //list.add(new ImageVScrollFragment());
         list.add(new MyInfoFragment());
         list.add(new VScrollFragment());
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), list);

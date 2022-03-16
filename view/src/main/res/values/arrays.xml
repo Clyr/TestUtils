@@ -21,6 +21,8 @@
         <item>图表</item>
         <item>Fragment框架</item>
         <item>CoolViewPager</item>
+        <item>WebView</item>
+        <item>Activity动画</item>
 
     </string-array>
 </resources>

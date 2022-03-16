@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/.gradle/caches/transforms-3/9527edb4cd3e5ae02b85c85747cf998a/transformed/jetified-spiderman-1.1.9/res/layout/activity_crash.xml" value="0.32608695652173914" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2861111111111111" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.28055555555555556" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/drawable/vector_drawable_test.xml" value="0.27870370370370373" />
@@ -31,6 +32,7 @@
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/activity_system_util.xml" value="0.33605072463768115" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/activity_table.xml" value="0.33605072463768115" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/activity_tree_list.xml" value="0.34148550724637683" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/activity_web_view.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/fragment_blank.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/fragment_dashboard.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/layout/fragment_home.xml" value="0.25" />
@@ -56,10 +58,14 @@
         <entry key="..\:/AndroidProject/Test/TestUtils/base/src/main/res/layout/dialogballtrans.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/base/src/main/res/layout/loadingdialog.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/base/src/main/res/layout/textdialog.xml" value="0.34791666666666665" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/drawable/circle_bg_red.xml" value="0.1915" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/layout/activity_anim.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/layout/activity_check_test.xml" value="0.33695652173913043" />
         <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/layout/activity_main3.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/layout/activity_save_string.xml" value="0.34791666666666665" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/layout/activity_scan.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/layout/activity_sqlite.xml" value="0.34148550724637683" />
+        <entry key="..\:/AndroidProject/Test/TestUtils/test/src/main/res/layout/item_img.xml" value="0.33" />
         <entry key="..\:/AndroidProject/Test/TestUtils/three_sdk/src/main/res/layout/activity_cloud_search_demo.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/three_sdk/src/main/res/layout/activity_lbssearch.xml" value="0.34791666666666665" />
         <entry key="..\:/AndroidProject/Test/TestUtils/three_sdk/src/main/res/layout/activity_web_view_for_baidu_map.xml" value="0.3473731884057971" />
@@ -106,7 +112,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

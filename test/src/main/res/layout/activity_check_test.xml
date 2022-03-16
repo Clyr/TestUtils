@@ -37,6 +37,16 @@
             android:text="@string/duplicate_removal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/spider_man"
+            android:text="@string/spider_man"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/spider_man_throw"
+            android:text="@string/spider_man_throw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,7 +54,7 @@
     <color name="red8">#88ff0000</color>
     <color name="red5">#55ff0000</color>
     <color name="mm131">#FF0460</color>
-    <!--<color name="red3">#33ff0000</color>-->
+    <color name="red_bg_circle">#FA0040</color>
 
     <color name="blue">#0000ff</color>
     <!--<color name="blue3">#330000ff</color>-->

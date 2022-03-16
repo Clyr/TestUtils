@@ -10,8 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.GET_TASKS" />
-    <!-- 电量广播 -->
+    <uses-permission android:name="android.permission.GET_TASKS" /> <!-- 电量广播 -->
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission
         android:name="android.permission.WRITE_SETTINGS"
@@ -36,6 +35,9 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".activity.WebViewActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.CoolViewPagerActivity"
             android:exported="false" />
@@ -97,6 +99,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />

@@ -12,15 +12,15 @@
         android:clickable="false"
         android:focusable="false"
         />
+
     <ImageView
         android:id="@+id/img_thumb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
         android:clickable="false"
         android:focusable="false"
-        android:visibility="visible"
-        />
+        android:scaleType="centerCrop"
+        android:visibility="visible" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,7 +95,6 @@
 
     <com.clyr.view.scrollablepanel.Love
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.clyr.view.scrollablepanel.Love>
+        android:layout_height="match_parent"></com.clyr.view.scrollablepanel.Love>
 
 </RelativeLayout>

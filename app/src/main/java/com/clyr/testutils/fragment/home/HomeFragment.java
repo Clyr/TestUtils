@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.clyr.base.interfaces.OnItemClickListener;
+import com.clyr.test.AnimActivity;
 import com.clyr.test.CheckTestActivity;
 import com.clyr.testutils.App;
 import com.clyr.testutils.BuildConfig;
@@ -38,6 +39,7 @@ import com.clyr.testutils.activity.RxjavaActivity;
 import com.clyr.testutils.activity.ShareActivity;
 import com.clyr.testutils.activity.SystemUtilActivity;
 import com.clyr.testutils.activity.TreeListActivity;
+import com.clyr.testutils.activity.WebViewActivity;
 import com.clyr.testutils.adapter.HomeFragmentAdapter;
 import com.clyr.testutils.base.Const;
 import com.clyr.testutils.databinding.FragmentHomeBinding;
@@ -82,7 +84,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         binding.recyclerview.setLayoutManager(layout);
 
         List<String> mList = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.home_fun_list)));
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             //UnsupportedOperationException
             //如果在将String[]转化为List< String >的时候，是不能对转化出来的结果进行add，remove操作的，
             //因为他们并不是我们熟悉的ArrayList，而是Arrays里面的内部类ArrayList
@@ -120,7 +122,11 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
             intent.setClass(mContext, aClass);
             intent.putExtra(Const.TITLE, title);
             startActivity(intent);
+            if ("Activity动画".equals(title)) {
+                requireActivity().overridePendingTransition(com.clyr.test.R.anim.fade_in, com.clyr.test.R.anim.fade_out);
+            }
         }
+
 
     }
 
@@ -171,6 +177,10 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 return CoolViewPagerActivity.class;
             case "验证测试":
                 return CheckTestActivity.class;
+            case "WebView":
+                return WebViewActivity.class;
+            case "Activity动画":
+                return AnimActivity.class;
         }
 
         return EmptyActivity.class;
