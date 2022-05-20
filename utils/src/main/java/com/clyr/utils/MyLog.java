@@ -250,4 +250,17 @@ public final class MyLog {
         }*/
 
 
+    public static void logeArr(String... strings) {
+        if (strings == null || strings.length <= 0) {
+            loge(TAG, "content is null");
+            return;
+        }
+        StringBuilder sc = new StringBuilder();
+        for (String str : strings) {
+            sc.append(str).append(",");
+        }
+        loge(TAG, sc.substring(0, sc.length() - 1));
+
+    }
+
 }

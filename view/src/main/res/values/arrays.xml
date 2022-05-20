@@ -2,6 +2,7 @@
 <resources>
     <string-array name="home_fun_list">
         <item>验证测试</item>
+        <item>上拉View</item>
         <item>OkHttp</item>
         <item>IO存储</item>
         <item>GridView</item>

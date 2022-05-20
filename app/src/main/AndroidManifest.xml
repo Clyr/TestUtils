@@ -36,6 +36,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".activity.BottomSmallActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.WebViewActivity"
             android:exported="false" />
         <activity

@@ -22,6 +22,7 @@ import com.clyr.test.CheckTestActivity;
 import com.clyr.testutils.App;
 import com.clyr.testutils.BuildConfig;
 import com.clyr.testutils.R;
+import com.clyr.testutils.activity.BottomSmallActivity;
 import com.clyr.testutils.activity.ChartActivity;
 import com.clyr.testutils.activity.CoolViewPagerActivity;
 import com.clyr.testutils.activity.CustomUIActivity;
@@ -65,6 +66,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     private AppBarLayout appBarLayout;
     private final Context mContext = getContext() == null ? App.getContext() : getContext();
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -181,6 +183,9 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 return WebViewActivity.class;
             case "Activity动画":
                 return AnimActivity.class;
+            case "上拉View":
+                return BottomSmallActivity.class;
+            default:
         }
 
         return EmptyActivity.class;
