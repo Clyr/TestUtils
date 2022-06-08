@@ -1,18 +1,34 @@
 package com.clyr.testutils.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +41,7 @@ import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
 import com.clyr.testutils.base.Const;
 import com.clyr.utils.ToastUtils;
+import com.clyr.view.MyClickableSpan;
 import com.clyr.view.SlideUnlockView;
 import com.clyr.view.UnReadView;
 import com.clyr.view.captcha.SwipeCaptchaView;
@@ -41,6 +58,7 @@ public class CustomUIActivity extends BaseActivity {
         setContentView(R.layout.activity_custom_uiactivity);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void initView() {
         initBar();
@@ -101,6 +119,58 @@ public class CustomUIActivity extends BaseActivity {
             intent.putExtra(Const.TITLE, getResources().getString(R.string.loaddialog));
             startActivity(intent);
         });
+
+        TextView switch_content = findViewById(R.id.switch_content);
+        TextView single_content = findViewById(R.id.single_content);
+        TextView switch_tag = findViewById(R.id.switch_tag);
+        ImageView switch_img = findViewById(R.id.switch_img);
+
+        String string = getResources().getString(R.string.string_html1);
+        Spanned spanned = Html.fromHtml(getResources().getString(R.string.string_html1));
+        //contet_text.setText(getClickableHtml(string));
+        //这一句很重要，否则ClickableSpan内的onClick方法将无法触发！！
+        switch_content.setMovementMethod(LinkMovementMethod.getInstance());
+
+        SpannableString spannableString = new SpannableString(spanned);
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(CustomUIActivity.this, "点击了world", Toast.LENGTH_LONG).show();
+                //contet_text.scrollTo(0,0);
+                ((TextView)view).setHighlightColor(getResources().getColor(android.R.color.transparent));
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        MyClickableSpan myClickableSpan = new MyClickableSpan(false, v -> {
+            Toast.makeText(CustomUIActivity.this, "点击了MyClickableSpan", Toast.LENGTH_LONG).show();
+
+        });
+
+        //spannableString.setSpan(clickableSpan, 0, 5, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(clickableSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
+        spannableString.setSpan(styleSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
+        spannableString.setSpan(foregroundColorSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+        BackgroundColorSpan span = new BackgroundColorSpan(Color.TRANSPARENT);
+        spannableString.setSpan(span, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+
+        switch_content.setText(spannableString);
+
+        switch_content.setOnTouchListener((v, event) -> {
+            return event.getAction() == MotionEvent.ACTION_MOVE;
+            //return true;
+        });
+
     }
 
     private void initMarqueeView() {
