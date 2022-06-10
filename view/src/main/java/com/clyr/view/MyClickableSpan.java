@@ -37,5 +37,4 @@ public class MyClickableSpan extends ClickableSpan {
         ds.setUnderlineText(showLine);
     }
 
-
 }

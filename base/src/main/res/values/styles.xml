@@ -179,4 +179,7 @@
         <item name="smIdentText">@color/light_smIdentText</item>
         <item name="smDescText">@color/colorPrimary</item>
     </style>
+    <declare-styleable name="AlignTextView">
+        <attr name="alignOnlyOneLine" format="boolean"/>
+    </declare-styleable>
 </resources>

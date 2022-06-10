@@ -15,7 +15,6 @@ android {
         multiDexEnabled true
         resConfigs "en", "zh-rCN"/*,"其他应用需要支持的语言"*/
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME : applicationId,

@@ -76,9 +76,11 @@
 
 
         <RelativeLayout
+            android:id="@+id/relative_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp">
+            android:layout_margin="15dp"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/switch_content"
@@ -88,11 +90,13 @@
                 android:minLines="2" />
 
             <LinearLayout
+                android:id="@+id/switch_bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/switch_content"
                 android:layout_alignParentEnd="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/single_content"
@@ -124,7 +128,54 @@
 
             </LinearLayout>
         </RelativeLayout>
-    </LinearLayout>
 
+
+        <RelativeLayout
+            android:id="@+id/switch_relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp">
+
+            <TextView
+                android:id="@+id/switch_content_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:minLines="2" />
+
+<!--            <com.clyr.view.JustifyTextView-->
+<!--                android:id="@+id/switch_content_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/light_blue_A200"-->
+<!--                android:textSize="14sp"-->
+<!--                android:minLines="2"/>-->
+
+
+            <LinearLayout
+                android:id="@+id/switch_lin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/switch_content_text"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <TextView
+                    android:id="@+id/switch_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="展开" />
+
+                <ImageView
+                    android:id="@+id/switch_image"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/back" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

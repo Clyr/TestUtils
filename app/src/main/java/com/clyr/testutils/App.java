@@ -4,6 +4,7 @@ import static com.xuexiang.xupdate.entity.UpdateError.ERROR.CHECK_NO_NEW_VERSION
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -11,7 +12,7 @@ import android.os.Message;
 import android.os.Process;
 import android.text.TextUtils;
 
-import androidx.multidex.MultiDexApplication;
+
 
 import com.clyr.base.AppKit;
 import com.clyr.testutils.activity.MainActivity;
@@ -39,7 +40,7 @@ import okhttp3.OkHttpClient;
  * Created by clyr on 2018/4/2 0002.
  */
 
-public class App extends MultiDexApplication {
+public class App extends Application /*extends MultiDexApplication*/ {
     @SuppressLint("StaticFieldLeak")
     private static App mApp = null;
     // user your appid the key.

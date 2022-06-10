@@ -5,28 +5,34 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Layout;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
-import android.text.style.BackgroundColorSpan;
 import android.text.style.ClickableSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
-import android.text.style.UnderlineSpan;
+import android.text.style.URLSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,17 +46,23 @@ import com.bumptech.glide.request.transition.Transition;
 import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
 import com.clyr.testutils.base.Const;
+import com.clyr.utils.MyLog;
+import com.clyr.utils.PublicTools;
 import com.clyr.utils.ToastUtils;
-import com.clyr.view.MyClickableSpan;
+import com.clyr.view.AlignTextView;
+import com.clyr.view.JustifyTextView;
 import com.clyr.view.SlideUnlockView;
 import com.clyr.view.UnReadView;
 import com.clyr.view.captcha.SwipeCaptchaView;
 import com.sunfusheng.marqueeview.MarqueeView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class CustomUIActivity extends BaseActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,58 +132,322 @@ public class CustomUIActivity extends BaseActivity {
             startActivity(intent);
         });
 
-        TextView switch_content = findViewById(R.id.switch_content);
+        /*TextView switch_content = findViewById(R.id.switch_content);
         TextView single_content = findViewById(R.id.single_content);
         TextView switch_tag = findViewById(R.id.switch_tag);
         ImageView switch_img = findViewById(R.id.switch_img);
 
-        String string = getResources().getString(R.string.string_html1);
-        Spanned spanned = Html.fromHtml(getResources().getString(R.string.string_html1));
-        //contet_text.setText(getClickableHtml(string));
-        //这一句很重要，否则ClickableSpan内的onClick方法将无法触发！！
+        //String string = getResources().getString(R.string.string_html1);
+        String clickString = "《权利通知指引》";
+        String string = getResources().getString(R.string.string_html3);
+        Spanned spanned = Html.fromHtml(string);
         switch_content.setMovementMethod(LinkMovementMethod.getInstance());
 
-        SpannableString spannableString = new SpannableString(spanned);
+        if (!TextUtils.isEmpty(string) && !TextUtils.isEmpty(clickString)) {
+            int indexStart = string.indexOf(clickString);
+            int indexEnd = indexStart + clickString.length();
+
+            SpannableString spannableString = new SpannableString(spanned);
+            ClickableSpan clickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(CustomUIActivity.this, "点击了world", Toast.LENGTH_LONG).show();
+                    ((TextView) view).setHighlightColor(getResources().getColor(android.R.color.transparent));
+                    MyLog.loge("点击了MyClickableSpan");
+                }
+
+                @Override
+                public void updateDrawState(@NonNull TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(false);
+                }
+            };
+            MyClickableSpan myClickableSpan = new MyClickableSpan(false, v -> {
+                Toast.makeText(CustomUIActivity.this, "点击了MyClickableSpan", Toast.LENGTH_LONG).show();
+                //MyLog.loge("点击了MyClickableSpan");
+            });
+
+            //spannableString.setSpan(clickableSpan, 0, 5, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            spannableString.setSpan(clickableSpan, indexStart, indexEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
+            spannableString.setSpan(styleSpan, indexStart, indexEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
+            spannableString.setSpan(foregroundColorSpan, indexStart, indexEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            BackgroundColorSpan span = new BackgroundColorSpan(Color.TRANSPARENT);
+            spannableString.setSpan(span, indexStart, indexEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+
+            switch_content.setText(spannableString);
+
+            switch_content.setOnTouchListener((v, event) -> {
+                return event.getAction() == MotionEvent.ACTION_MOVE;
+                //return true;
+            });
+
+            RelativeLayout relative_switch = findViewById(R.id.relative_switch);
+            switch_content.setOnClickListener(v -> {
+                Toast.makeText(CustomUIActivity.this, "switch_content.setOnClickListener", Toast.LENGTH_LONG).show();
+                MyLog.loge("switch_content.setOnClickListener");
+            });
+
+            LinearLayout switch_bottom = findViewById(R.id.switch_bottom);
+            if (switch_content.getLineCount() > 2) {
+                switch_bottom.setVisibility(View.VISIBLE);
+
+            }
+        }*/
+
+        initSwitchView();
+
+    }
+
+    private boolean isShow = false;
+    private TextView switchContent;
+    private LinearLayout switchLin;
+    private final int minLines = 2;
+    private final int maxLines = 20;
+    private final int margin = 10;
+    private String clickString;
+    private int indexStart = -1;
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void initSwitchView() {
+        RelativeLayout switchRelative = findViewById(R.id.switch_relative);
+        switchContent = findViewById(R.id.switch_content_text);
+        switchLin = findViewById(R.id.switch_lin);
+        TextView switchText = findViewById(R.id.switch_text);
+        ImageView switchImage = findViewById(R.id.switch_image);
+
+
+        clickString = "《权利通知指引》";
+        String string = getResources().getString(R.string.string_html3);
+        switchContent.setText(string);
+        if (!TextUtils.isEmpty(string) && !TextUtils.isEmpty(clickString)) {
+            indexStart = string.indexOf(clickString);
+            switchLin.setOnClickListener(v -> {
+                if (switchContent.getLineCount() >= minLines) {
+                    if (isShow) {
+                        switchContent.setMaxLines(minLines);
+                        try {
+                            changeTextViewContent(string);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        switchContent.setPadding(0, 0, 0, 0);
+                    } else {
+                        switchContent.setMinLines(minLines);
+                        switchContent.setMaxLines(maxLines);
+                        switchContent.setText(string);
+                        reSetPadding(string);
+                    }
+                }
+                if (isShow) {
+                    switchText.setText("展开");
+                } else {
+                    switchText.setText("收起");
+                }
+                isShow = !isShow;
+            });
+            switchRelative.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+
+                    if (switchContent.getLineCount() > minLines) {
+                        switchLin.setVisibility(View.VISIBLE);
+                        switchContent.setMaxLines(maxLines);
+                        try {
+                            changeTextViewContent(string);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    switchRelative.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            });
+        }
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    private void changeTextViewContent(String text) throws Exception {
+
+        if (switchContent.getLineCount() > minLines) {
+            Layout layout = switchContent.getLayout();
+            int tagWidth = switchLin.getWidth() + margin;
+            int textWidth = switchContent.getWidth();
+            //MyLog.loge("textWidth = " + textWidth);
+            //MyLog.loge("tagWidth = " + tagWidth);
+            int maxLineWidth = 0;
+            int start = 0;
+            int end;
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < switchContent.getLineCount(); i++) {
+                end = layout.getLineEnd(i);
+                //指定行的内容
+                //TODO StringIndexOutOfBoundsException: length=2; index=26
+
+                String line = text.substring(start, end);
+                start = end;
+                //指定行的宽度
+                float widthCount = layout.getLineWidth(i);
+                if (widthCount > maxLineWidth) {
+                    maxLineWidth = (int) widthCount;
+                }
+
+                if (i == minLines - 1) {
+                    String stringForMore = getStringForMore(line, textWidth - tagWidth);
+                    switchContent.setText(stringBuilder + stringForMore);
+                    switchLin.setVisibility(View.VISIBLE);
+                    //TODO 需要重新添加点击事件
+                    addClickableSpan(switchContent.getText().toString());
+                }
+
+                stringBuilder.append(line);
+
+                /*if (maxLineWidth > 0 && (i == switchContent.getLineCount() - 1)) {
+                    int rm = textWidth - maxLineWidth;
+                    if (rm > 16) {
+                        rm = 6;
+                    }
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) switchLin.getLayoutParams();
+                    layoutParams.rightMargin = PublicTools.dip2px(this, rm);
+                    switchLin.setLayoutParams(layoutParams);
+                }*/
+
+            }
+        }
+    }
+
+    private void reSetPadding(@NotNull String string) {
+        Layout layout = switchContent.getLayout();
+        int tagWidth = switchLin.getWidth() + margin;
+        int textWidth = switchContent.getWidth();
+        if (switchContent.getLineCount() > minLines) {
+            float widthCount = layout.getLineWidth(switchContent.getLineCount() - 1);
+            if (widthCount > textWidth - tagWidth) {
+                //switchContent.setPadding(0, 0, 0, PublicTools.dip2px(this, 18));
+                switchContent.setPadding(0, 0, 0, 0);
+            }
+        }
+        //TODO 需要重新添加点击事件
+        addClickableSpan(string);
+    }
+
+    private String getStringForMore(String str, int screenWidth) {
+        StringBuilder strEnd = new StringBuilder();
+        strEnd.append(str);
+        Paint paint = new Paint();
+        paint.setTextSize(PublicTools.px2dip(this, switchContent.getTextSize()));
+        float textMaxWidth = screenWidth - PublicTools.dip2px(this, paint.measureText("..."));
+        //MyLog.loge("screenWidth = " + screenWidth + " - textMaxWidth = " + textMaxWidth);
+        if (textMaxWidth > 0) {
+            while (true) {
+                if (strEnd.length() > 1) {
+                    float edWidth = paint.measureText(String.valueOf(strEnd));
+                    //MyLog.loge("edWidth = "+PublicTools.dip2px(this, edWidth) +"");
+                    if (PublicTools.dip2px(this, edWidth) > textMaxWidth) {
+                        float measureText = paint.measureText(String.valueOf(strEnd.delete(strEnd.length() - 1, strEnd.length())));
+                        if (PublicTools.dip2px(this, measureText) <= textMaxWidth) {
+                            return String.valueOf(strEnd.append("..."));
+                        }
+                    } else {
+                        return String.valueOf(strEnd.append("..."));
+                    }
+                } else {
+                    return str;
+                }
+            }
+        }
+        return str;
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void addClickableSpan(@NotNull String string) {
+
+        Spanned spanned = Html.fromHtml(string);
+        switchContent.setMovementMethod(LinkMovementMethod.getInstance());
+
+        int indexEnd = indexStart + clickString.length();
+
+        if (indexStart > 0 && indexStart < string.length()) {
+            if (indexEnd > string.length()) {
+                indexEnd = string.length();
+            }
+
+            SpannableString spannableString = new SpannableString(spanned);
+            ClickableSpan clickableSpan = new ClickableSpan() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(CustomUIActivity.this, "点击了world", Toast.LENGTH_LONG).show();
+                    //((TextView) view).setHighlightColor(getResources().getColor(android.R.color.transparent));
+                    MyLog.loge("点击了MyClickableSpan");
+                }
+
+                @Override
+                public void updateDrawState(@NonNull TextPaint ds) {
+                    super.updateDrawState(ds);
+                    ds.setUnderlineText(false);
+                }
+            };
+
+            spannableString.setSpan(clickableSpan, indexStart, indexEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
+            spannableString.setSpan(styleSpan, indexStart, indexEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
+            spannableString.setSpan(foregroundColorSpan, indexStart, indexEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+            switchContent.setText(spannableString);
+            switchContent.setOnTouchListener((v, event) -> {
+                return event.getAction() == MotionEvent.ACTION_MOVE;
+                //return true;
+            });
+
+            /*switchContent.setOnClickListener(v -> {
+                Toast.makeText(CustomUIActivity.this, "switch_content.setOnClickListener", Toast.LENGTH_LONG).show();
+                MyLog.loge("switch_content.setOnClickListener");
+            });*/
+        }
+
+
+    }
+
+
+    /**
+     * 格式化超链接文本内容并设置点击处理
+     */
+    private CharSequence getClickableHtml(String html) {
+        Spanned spannedHtml = Html.fromHtml(html);
+        SpannableStringBuilder clickableHtmlBuilder = new SpannableStringBuilder(spannedHtml);
+        URLSpan[] urls = clickableHtmlBuilder.getSpans(0, spannedHtml.length(), URLSpan.class);
+        for (final URLSpan span : urls) {
+            setLinkClickable(clickableHtmlBuilder, span);
+        }
+        return clickableHtmlBuilder;
+    }
+
+    /**
+     * 设置点击超链接对应的处理内容
+     */
+    private void setLinkClickable(final SpannableStringBuilder clickableHtmlBuilder, final URLSpan urlSpan) {
+        int start = clickableHtmlBuilder.getSpanStart(urlSpan);
+        int end = clickableHtmlBuilder.getSpanEnd(urlSpan);
+        int flags = clickableHtmlBuilder.getSpanFlags(urlSpan);
+
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(CustomUIActivity.this, "点击了world", Toast.LENGTH_LONG).show();
-                //contet_text.scrollTo(0,0);
-                ((TextView)view).setHighlightColor(getResources().getColor(android.R.color.transparent));
-            }
-
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(false);
+                MyLog.i("URL-click:" + urlSpan.getURL());
             }
         };
-        MyClickableSpan myClickableSpan = new MyClickableSpan(false, v -> {
-            Toast.makeText(CustomUIActivity.this, "点击了MyClickableSpan", Toast.LENGTH_LONG).show();
-
-        });
-
-        //spannableString.setSpan(clickableSpan, 0, 5, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
-        spannableString.setSpan(clickableSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
-        spannableString.setSpan(styleSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
-        ForegroundColorSpan foregroundColorSpan = new ForegroundColorSpan(Color.BLACK);
-        spannableString.setSpan(foregroundColorSpan, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
-        BackgroundColorSpan span = new BackgroundColorSpan(Color.TRANSPARENT);
-        spannableString.setSpan(span, 0, 2, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
-
-        switch_content.setText(spannableString);
-
-        switch_content.setOnTouchListener((v, event) -> {
-            return event.getAction() == MotionEvent.ACTION_MOVE;
-            //return true;
-        });
-
+        //实际使用过程中，可根据需要清空之前的span，防止出现重复调用的情况
+        //clickableHtmlBuilder.clearSpans();或者clickableHtmlBuilder.removeSpan(urlSpan);
+        clickableHtmlBuilder.setSpan(clickableSpan, start, end, flags);
     }
+
 
     private void initMarqueeView() {
         String[] res = {
