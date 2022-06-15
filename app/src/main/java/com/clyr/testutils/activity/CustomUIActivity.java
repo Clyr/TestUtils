@@ -39,6 +39,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
@@ -51,6 +52,7 @@ import com.clyr.utils.PublicTools;
 import com.clyr.utils.ToastUtils;
 import com.clyr.view.AlignTextView;
 import com.clyr.view.JustifyTextView;
+import com.clyr.view.MyTextView;
 import com.clyr.view.SlideUnlockView;
 import com.clyr.view.UnReadView;
 import com.clyr.view.captcha.SwipeCaptchaView;
@@ -202,10 +204,23 @@ public class CustomUIActivity extends BaseActivity {
 
         initSwitchView();
 
+        AppCompatTextView htmltext = findViewById(R.id.htmltext);
+        //htmltext.setVisibility(View.VISIBLE);
+        //htmltext.setText(Html.fromHtml(getResources().getString(R.string.string_android2)));
+        htmltext.setText(getResources().getString(R.string.string_html3));
+
+        TextView textview = findViewById(R.id.textview);
+        textview.setText(getResources().getString(R.string.string_html3));
+
+        MyTextView mytextview = findViewById(R.id.mytextview);
+        mytextview.setText(getResources().getString(R.string.string_html3));
+
+
     }
 
     private boolean isShow = false;
-    private TextView switchContent;
+    private MyTextView switchContent;
+//    private TextView switchContent;
     private LinearLayout switchLin;
     private final int minLines = 2;
     private final int maxLines = 20;
@@ -225,9 +240,11 @@ public class CustomUIActivity extends BaseActivity {
         clickString = "《权利通知指引》";
         String string = getResources().getString(R.string.string_html3);
         switchContent.setText(string);
+        switchContent.setClickString(clickString);
         if (!TextUtils.isEmpty(string) && !TextUtils.isEmpty(clickString)) {
             indexStart = string.indexOf(clickString);
             switchLin.setOnClickListener(v -> {
+
                 if (switchContent.getLineCount() >= minLines) {
                     if (isShow) {
                         switchContent.setMaxLines(minLines);
@@ -267,6 +284,17 @@ public class CustomUIActivity extends BaseActivity {
                     switchRelative.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
             });
+           /* switchContent.setCallBack(() -> {
+                if (switchContent.getLineCount() > minLines) {
+                    switchLin.setVisibility(View.VISIBLE);
+                    switchContent.setMaxLines(maxLines);
+                    try {
+                        changeTextViewContent(string);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });*/
         }
     }
 
@@ -281,16 +309,14 @@ public class CustomUIActivity extends BaseActivity {
             //MyLog.loge("textWidth = " + textWidth);
             //MyLog.loge("tagWidth = " + tagWidth);
             int maxLineWidth = 0;
-            int start = 0;
-            int end;
+
             StringBuilder stringBuilder = new StringBuilder();
             for (int i = 0; i < switchContent.getLineCount(); i++) {
-                end = layout.getLineEnd(i);
+                int start = layout.getLineStart(i);
+                int end = layout.getLineEnd(i);
                 //指定行的内容
-                //TODO StringIndexOutOfBoundsException: length=2; index=26
 
                 String line = text.substring(start, end);
-                start = end;
                 //指定行的宽度
                 float widthCount = layout.getLineWidth(i);
                 if (widthCount > maxLineWidth) {
@@ -392,6 +418,7 @@ public class CustomUIActivity extends BaseActivity {
                     ds.setUnderlineText(false);
                 }
             };
+            switchContent.setHighlightColor(getResources().getColor(android.R.color.transparent));
 
             spannableString.setSpan(clickableSpan, indexStart, indexEnd, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);

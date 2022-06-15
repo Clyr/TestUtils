@@ -3,7 +3,9 @@ package com.clyr.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -34,13 +36,17 @@ public class JustifyTextView extends AppCompatTextView {
     @Override
     protected void onDraw(Canvas canvas) {
         TextPaint paint = getPaint();
-        paint.setColor(getCurrentTextColor());
-        paint.drawableState = getDrawableState();
-        //paint.setTextSize(14f);
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 14f);
+//        paint.setColor(getCurrentTextColor());
+//        paint.drawableState = getDrawableState();
+//
+//        TextPaint textPaint = paint;
+//        textPaint.setColor(Color.BLACK);
+//        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
+
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f);
         mViewWidth = getMeasuredWidth();
         String text = getText().toString();
-        mLineY = 0;
+        mLineY = 0;// + ((int) getLineSpacingExtra() >> 1);
         mLineY += getTextSize();
         Layout layout = getLayout(); // layout.getLayout()在4.4.3出现NullPointerException
         if (layout == null) {

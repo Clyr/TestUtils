@@ -7,7 +7,9 @@ import android.content.pm.ShortcutManager;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -95,6 +97,8 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         HomeFragmentAdapter homeFragmentAdapter = new HomeFragmentAdapter(mList, this);
         binding.recyclerview.setAdapter(homeFragmentAdapter);
         binding.recyclerview.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL));
+
+        startActivity(new Intent(getContext(),CustomUIActivity.class));
     }
 
 
@@ -275,5 +279,18 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     public void onPause() {
         super.onPause();
         LoadingDialog.cancelLoading();
+    }
+
+
+    private void simulateTouchEvent(View view, int x, int y) {
+        long downTime = SystemClock.uptimeMillis();
+        long eventTime = SystemClock.uptimeMillis() + 100;
+        int metaState = 0;
+        MotionEvent motionEvent = MotionEvent.obtain(downTime, eventTime,
+                MotionEvent.ACTION_DOWN, x, y, metaState);
+        view.dispatchTouchEvent(motionEvent);
+        MotionEvent upEvent = MotionEvent.obtain(downTime + 1000, eventTime + 1000,
+                MotionEvent.ACTION_UP, x, y, metaState);
+        view.dispatchTouchEvent(upEvent);
     }
 }

@@ -74,6 +74,12 @@
             android:layout_height="wrap_content"
             android:text="@string/loaddialog" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/htmltext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/relative_switch"
@@ -136,20 +142,20 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp">
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/switch_content_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:minLines="2" />
+                android:minLines="2"
+                android:textSize="12sp" />-->
 
-<!--            <com.clyr.view.JustifyTextView-->
-<!--                android:id="@+id/switch_content_text"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@color/light_blue_A200"-->
-<!--                android:textSize="14sp"-->
-<!--                android:minLines="2"/>-->
+            <com.clyr.view.MyTextView
+                android:id="@+id/switch_content_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minLines="2"
+                android:textSize="12sp" />
 
 
             <LinearLayout
@@ -159,6 +165,7 @@
                 android:layout_alignBottom="@+id/switch_content_text"
                 android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
+                android:layout_marginBottom="-2dp"
                 android:orientation="horizontal"
                 android:visibility="invisible">
 
@@ -166,16 +173,34 @@
                     android:id="@+id/switch_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="展开" />
+                    android:text="展开"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/switch_image"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginLeft="3dp"
                     android:src="@drawable/back" />
             </LinearLayout>
 
         </RelativeLayout>
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_margin="10dp" />
+
+        <com.clyr.view.MyTextView
+            android:lineHeight="15dp"
+            android:id="@+id/mytextview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp" />
     </LinearLayout>
 
 </LinearLayout>
