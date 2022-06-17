@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.text.Editable;
 import android.text.Html;
@@ -51,6 +52,7 @@ import com.clyr.utils.MyLog;
 import com.clyr.utils.PublicTools;
 import com.clyr.utils.ToastUtils;
 import com.clyr.view.AlignTextView;
+import com.clyr.view.CustomFoldView;
 import com.clyr.view.JustifyTextView;
 import com.clyr.view.MyTextView;
 import com.clyr.view.SlideUnlockView;
@@ -65,6 +67,8 @@ import java.util.List;
 
 public class CustomUIActivity extends BaseActivity {
 
+
+    private AppCompatTextView htmltext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,25 +206,75 @@ public class CustomUIActivity extends BaseActivity {
             }
         }*/
 
-        initSwitchView();
 
-        AppCompatTextView htmltext = findViewById(R.id.htmltext);
+        htmltext = findViewById(R.id.htmltext);
         //htmltext.setVisibility(View.VISIBLE);
         //htmltext.setText(Html.fromHtml(getResources().getString(R.string.string_android2)));
-        htmltext.setText(getResources().getString(R.string.string_html3));
+        //htmltext.setText(getResources().getString(R.string.string_html3));
+        htmltext.setText("安卓（Android）是一种基于Linux内核");
+        //handler.postDelayed(runnable, 1000);
+        htmltext.setOnClickListener(v -> {
+            Layout layout = htmltext.getLayout();
+            MyLog.loge("htmltext - height = " + htmltext.getHeight() + " textSize = " + htmltext.getTextSize());
+            MyLog.loge("layout = " + layout.getHeight() + " lineHeight = " + htmltext.getLineHeight());
+            //handler.postDelayed(runnable, 300);
+            htmltext.setText(htmltext.getText() + "\n安卓（Android）是一种基于Linux内核");
+
+
+        });
 
         TextView textview = findViewById(R.id.textview);
         textview.setText(getResources().getString(R.string.string_html3));
 
         MyTextView mytextview = findViewById(R.id.mytextview);
         mytextview.setText(getResources().getString(R.string.string_html3));
+        //initSwitchView();
 
-
+        initFoldView();
     }
+
+    private void initFoldView() {
+        CustomFoldView foldview = findViewById(R.id.foldview);
+        foldview.init(getResources().getString(R.string.string_html3));
+    }
+
+    StringBuilder stringBuilder = new StringBuilder();
+    List<Integer> mlist = new ArrayList<>();
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            MyLog.loge("htmltext - height = " + htmltext.getHeight() + " textSize = " + htmltext.getTextSize());
+            mlist.add(htmltext.getHeight());
+            stringBuilder.append("安卓（Android）是一种基于Linux内核\n");
+            htmltext.setText(stringBuilder);
+            if (mlist.size() < 20) {
+                //handler.postDelayed(runnable, 300);
+            } else {
+                StringBuilder ss = new StringBuilder();
+                StringBuilder ss2 = new StringBuilder();
+                StringBuilder ss3 = new StringBuilder();
+
+                for (int i = 0; i < mlist.size(); i++) {
+
+                    if (i <= mlist.size() - 2) {
+                        int i1 = mlist.get(i + 1) - mlist.get(i);
+                        ss2.append(i1).append(" , ");
+                    }
+                    ss.append(mlist.get(i)).append(" , ");
+                    ss3.append(mlist.get(i) - htmltext.getTextSize() * (i + 1)).append(" , ");
+                }
+                MyLog.loge(String.valueOf(ss));
+                MyLog.loge(String.valueOf(ss2));
+                MyLog.loge(String.valueOf(ss3));
+            }
+
+        }
+    };
 
     private boolean isShow = false;
     private MyTextView switchContent;
-//    private TextView switchContent;
+    //    private TextView switchContent;
     private LinearLayout switchLin;
     private final int minLines = 2;
     private final int maxLines = 20;
@@ -258,7 +312,7 @@ public class CustomUIActivity extends BaseActivity {
                         switchContent.setMinLines(minLines);
                         switchContent.setMaxLines(maxLines);
                         switchContent.setText(string);
-                        reSetPadding(string);
+                        //reSetPadding(string);
                     }
                 }
                 if (isShow) {
@@ -325,10 +379,11 @@ public class CustomUIActivity extends BaseActivity {
 
                 if (i == minLines - 1) {
                     String stringForMore = getStringForMore(line, textWidth - tagWidth);
+                    switchContent.setMaxLines(2);
                     switchContent.setText(stringBuilder + stringForMore);
                     switchLin.setVisibility(View.VISIBLE);
                     //TODO 需要重新添加点击事件
-                    addClickableSpan(switchContent.getText().toString());
+                    //addClickableSpan(switchContent.getText().toString());
                 }
 
                 stringBuilder.append(line);
@@ -376,6 +431,7 @@ public class CustomUIActivity extends BaseActivity {
                     //MyLog.loge("edWidth = "+PublicTools.dip2px(this, edWidth) +"");
                     if (PublicTools.dip2px(this, edWidth) > textMaxWidth) {
                         float measureText = paint.measureText(String.valueOf(strEnd.delete(strEnd.length() - 1, strEnd.length())));
+                        //MyLog.loge("measureText = "+PublicTools.dip2px(this, measureText));
                         if (PublicTools.dip2px(this, measureText) <= textMaxWidth) {
                             return String.valueOf(strEnd.append("..."));
                         }

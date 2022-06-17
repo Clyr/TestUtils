@@ -39,9 +39,6 @@ public class MyTextView extends AppCompatTextView {
     private int tempEnd = -1;
     private MyTextCallBack callBack;
 
-    private int maxLines = 2;
-
-
     public MyTextView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
@@ -51,33 +48,35 @@ public class MyTextView extends AppCompatTextView {
         super.onLayout(changed, left, top, right, bottom);
     }
 
-    public void setText(String text) {
-        textContent = text;
-    }
-
-    public void setMaxLine(int maxLines) {
-        this.maxLines = maxLines;
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
-        if (!TextUtils.isEmpty(textContent)) {
+        if (!TextUtils.isEmpty(getText())) {
+            textContent = getText().toString();
             if (getLineCount() > 1) {
                 setTextSize(TypedValue.COMPLEX_UNIT_SP, 13f);
                 mViewWidth = getMeasuredWidth();
                 mViewHeight = getMeasuredHeight();
+                //MyLog.loge("lineheight = "+ getLineHeight());
                 TextPaint paint = getPaint();
                 int height = getHeight();
                 Layout layout = getLayout();
                 tempEnd = -1;
-                float lineSpace = (mViewHeight - (getLineCount() * getTextSize()) - PublicTools.dip2px(getContext(), 1)) / (getLineCount() - 1);
+                float lineC = getLineHeight() - getTextSize();
+                //float lineSpace = (mViewHeight - (getLineCount() * getTextSize()) - PublicTools.dip2px(getContext(), 1)) / (getLineCount() - 1);
+                float lineSpace = (mViewHeight - (getLineCount() * (getTextSize() + lineC * 2))) / (getLineCount() - 1);
+
                 for (int i = 0; i < getLineCount(); i++) {
                     int lineStart = layout.getLineStart(i);
                     int lineEnd = layout.getLineEnd(i);
                     tempEnd += lineEnd;
                     String lineText = textContent.substring(lineStart, lineEnd);
-                    if (i == getLineCount() - 1) {
+                    /*if (lineText.contains("...")) {
                         canvas.drawText(lineText, 0, getTextSize() * (i + 1) + i * lineSpace, paint);
+                        return;
+                    }*/
+                    if (i == getLineCount() - 1) {
+                        //canvas.drawText(lineText, 0, getTextSize() * (i + 1) + i * lineSpace, paint);
+                        canvas.drawText(lineText, 0, (getTextSize() + lineC * 2) * (i + 1) + i * lineSpace, paint);
                     } else {
                         boolean isBold = false;
                         if (!TextUtils.isEmpty(clickString) && lineText.contains(clickString)) {
@@ -89,7 +88,9 @@ public class MyTextView extends AppCompatTextView {
                                 isBold = true;
                             }
                         }
-                        drawScaledText(canvas, paint, lineText, getTextSize() * (i + 1) + i * lineSpace, isBold);
+                        //drawScaledText(canvas, paint, lineText, getTextSize() * (i + 1) + i * lineSpace, isBold);
+                        drawScaledText(canvas, paint, lineText, (getTextSize() + lineC * 2) * (i + 1) + i * lineSpace, isBold);
+
 
                     }
 
@@ -209,7 +210,7 @@ public class MyTextView extends AppCompatTextView {
 
             default:
         }
-        return super.onTouchEvent(event);
+        return true;
     }
 
     public void setCallBack(MyTextCallBack callBack) {
