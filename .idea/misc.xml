@@ -4,6 +4,10 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/.gradle/caches/transforms-3/9527edb4cd3e5ae02b85c85747cf998a/transformed/jetified-spiderman-1.1.9/res/layout/activity_crash.xml" value="0.32608695652173914" />
+        <entry key="..\:/AndroidProject/GitLab/TestUtils/app/src/main/res/layout/activity_custom_uiactivity.xml" value="0.33" />
+        <entry key="..\:/AndroidProject/GitLab/TestUtils/app/src/main/res/layout/activity_media.xml" value="0.34791666666666665" />
+        <entry key="..\:/AndroidProject/GitLab/TestUtils/app/src/main/res/layout/fragment_dashboard.xml" value="0.34791666666666665" />
+        <entry key="..\:/AndroidProject/GitLab/TestUtils/view/src/main/res/drawable/message_line_height.xml" value="0.204" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2861111111111111" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.28055555555555556" />
         <entry key="..\:/AndroidProject/Test/TestUtils/app/src/main/res/drawable/vector_drawable_test.xml" value="0.27870370370370373" />

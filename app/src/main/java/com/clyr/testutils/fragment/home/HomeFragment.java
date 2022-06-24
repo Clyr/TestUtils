@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         binding.recyclerview.setAdapter(homeFragmentAdapter);
         binding.recyclerview.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.VERTICAL));
 
-        startActivity(new Intent(getContext(),CustomUIActivity.class));
+        //startActivity(new Intent(getContext(),CustomUIActivity.class));
     }
 
 

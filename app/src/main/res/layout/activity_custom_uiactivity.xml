@@ -87,10 +87,9 @@
                 android:visibility="gone" />
 
             <com.clyr.view.CustomFoldView
-                android:background="@color/android_theme_tag_color_03"
                 android:id="@+id/foldview"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"/>
+                android:layout_height="wrap_content"/>
 
             <RelativeLayout
                 android:id="@+id/relative_switch"

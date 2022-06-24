@@ -3,20 +3,41 @@ package com.clyr.testutils.activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
 import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
+import com.clyr.utils.ScreenshotUtil;
+import com.clyr.utils.ThreadPoolUtils;
+import com.clyr.utils.ToastUtils;
 import com.clyr.view.GuaGuaKa;
 import com.clyr.view.ProcessImageView;
 import com.clyr.view.activity.CameraActivity;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -80,9 +101,41 @@ public class MediaActivity extends BaseActivity {
 
         GuaGuaKa.setText("星期三");
         initImageView();
+        initScreenShot();
     }
 
+    private void initScreenShot() {
+        if (getPermissions(0)) {
+            RelativeLayout ssRel = findViewById(R.id.screenshot_rel);
+            ImageView ssImage = findViewById(R.id.screenshot_image);
+            Button ssBtn = findViewById(R.id.screenshot_btn);
+            ssBtn.setOnClickListener(v -> {
+                String fileRel = ScreenshotUtil.saveScreenshotFromView(ssRel, this);
+                Glide.with(this).load(fileRel).into(ssImage);
+            });
+
+//            File file = ScreenshotUtil.saveScreenshotFromActivity(this);
+            // Glide.with(this).load("/storage/emulated/0/dcim/1655452456986.jpg").into(ssImage);
+
+            //
+            ssRel.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    ssRel.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+//                    String saveScreenImage = ScreenshotUtil.saveScreenImage(ssRel);
+                    String saveScreenImage = ScreenshotUtil.saveScreenImage(getWindow().getDecorView());
+                    Glide.with(MediaActivity.this).load(saveScreenImage).into(ssImage);
+                }
+            });
+
+        }
+    }
+
+
     private void initImageView() {
+
+
         processImageView = findViewById(R.id.image);
         //模拟图片上传进度
         mButton = findViewById(R.id.buttonimage);
@@ -112,7 +165,7 @@ public class MediaActivity extends BaseActivity {
         mButton.setVisibility(View.GONE);
         processImageView.setImageResource(R.drawable.image);
         progress = 0;
-        new Thread(() -> {
+        /*new Thread(() -> {
             while (true) {
                 if (progress == 100) {//图片上传完成
                     handler.sendEmptyMessage(SUCCESS);
@@ -126,7 +179,43 @@ public class MediaActivity extends BaseActivity {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
+
+        ExecutorService es = new ThreadPoolExecutor(
+                1,
+                1,
+                0L,
+                TimeUnit.MILLISECONDS,
+                new LinkedBlockingQueue<Runnable>(10),
+                Executors.defaultThreadFactory(),
+                new ThreadPoolExecutor.DiscardPolicy());
+
+//        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1, new ThreadPoolExecutor.DiscardPolicy());
+//        scheduledThreadPoolExecutor.schedule()
+//        corePoolSize：线程池中的线程数量；
+//        maximumPoolSize：线程池中的最大线程数量；
+//        keepAliveTime：当线程池线程数量超过corePoolSize时，多余的空闲线程会在多长时间内被销毁；
+//        unit：keepAliveTime的时间单位；
+//        workQueue：任务队列，被提交但是尚未被执行的任务；
+//        threadFactory：线程工厂，用于创建线程，一般情况下使用默认的，即Executors类的静态方法defaultThreadFactory()；handler：拒绝策略。当任务太多来不及处理时，如何拒绝任务。
+        Runnable runnable = () -> {
+            while (true) {
+                if (progress == 100) {//图片上传完成
+                    handler.sendEmptyMessage(SUCCESS);
+                    return;
+                }
+                progress++;
+                processImageView.setProgress(progress);
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        es.execute(runnable);
+
+
     }
 
     @SuppressLint("HandlerLeak")
@@ -156,5 +245,11 @@ public class MediaActivity extends BaseActivity {
         }
 
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

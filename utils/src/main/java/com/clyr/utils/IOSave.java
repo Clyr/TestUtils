@@ -388,6 +388,7 @@ public class IOSave {
         }
 
         // 当第一次创建数据库的时候，调用该方法
+        @Override
         public void onCreate(SQLiteDatabase db) {
             String sql = "create table stu_table(id int,sname varchar(20),sage int,ssex varchar(10))";
             //输出创建数据库的日志信息
@@ -397,6 +398,7 @@ public class IOSave {
         }
 
         //当更新数据库的时候执行该方法
+        @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             //输出更新数据库的日志信息
             Log.i(TAG, "update Database------------->");

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -51,9 +52,7 @@ import com.clyr.testutils.base.Const;
 import com.clyr.utils.MyLog;
 import com.clyr.utils.PublicTools;
 import com.clyr.utils.ToastUtils;
-import com.clyr.view.AlignTextView;
 import com.clyr.view.CustomFoldView;
-import com.clyr.view.JustifyTextView;
 import com.clyr.view.MyTextView;
 import com.clyr.view.SlideUnlockView;
 import com.clyr.view.UnReadView;
@@ -236,6 +235,12 @@ public class CustomUIActivity extends BaseActivity {
     private void initFoldView() {
         CustomFoldView foldview = findViewById(R.id.foldview);
         foldview.init(getResources().getString(R.string.string_html3));
+        foldview.addClickString("《权利通知指引》", "免责声明");
+        foldview.setClickStringColor(R.color.colorPrimary);
+        foldview.setOnClickAction((clickString) -> {
+            MyLog.loge(clickString);
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://baike.baidu.com/item/Android/60243?fr=aladdin")));
+        });
     }
 
     StringBuilder stringBuilder = new StringBuilder();
