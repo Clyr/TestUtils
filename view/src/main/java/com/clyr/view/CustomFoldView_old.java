@@ -30,7 +30,7 @@ import java.util.List;
  * 第一版 两端对齐、点击事件、变色
  */
 
-public class CustomFoldView extends View {
+public class CustomFoldView_old extends View {
     TextPaint mTextPaint;
     Paint mPaint;
     String mText;
@@ -50,11 +50,11 @@ public class CustomFoldView extends View {
         this.onClickAction = onClickAction;
     }
 
-    public CustomFoldView(Context context, @Nullable AttributeSet attrs) {
+    public CustomFoldView_old(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CustomFoldView init(String text) {
+    public CustomFoldView_old init(String text) {
         mPaint = new Paint();
         mTextPaint = new TextPaint();
         defaultPaintText();
@@ -68,7 +68,6 @@ public class CustomFoldView extends View {
 
             desiredWidth = StaticLayout.getDesiredWidth(mText, mTextPaint);
             screenWidth = PublicTools.getScreenWidth((Activity) getContext());
-            //screenWidth = getMeasuredWidth();
 
             char[] chars = mText.toCharArray();
             int tempWidth = 0;
@@ -89,21 +88,23 @@ public class CustomFoldView extends View {
             lines = mList.size();
             singleLineNum = mText.length() / lines;
             postInvalidate();
-            /*setMeasuredDimension(screenWidth,
-                    PublicTools.dip2px(getContext(), fontSize * lines + 3));*/
-
-        } else {
-            MyLog.loge("The text is empty");
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        //detailText();
-
+        //super.onDraw(canvas);
+        MyLog.loge("getPaddingRight() = " + getPaddingRight());
         if (mList.size() > 0) {
+
             int lineHeight = PublicTools.dip2px(getContext(), fontSize);
             for (int i = 0; i < mList.size(); i++) {
+                /*if (i == mList.size() - 1) {
+                    //TODO
+                    canvas.drawText(mList.get(i).getText(), 0, lineHeight * (i + 1), mTextPaint);
+                } else {
+                    drawScaledText(canvas, mList.get(i), lineHeight * (i + 1),i == mList.size() - 1);
+                }*/
                 drawScaledText(canvas, mList.get(i), lineHeight * (i + 1), i == mList.size() - 1);
             }
         }
@@ -203,10 +204,6 @@ public class CustomFoldView extends View {
         mTextPaint.setTextSize(PublicTools.dip2px(getContext(), fontSize));
     }
 
-    public void start() {
-        postInvalidate();
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -285,8 +282,7 @@ public class CustomFoldView extends View {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int width = getDefaultSize(getWidth(), widthMeasureSpec);
-        //detailText(width);
-        setMeasuredDimension(width,
+        setMeasuredDimension(screenWidth,
                 PublicTools.dip2px(getContext(), fontSize * lines + 3));
     }
 
