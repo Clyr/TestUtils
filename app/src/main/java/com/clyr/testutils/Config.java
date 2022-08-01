@@ -9,7 +9,7 @@ import android.os.Build.VERSION_CODES;
  */
 
 public class Config {
-    public static final String mUrl = "http://192.168.32.22:8080/TRAMS";//地址 https
+    public static final String murl = "http://192.168.32.22:8080/TRAMS";//地址 https
 //    public static final String mUrl = "https://192.168.32.22:8443/TRAMS";//地址 https
 
     public static final String mRefreash = "REFREASH"; //EventBus：刷新

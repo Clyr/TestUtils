@@ -4,7 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
@@ -22,20 +22,16 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.clyr.testutils.R;
 import com.clyr.testutils.base.BaseActivity;
+import com.clyr.utils.GalleryUtil;
+import com.clyr.utils.MyLog;
 import com.clyr.utils.ScreenshotUtil;
-import com.clyr.utils.ThreadPoolUtils;
-import com.clyr.utils.ToastUtils;
 import com.clyr.view.GuaGuaKa;
 import com.clyr.view.ProcessImageView;
 import com.clyr.view.activity.CameraActivity;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -124,8 +120,16 @@ public class MediaActivity extends BaseActivity {
                     ssRel.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
 //                    String saveScreenImage = ScreenshotUtil.saveScreenImage(ssRel);
-                    String saveScreenImage = ScreenshotUtil.saveScreenImage(getWindow().getDecorView());
-                    Glide.with(MediaActivity.this).load(saveScreenImage).into(ssImage);
+                    /*String saveScreenImage = ScreenshotUtil.saveScreenImage(getWindow().getDecorView());
+                    Glide.with(MediaActivity.this).load(saveScreenImage).into(ssImage);*/
+
+
+                    Bitmap viewBitmap = ScreenshotUtil.createViewBitmap(getWindow().getDecorView());
+//                    Bitmap viewBitmap = ScreenshotUtil.createViewBitmap(ssRel);
+                    Uri uri = ScreenshotUtil.saveImage29(MediaActivity.this, viewBitmap);
+                    Glide.with(MediaActivity.this).load(uri).into(ssImage);
+
+                    MyLog.loge(GalleryUtil.getPath(MediaActivity.this, uri));
                 }
             });
 

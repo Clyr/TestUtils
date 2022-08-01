@@ -234,14 +234,15 @@ public class CustomUIActivity extends BaseActivity {
 
     private void initFoldView() {
         CustomFoldView foldview = findViewById(R.id.foldview);
-        foldview.init(getResources().getString(R.string.string_html3));
+        foldview.setHideLines(2);
+        foldview.init(getResources().getString(R.string.string_html3), 20 * 2);
         foldview.setClickStringColor(R.color.colorPrimary);
         foldview.addClickString("《权利通知指引》", "免责声明");
         foldview.setOnClickAction((clickString) -> {
             MyLog.loge(clickString);
             startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://baike.baidu.com/item/Android/60243?fr=aladdin")));
         });
-        //foldview.start();
+        foldview.start();
     }
 
     StringBuilder stringBuilder = new StringBuilder();

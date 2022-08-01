@@ -53,6 +53,7 @@ import com.clyr.utils.ToastUtils;
 import com.clyr.view.RecycleViewDivider;
 import com.clyr.view.loadingdialog.LoadingDialog;
 import com.google.android.material.appbar.AppBarLayout;
+import com.unity3d.player.UnityPlayerActivity;
 import com.xuexiang.xupdate.UpdateManager;
 import com.xuexiang.xupdate.XUpdate;
 import com.xuexiang.xupdate.entity.UpdateEntity;
@@ -133,7 +134,6 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
             }
         }
 
-
     }
 
     private Class<?> getActivityClass(String str) {
@@ -189,6 +189,8 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
                 return AnimActivity.class;
             case "上拉View":
                 return BottomSmallActivity.class;
+            case "UnityGame":
+                return UnityPlayerActivity.class;
             default:
         }
 
