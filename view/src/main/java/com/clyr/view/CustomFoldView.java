@@ -3,8 +3,11 @@ package com.clyr.view;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -20,7 +23,6 @@ import androidx.core.content.ContextCompat;
 import com.clyr.utils.MyLog;
 import com.clyr.utils.PublicTools;
 import com.clyr.utils.ToastUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,6 @@ public class CustomFoldView extends View {
     List<LineText> mList = new ArrayList<>();
     private float desiredWidth;
     private int screenWidth;
-    private int lines;
     private int singleLineNum;
     List<ClickString> clickStringList = new ArrayList();
     private Typeface typeface = Typeface.DEFAULT;
@@ -45,6 +46,13 @@ public class CustomFoldView extends View {
     private int mColor = R.color.black;
     private OnClickAction onClickAction;
 
+    private int hideLines = -1;
+    private float buttonWidth = -1;
+    private boolean isHide = false;
+
+    private float padding = 0f;
+    private String[] strings;
+    private int lineMaxNum;
 
     public void setOnClickAction(OnClickAction onClickAction) {
         this.onClickAction = onClickAction;
@@ -54,20 +62,22 @@ public class CustomFoldView extends View {
         super(context, attrs);
     }
 
-    public CustomFoldView init(String text) {
+    public CustomFoldView init(String text, float padding) {
         mPaint = new Paint();
         mTextPaint = new TextPaint();
         defaultPaintText();
         mText = text;
-        detailText();
+        this.padding = padding;
+        measureButton();
         return this;
     }
 
-    private void detailText() {
+
+    public void start() {
         if (!TextUtils.isEmpty(mText)) {
 
             desiredWidth = StaticLayout.getDesiredWidth(mText, mTextPaint);
-            screenWidth = PublicTools.getScreenWidth((Activity) getContext());
+            screenWidth = PublicTools.getScreenWidth((Activity) getContext()) - PublicTools.dip2px(getContext(), padding);
             //screenWidth = getMeasuredWidth();
 
             char[] chars = mText.toCharArray();
@@ -85,13 +95,26 @@ public class CustomFoldView extends View {
                     mList.add(new LineText(String.valueOf(stringBuilder), desiredWidth));
                 }
             }
+            lineMaxNum = mList.size();
+            if (hideLines > 0) {
+                if (StaticLayout.getDesiredWidth(mList.get(mList.size() - 1).getText(), mTextPaint) >
+                        screenWidth - PublicTools.dip2px(getContext(), fontSize)) {
+                    mList.add(new LineText("", 0));
+                }
+                lineMaxNum = mList.size();
 
-            lines = mList.size();
-            singleLineNum = mText.length() / lines;
+                if (mList.size() > hideLines && isHide) {
+                    mList = mList.subList(0, hideLines);
+                }
+            }
+            if (strings != null && strings.length > 0) {
+                for (String item : strings) {
+                    recordClickString(item);
+                }
+            }
             postInvalidate();
             /*setMeasuredDimension(screenWidth,
-                    PublicTools.dip2px(getContext(), fontSize * lines + 3));*/
-
+                    PublicTools.dip2px(getContext(), fontSize * mList.size() + 3));*/
         } else {
             MyLog.loge("The text is empty");
         }
@@ -127,6 +150,30 @@ public class CustomFoldView extends View {
                     break;
                 }
             }
+
+            if (hideLines > 0 && isLastLine) {
+                int imageWidth = PublicTools.dip2px(getContext(), fontSize);
+                float imageSpace = screenWidth - x - StaticLayout.getDesiredWidth("...", mTextPaint) - imageWidth;
+                if (imageSpace <= buttonWidth) {
+                    canvas.drawText("...", x, lineY, mTextPaint);
+                    //x += StaticLayout.getDesiredWidth("...", mTextPaint);
+                    float xBtn = screenWidth - buttonWidth;
+                    Bitmap mBitmap;
+                    if (isHide) {
+                        canvas.drawText("展开", xBtn, lineY, mTextPaint);
+                        mBitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.icon_down);
+                    } else {
+                        canvas.drawText("收起", xBtn, lineY, mTextPaint);
+                        mBitmap = BitmapFactory.decodeResource(this.getResources(), R.mipmap.icon_up);
+                    }
+                    Rect des = new Rect(screenWidth - imageWidth, (int) lineY - imageWidth, screenWidth, (int) lineY);
+                    canvas.drawBitmap(mBitmap, null, des, mPaint);
+
+                    return;
+                }
+
+            }
+
             canvas.drawText(c, x, lineY, mTextPaint);
             x += isLastLine ? cw : cw + rightSpace;
         }
@@ -134,11 +181,8 @@ public class CustomFoldView extends View {
 
 
     public void addClickString(String... strings) {
-        if (strings != null && strings.length > 0) {
-            for (String item : strings) {
-                recordClickString(item);
-            }
-        }
+        this.strings = strings;
+
     }
 
     private void recordClickString(String clickString) {
@@ -203,8 +247,9 @@ public class CustomFoldView extends View {
         mTextPaint.setTextSize(PublicTools.dip2px(getContext(), fontSize));
     }
 
-    public void start() {
-        postInvalidate();
+    public void setHideLines(int hideLines) {
+        this.hideLines = hideLines;
+        isHide = hideLines > 0;
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -230,6 +275,15 @@ public class CustomFoldView extends View {
         //float lineY = upY / lineHeight;
         int lineY = (int) (upY / lineHeight);
         if (lineY < mList.size()) {
+            if (lineY == hideLines - 1) {
+                if (upX <= screenWidth && upX >= screenWidth - buttonWidth) {
+                    isHide = !isHide;
+                    start();
+                    return;
+                }
+
+            }
+
             List<ClickString> clickStrings = mList.get(lineY).getClickStrings();
             String text = mList.get(lineY).getText();
             float lineWidth = StaticLayout.getDesiredWidth(text, mTextPaint);
@@ -280,6 +334,10 @@ public class CustomFoldView extends View {
         }
     }
 
+    private void measureButton() {
+        buttonWidth = StaticLayout.getDesiredWidth("展开", mTextPaint);
+        buttonWidth += PublicTools.dip2px(getContext(), 1 + fontSize);
+    }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -287,7 +345,7 @@ public class CustomFoldView extends View {
         int width = getDefaultSize(getWidth(), widthMeasureSpec);
         //detailText(width);
         setMeasuredDimension(width,
-                PublicTools.dip2px(getContext(), fontSize * lines + 3));
+                PublicTools.dip2px(getContext(), fontSize * lineMaxNum + 3));
     }
 
     class LineText {

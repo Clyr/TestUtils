@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.clyr.testutils"
-        minSdk 19
+        minSdk 22
         targetSdk 31
         versionCode 1
         versionName "1.0.0"
@@ -33,6 +33,9 @@ android {
                 GETUI_APP_KEY   : "SmXmxNayux8zghRwjMeP79",
                 GETUI_APP_SECRET: "POqOjmYLLu9FKjjyrgSvT8"
         ]
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
 
 
@@ -55,6 +58,9 @@ android {
     buildFeatures {
         viewBinding true
     }
+    packagingOptions {
+        doNotStrip '*/armeabi-v7a/*.so'
+    }
 }
 
 dependencies {
@@ -72,6 +78,7 @@ dependencies {
     implementation project(path: ':base')
     implementation project(path: ':test')
     implementation project(path: ':three_sdk')
+    implementation project(path: ':unityLibrary')
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

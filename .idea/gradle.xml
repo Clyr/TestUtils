@@ -7,6 +7,7 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="11" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -14,6 +15,7 @@
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/test" />
             <option value="$PROJECT_DIR$/three_sdk" />
+            <option value="$PROJECT_DIR$/unityLibrary" />
             <option value="$PROJECT_DIR$/utils" />
             <option value="$PROJECT_DIR$/view" />
           </set>

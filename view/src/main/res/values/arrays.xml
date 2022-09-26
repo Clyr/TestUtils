@@ -24,6 +24,7 @@
         <item>CoolViewPager</item>
         <item>WebView</item>
         <item>Activity动画</item>
+        <item>UnityGame</item>
 
     </string-array>
 </resources>
