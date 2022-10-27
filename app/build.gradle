@@ -5,7 +5,19 @@ plugins {
 
 android {
     compileSdk 31
-
+    signingConfigs {
+        release {
+            // 签名证书
+            storeFile file("clyr_lzy.jks")
+            // 密钥库口令
+            storePassword "123456"
+            // 别名
+            keyAlias "key0"
+            // 密钥口令
+            keyPassword "123456"
+            v2SigningEnabled true
+        }
+    }
     defaultConfig {
         applicationId "com.clyr.testutils"
         minSdk 22
@@ -137,6 +149,8 @@ dependencies {
     implementation 'cn.jiguang.sdk:jpush:4.5.0'  // 此处以JPush 4.0.0 版本为例
 
     // 接入华为厂商// 极光厂商插件版本与接入 JPush 版本保持一致，下同
+    //implementation 'com.huawei.hms:hwid:6.7.0.300'
+    implementation 'com.huawei.hms:location:6.7.0.300'
     implementation 'com.huawei.hms:push:6.1.0.300'
     implementation 'cn.jiguang.sdk.plugin:huawei:4.5.0'
     // 接入魅族厂商

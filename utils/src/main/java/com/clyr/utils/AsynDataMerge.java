@@ -29,7 +29,7 @@ public class AsynDataMerge {
      * @param obj obj
      */
     public void addMergeData(String tag, Object obj) {
-        synchronized (AsynDataMerge.class){
+        synchronized (AsynDataMerge.class) {
             if (TextUtils.isEmpty(tag)) {
                 tag = "TAG_" + mObjMap.size();
             }

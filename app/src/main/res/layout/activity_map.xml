@@ -24,6 +24,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="百度地图WbeView" />
+        <Button
+            android:id="@+id/tianmap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="天地图" />
+
+        <Button
+            android:id="@+id/huaweiMap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="华为定位服务" />
+
+
+        <TextView
+            android:id="@+id/log_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
